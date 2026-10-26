@@ -1,0 +1,13 @@
+# Sitio estático: no requiere build. Netlify publica la raíz del repo.
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Documento confidencial: que no aparezca en buscadores
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=0, must-revalidate"

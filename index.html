@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050a14">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<title>Piloto Suelo Vivo Herdez</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Piloto SMAAgro de monitoreo continuo de suelo agrícola en Sinaloa o Durango · Smability para TNC México y Grupo Herdez.">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Base: sistema visual del deck Smability (Corredor Verde). Tema oscuro único, deliberado.
+   Layout: panel izquierdo sobre mapa topográfico Sinaloa–Durango; láminas densas a ancho completo. */
+:root{
+  color-scheme:dark;
+  --bg:#050a14;
+  --panel:rgba(8,14,27,.80);
+  --panel-soft:rgba(8,14,27,.58);
+  --surface:rgba(15,23,42,.62);
+  --surface-hover:rgba(15,23,42,.88);
+  --line:rgba(148,163,184,.16);
+  --line-accent:rgba(34,211,238,.42);
+  --text:#f1f5f9;
+  --text-2:#b4c0d3;
+  --text-3:#7d8ba1;
+  --accent:#22d3ee;
+  --accent-soft:rgba(34,211,238,.12);
+  /* Variables de suelo y líneas de trabajo */
+  --c-hum:#22d3ee;     /* humedad */
+  --c-sal:#fbbf24;     /* salinidad / CE */
+  --c-tmp:#fb7185;     /* temperatura */
+  --c-agua:#60a5fa;    /* pozo / lluvia */
+  --c-vida:#4ade80;    /* vida del suelo / regenerativo */
+  --c-pol:#a78bfa;     /* política pública */
+  --c-earth:#c08a5b;   /* suelo */
+  --radius:14px;--radius-sm:10px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --gutter:max(clamp(20px,4vw,64px),calc(env(safe-area-inset-left,0px) + 16px));
+  --top:clamp(84px,11vh,112px);
+  --bar-bottom:clamp(22px,3.2vh,34px);
+  --bottom:clamp(88px,11.5vh,108px);
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:var(--font);color:var(--text);
+  background:radial-gradient(1200px 800px at 70% 40%,#0c1a33 0%,var(--bg) 62%);
+  background-color:var(--bg);
+  overflow:hidden;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* Fondo */
+#bg,#map{position:fixed;inset:0;z-index:0}
+#map[hidden]{display:none}
+.scrim{position:fixed;inset:0;z-index:1;pointer-events:none}
+.scrim::before,.scrim::after{content:"";position:absolute;inset:0;transition:opacity 1s var(--ease)}
+.scrim::before{background:radial-gradient(ellipse at 50% 50%,rgba(5,10,20,.15) 0%,rgba(5,10,20,.85) 78%)}
+.scrim::after{background:linear-gradient(90deg,rgba(5,10,20,.95) 0%,rgba(5,10,20,.84) 34%,rgba(5,10,20,.3) 60%,rgba(5,10,20,0) 78%);opacity:0}
+.scrim[data-mode="side"]::before{opacity:.25}
+.scrim[data-mode="side"]::after{opacity:1}
+.scrim[data-mode="full"]::before{opacity:1}
+.edges{position:fixed;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(5,10,20,.75) 0%,rgba(5,10,20,0) 18%),linear-gradient(0deg,rgba(5,10,20,.8) 0%,rgba(5,10,20,0) 20%)}
+.grid{position:fixed;inset:0;z-index:2;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:48px 48px;-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 45%,transparent 75%);mask-image:linear-gradient(90deg,#000 0%,#000 45%,transparent 75%)}
+
+/* Progreso + header */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:30;background:rgba(148,163,184,.08)}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#0ea5e9,var(--accent));transition:width .6s var(--ease)}
+.progress-split{position:absolute;top:0;bottom:0;width:3px;margin-left:-1px;background:var(--bg)}
+.brand{position:fixed;top:calc(env(safe-area-inset-top,0px) + clamp(18px,3vh,30px));left:var(--gutter);z-index:30;display:flex;align-items:center;gap:14px}
+.brand-logo{height:42px;width:auto;display:block}
+.brand-sep{width:1px;height:22px;background:var(--line)}
+.brand-client{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3)}
+.conf-badge{position:fixed;top:calc(env(safe-area-inset-top,0px) + clamp(24px,3.6vh,36px));right:var(--gutter);z-index:30;display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;border:1px solid rgba(251,191,36,.4);background:rgba(251,191,36,.08);color:#fbbf24;font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
+.conf-badge svg{width:12px;height:12px}
+
+/* Láminas */
+.deck{position:fixed;inset:0;z-index:10;pointer-events:none}
+.slide{position:absolute;inset:0;padding:var(--top) var(--gutter) var(--bottom);display:flex;flex-direction:column;justify-content:center;visibility:hidden;opacity:0;transition:opacity .55s var(--ease),visibility 0s linear .55s}
+.slide.is-active{visibility:visible;opacity:1;transition:opacity .55s var(--ease),visibility 0s}
+.slide .panel{pointer-events:auto}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.slide.is-active .rv{opacity:1;transform:none;transition-delay:calc(var(--i,0) * 60ms + 120ms)}
+
+.panel{width:min(660px,52vw);max-height:100%;overflow:auto;background:var(--panel);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,2.6vw,38px);box-shadow:0 24px 60px rgba(0,0,0,.45);scrollbar-width:thin;scrollbar-color:rgba(148,163,184,.3) transparent}
+.panel--wide{width:min(860px,62vw)}
+.panel--full{width:min(1240px,100%);margin:0 auto}
+.panel--cover{margin:0 auto;width:min(900px,100%);text-align:center;background:var(--panel-soft);padding:clamp(28px,5vw,60px)}
+
+/* Tipografía */
+.kicker{display:inline-flex;align-items:center;gap:10px;margin-bottom:12px;font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.kicker::before{content:"";width:22px;height:1px;background:currentColor;opacity:.7}
+.panel--cover .kicker::after{content:"";width:22px;height:1px;background:currentColor;opacity:.7}
+h1{font-size:clamp(2.3rem,5.2vw,4.4rem);font-weight:800;line-height:1.03;letter-spacing:-.035em;text-wrap:balance}
+h2{font-size:clamp(1.55rem,2.5vw,2.35rem);font-weight:700;line-height:1.12;letter-spacing:-.025em;margin-bottom:10px;text-wrap:balance}
+h3{font-size:.74rem;font-family:var(--mono);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px}
+.lead{font-size:clamp(.95rem,1.05vw,1.06rem);line-height:1.6;color:var(--text-2);max-width:66ch}
+.accent{color:var(--accent)}
+.grad{background:linear-gradient(90deg,var(--accent),#86efac);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover-sub{margin-top:18px;font-size:clamp(1.02rem,1.5vw,1.3rem);color:var(--text-2);font-weight:500;text-wrap:balance}
+.cover-meta{margin-top:28px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:center;flex-wrap:wrap;gap:8px 28px;font-size:.93rem;color:var(--text-2)}
+.cover-meta strong{color:var(--text);font-weight:600}
+.hint{margin-top:20px;font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.hint kbd{font-family:inherit;padding:2px 7px;border:1px solid var(--line);border-radius:5px;color:var(--text-2)}
+.conf-note{margin:16px auto 0;font-size:.72rem;line-height:1.5;color:var(--text-3);max-width:64ch}
+.parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:30px auto 0;text-align:left}
+.part{display:grid;gap:6px;padding:14px 16px;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);transition:border-color .25s,transform .25s var(--ease),background .25s}
+.part:hover{border-color:var(--line-accent);background:var(--surface-hover);transform:translateY(-2px)}
+.part-num{font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.part-title{font-size:.94rem;font-weight:650;line-height:1.3}
+
+/* Tarjetas */
+.cards{display:grid;gap:12px;margin-top:22px}
+.cards--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cards--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cards--4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{--c:var(--accent);position:relative;overflow:hidden;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;transition:border-color .25s,background .25s}
+.card::before{content:"";position:absolute;left:0;top:0;right:0;height:2px;background:var(--c);opacity:.85}
+.card:hover{border-color:color-mix(in srgb,var(--c) 45%,transparent);background:var(--surface-hover)}
+.card--plain::before{display:none}
+.card-num{font-family:var(--mono);font-size:.7rem;color:var(--c);letter-spacing:.1em;margin-bottom:8px;display:block}
+.card h4{font-size:.98rem;font-weight:650;line-height:1.3;margin-bottom:6px}
+.card p,.card li{font-size:.86rem;line-height:1.5;color:var(--text-2)}
+.card ul{list-style:none;display:grid;gap:5px;margin-top:4px}
+.card li{padding-left:14px;position:relative}
+.card li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--c)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.chip{font-size:.76rem;color:var(--text-2);padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(15,23,42,.5)}
+.chip b{color:var(--text);font-weight:600}
+.chip--c{border-color:color-mix(in srgb,var(--c) 45%,transparent);color:var(--text)}
+.tag{display:inline-block;white-space:nowrap;font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--text-3)}
+.tag--on{color:var(--accent);border-color:var(--line-accent);background:var(--accent-soft)}
+.tag--lab{color:var(--c-sal);border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.08)}
+.note{display:flex;gap:10px;align-items:flex-start;margin-top:16px;padding:11px 14px;border-radius:var(--radius-sm);border:1px solid var(--line);background:rgba(15,23,42,.45);font-size:.8rem;line-height:1.5;color:var(--text-3)}
+.note svg{flex:none;width:16px;height:16px;margin-top:1px;color:var(--accent)}
+.note strong{color:var(--text-2)}
+.cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;margin-top:20px;align-items:start}
+.cols > *{min-width:0}
+
+/* Métricas */
+.metric{padding:18px 16px}
+.metric-value{display:block;font-size:clamp(1.8rem,2.8vw,2.7rem);font-weight:800;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.metric-label{display:block;margin-top:8px;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.metric p{margin-top:6px;font-size:.8rem}
+
+/* Listas incluye / no incluye */
+.scope{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.scope > div{min-width:0;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.scope ul{list-style:none;display:grid;gap:7px}
+.scope li{font-size:.86rem;line-height:1.45;color:var(--text-2);display:grid;grid-template-columns:18px 1fr;gap:6px}
+.scope li svg{width:15px;height:15px;margin-top:2px}
+.yes svg{color:var(--c-vida)}
+.no svg{color:var(--text-3)}
+
+/* Variables */
+.var{display:grid;grid-template-columns:auto 1fr auto;gap:4px 16px;align-items:start}
+.var .dot{width:12px;height:12px;border-radius:50%;background:var(--c);margin-top:5px;box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 20%,transparent)}
+.var .unit{font-family:var(--mono);font-size:.72rem;color:var(--text-3);white-space:nowrap}
+.var h4{margin:0}
+.var p{grid-column:2 / -1}
+.nice{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:4px}
+.nice th,.nice td{padding:9px 10px;border-bottom:1px solid rgba(148,163,184,.09);text-align:left;vertical-align:top}
+.nice th{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.nice td{color:var(--text-2)}
+.nice td:first-child{color:var(--text);font-weight:600;white-space:nowrap}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(5,10,20,.35)}
+
+/* Arquitectura */
+.arch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:22px;align-items:stretch}
+.layer{position:relative;min-width:0;margin-right:26px;padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);display:flex;flex-direction:column;gap:10px}
+.layer:last-child{margin-right:0}
+.layer:not(:last-child)::after{content:"";position:absolute;right:-22px;top:50%;width:18px;height:2px;background:var(--line-accent)}
+.layer:not(:last-child)::before{content:"";position:absolute;right:-24px;top:calc(50% - 4px);border:5px solid transparent;border-left:7px solid var(--accent);transform:translateX(4px)}
+.layer h4{font-size:.95rem;font-weight:700}
+.layer .lyr{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.blk{padding:9px 11px;border-radius:9px;border:1px solid var(--line);background:rgba(5,10,20,.45);font-size:.8rem;line-height:1.4;color:var(--text-2)}
+.blk b{display:block;color:var(--text);font-weight:600;font-size:.84rem;margin-bottom:2px}
+.blk--sa{border-style:dashed;border-color:rgba(96,165,250,.45)}
+.cadence{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}
+.cad{padding:12px 14px;border-radius:var(--radius-sm);border:1px solid var(--line);background:rgba(15,23,42,.45)}
+.cad span{display:block;font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.cad strong{display:block;margin-top:4px;font-size:1.05rem;font-variant-numeric:tabular-nums}
+
+/* Perfil de sonda */
+.profile-wrap{display:grid;grid-template-columns:200px minmax(0,1fr);gap:18px;align-items:start;margin-top:18px}
+.profile-wrap svg{width:100%;height:auto;display:block}
+
+/* Línea de tiempo / pasos */
+.steps{list-style:none;margin-top:20px;position:relative;padding-left:30px;display:grid;gap:16px}
+.steps::before{content:"";position:absolute;left:7px;top:8px;bottom:10px;width:1px;background:linear-gradient(var(--line-accent),var(--line))}
+.steps li{position:relative}
+.steps li::before{content:"";position:absolute;left:-28px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.step-when{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.step-title{font-weight:650;margin-top:3px}
+.step-text{margin-top:3px;font-size:.88rem;line-height:1.5;color:var(--text-2)}
+
+/* API */
+.endpoints{display:grid;gap:6px;margin-top:6px}
+.ep{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;align-items:baseline;padding:8px 10px;border-radius:8px;background:rgba(5,10,20,.45);border:1px solid var(--line)}
+.ep code{font-family:var(--mono);font-size:.76rem;color:var(--text);overflow-wrap:anywhere}
+.ep .m{font-family:var(--mono);font-size:.64rem;font-weight:600;color:var(--c-vida);letter-spacing:.06em}
+.ep .m.post{color:var(--c-sal)}
+.ep small{grid-column:2;font-size:.76rem;color:var(--text-3);line-height:1.4}
+pre.json{margin-top:6px;padding:14px 16px;border-radius:var(--radius-sm);border:1px solid var(--line);background:rgba(2,6,14,.75);font-family:var(--mono);font-size:.74rem;line-height:1.55;color:var(--text-2);overflow-x:auto;white-space:pre}
+pre.json .k{color:#7dd3fc}
+pre.json .s{color:#86efac}
+pre.json .n{color:#fbbf24}
+.live{margin-top:12px;display:grid;gap:10px;padding:14px 16px;border:1px dashed var(--line-accent);border-radius:var(--radius);background:var(--accent-soft)}
+.live-head{display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--text-2)}
+.live-dot{width:9px;height:9px;border-radius:50%;background:var(--c-vida);animation:live 1.8s infinite;flex:none}
+.live-dot.off{background:var(--text-3);animation:none}
+@keyframes live{0%{box-shadow:0 0 0 0 rgba(74,222,128,.6)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.live-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.live-site{padding:10px 12px;border-radius:9px;background:rgba(5,10,20,.5);border:1px solid var(--line)}
+.live-site span{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.live-site strong{font-size:1.1rem;font-variant-numeric:tabular-nums}
+.live-site em{font-style:normal;font-size:.76rem;color:var(--text-3);margin-left:4px}
+.live-foot{font-size:.72rem;color:var(--text-3);line-height:1.4}
+
+/* Modelo */
+.thr{display:grid;gap:8px;margin-top:6px}
+.thr-row{display:grid;grid-template-columns:70px minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:.82rem;color:var(--text-2)}
+.thr-row b{color:var(--text);font-weight:600}
+.thr-bar{position:relative;height:10px;border-radius:999px;background:linear-gradient(90deg,rgba(74,222,128,.35),rgba(251,191,36,.45) 50%,rgba(251,113,133,.55))}
+.thr-bar i{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--text);border-radius:2px}
+.thr-row .v{font-family:var(--mono);font-size:.72rem;text-align:right;color:var(--text-3)}
+
+/* Paradigma */
+.shift{display:grid;gap:8px;margin-top:20px}
+.shift-row{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(0,1.15fr);align-items:center;gap:10px}
+.shift-row > div{min-width:0;padding:11px 14px;border-radius:var(--radius-sm);font-size:.88rem;line-height:1.4}
+.from{border:1px solid var(--line);background:rgba(15,23,42,.4);color:var(--text-3)}
+.to{border:1px solid var(--line-accent);background:var(--accent-soft);color:var(--text);font-weight:550}
+.shift-row svg{width:22px;height:22px;color:var(--accent);justify-self:center}
+.shift-head{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(0,1.15fr);gap:10px}
+.shift-head span{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3)}
+.shift-head span:last-child{color:var(--accent)}
+.quote{margin-top:18px;padding:16px 20px;border-left:3px solid var(--c-vida);background:rgba(74,222,128,.07);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:1.02rem;line-height:1.5;color:var(--text)}
+
+/* Gantt */
+.gantt-wrap{margin-top:16px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(5,10,20,.35)}
+.gantt{display:grid;grid-template-columns:minmax(290px,2.2fr) repeat(15,minmax(32px,1fr));min-width:880px;font-size:.75rem}
+.g-h{padding:8px 0;text-align:center;font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--text-3);border-bottom:1px solid var(--line);position:sticky;top:0;background:#0a1222}
+.g-h.yr{color:var(--accent)}
+.g-l{white-space:nowrap;padding:4px 12px;color:var(--text-2);border-bottom:1px solid rgba(148,163,184,.07);display:flex;align-items:center;gap:8px;min-width:0}
+.g-l i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--c)}
+.g-c{border-bottom:1px solid rgba(148,163,184,.07);border-left:1px solid rgba(148,163,184,.05);position:relative}
+.g-bar{position:absolute;top:5px;bottom:5px;border-radius:5px;background:color-mix(in srgb,var(--c) 70%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 100%,transparent)}
+.g-season{position:absolute;top:6px;bottom:6px;border-radius:4px;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--c) 30%,transparent) 0 4px,transparent 4px 8px);border:1px solid color-mix(in srgb,var(--c) 50%,transparent)}
+.g-ms{position:absolute;top:50%;width:11px;height:11px;transform:translate(-50%,-50%) rotate(45deg);background:var(--text);box-shadow:0 0 0 3px rgba(5,10,20,.8)}
+.g-l.sep,.g-c.sep{border-top:1px solid var(--line)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;font-size:.76rem;color:var(--text-3)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+.legend i.ms{width:9px;height:9px;transform:rotate(45deg);border-radius:1px;background:var(--text)}
+.milestones{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px}
+.ms-card{padding:9px 11px;border-radius:9px;border:1px solid var(--line);background:rgba(15,23,42,.45);font-size:.78rem;color:var(--text-2);line-height:1.35}
+.ms-card b{display:block;font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;color:var(--accent);margin-bottom:3px}
+
+/* Presupuesto */
+.budget{width:100%;border-collapse:collapse;font-size:.86rem}
+.budget th{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.budget td{padding:6px 12px;border-bottom:1px solid rgba(148,163,184,.07);color:var(--text-2);vertical-align:top}
+.budget td.name{color:var(--text);font-weight:550}
+.budget td.name small{display:block;font-weight:400;color:var(--text-3);font-size:.76rem;margin-top:2px;line-height:1.35}
+.budget .amt,.budget .pct{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.budget .amt{color:var(--text)}
+.budget th.amt,.budget th.pct{text-align:right}
+.budget .barc{width:28%;min-width:110px}
+.bbar{height:8px;border-radius:999px;background:rgba(148,163,184,.12);margin-top:6px;overflow:hidden}
+.bbar span{display:block;height:100%;background:var(--c);border-radius:999px;transform-origin:left;transform:scaleX(0);transition:transform 1s var(--ease)}
+.slide.is-active .bbar span{transform:scaleX(1)}
+.budget tfoot td{border-top:1px solid var(--line-accent);border-bottom:0;color:var(--text);font-weight:700;padding-top:12px}
+.pay{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px}
+.pay div{padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:rgba(15,23,42,.45);font-size:.78rem;color:var(--text-2);line-height:1.35}
+.pay b{display:block;font-size:1rem;color:var(--text);font-variant-numeric:tabular-nums}
+
+/* Equipo */
+.person{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start}
+.avatar{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,transparent);border:1px solid color-mix(in srgb,var(--c) 45%,transparent);color:var(--c);font-weight:800;font-size:.95rem}
+.person h4{margin-bottom:2px}
+.role{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--c);display:block;margin-bottom:6px}
+
+/* Cierre */
+.contacts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:32px;text-align:left}
+.contact{display:grid;gap:4px;padding:20px 22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.contact-name{font-size:1.15rem;font-weight:700}
+.contact-role{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.contact-mail{margin-top:8px;font-family:var(--mono);font-size:.82rem;color:var(--text-2);user-select:all}
+.restart{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;cursor:pointer;border-radius:999px;border:1px solid var(--line);background:rgba(15,23,42,.5);font-size:.84rem;color:var(--text-2);transition:color .2s,border-color .2s,background .2s}
+.btn-ghost svg{width:16px;height:16px}
+.btn-ghost:hover{color:var(--text);border-color:var(--line-accent);background:var(--accent-soft)}
+
+/* Lámina final de mapa */
+.slide[data-layout="map"]{justify-content:flex-end}
+.panel--map{width:min(440px,100%);padding:22px 24px;background:rgba(8,14,27,.72)}
+.scrim[data-mode="map"]::before{opacity:.35}
+.map-contacts{display:grid;gap:8px;margin-top:14px}
+.map-contacts div{display:grid;gap:2px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:rgba(15,23,42,.5)}
+.map-contacts b{font-size:.95rem}
+.map-contacts span{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.map-contacts code{font-family:var(--mono);font-size:.78rem;color:var(--text-2);user-select:all}
+.map-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:.74rem;color:var(--text-3)}
+.map-legend span{display:inline-flex;align-items:center;gap:6px}
+.map-legend .ln{width:18px;height:0;border-top:1px solid rgba(148,163,184,.6)}
+.map-legend .ln.major{border-top:2px solid #7dd3fc}
+.map-legend .pt{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.25)}
+.probes td:nth-child(2),.probes td:nth-child(3){white-space:nowrap}
+.crit td:first-child{white-space:normal}
+
+/* Ficha, flujo, presupuesto v3 */
+.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.btn-primary{flex:none;display:inline-flex;align-items:center;gap:10px;padding:11px 18px;border-radius:999px;text-decoration:none;white-space:nowrap;background:var(--accent);color:#03121c;font-weight:700;font-size:.86rem;box-shadow:0 8px 24px rgba(34,211,238,.25);transition:transform .2s var(--ease)}
+.btn-primary svg{width:18px;height:18px}
+.btn-primary:hover{transform:translateY(-2px)}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:14px}
+.flow div{padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:rgba(15,23,42,.45);font-size:.8rem;color:var(--text-2);line-height:1.35}
+.flow b{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.spec td:first-child{width:130px;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);font-weight:600}
+.spec td{color:var(--text-2)}
+.cols--even{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);margin-top:14px}
+.budget td.dim{color:var(--text-3)}
+.budget td.name{font-weight:500;font-size:.8rem}
+#fees td,#costs td{padding:4px 12px}
+#fees th,#costs th{padding:7px 12px}
+#fees tfoot td,#costs tfoot td{padding-top:8px}
+.pay div{padding:8px 12px}
+.split{margin-top:14px}
+.split-bar{display:flex;height:12px;border-radius:999px;overflow:hidden;background:rgba(148,163,184,.12)}
+.split-bar span{height:100%}
+.s-fee{background:var(--accent)}
+.s-cost{background:var(--c-earth)}
+.split-legend{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:8px;font-size:.8rem;color:var(--text-2)}
+.split-legend span{display:inline-flex;align-items:center;gap:7px}
+.split-legend i{width:10px;height:10px;border-radius:3px}
+.split-legend b{color:var(--text);font-variant-numeric:tabular-nums}
+
+.cat{display:inline-flex;align-items:center;gap:8px}
+.cat i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--c)}
+.stack{display:flex;height:9px;border-radius:999px;overflow:hidden;min-width:4px}
+.stack span{height:100%}
+#byact td{padding:6px 12px}
+/* Footer */
+.bar{position:fixed;left:var(--gutter);right:var(--gutter);bottom:calc(var(--bar-bottom) + env(safe-area-inset-bottom,0px));z-index:30;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none}
+.bar>*{pointer-events:auto}
+.meta{display:flex;align-items:center;gap:12px;padding:9px 16px;border-radius:999px;background:rgba(8,14,27,.78);border:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);min-width:0}
+.meta .dot{width:3px;height:3px;border-radius:50%;background:var(--text-3);flex:none}
+.slide-title{color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.counter-btn{display:inline-flex;align-items:center;gap:6px;padding:2px 4px;margin:-2px -4px;border:0;border-radius:6px;background:none;cursor:pointer;font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--text);font-variant-numeric:tabular-nums}
+.counter-btn svg{width:12px;height:12px;color:var(--text-3);transition:transform .25s var(--ease)}
+.counter-btn[aria-expanded="true"] svg{transform:rotate(180deg);color:var(--accent)}
+.actions{display:flex;align-items:center;gap:8px}
+.icon-btn{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;cursor:pointer;background:rgba(8,14,27,.78);border:1px solid var(--line);color:var(--text);transition:color .2s,border-color .2s,background .2s}
+.icon-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon-btn:hover{background:var(--accent);color:#03121c;border-color:var(--accent)}
+.icon-btn:disabled{opacity:.3;pointer-events:none}
+.index{position:fixed;left:var(--gutter);bottom:calc(var(--bar-bottom) + 56px + env(safe-area-inset-bottom,0px));z-index:40;width:min(420px,calc(100vw - 2 * var(--gutter)));max-height:70vh;overflow:auto;padding:8px;background:rgba(8,14,27,.97);border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.55);opacity:0;transform:translateY(8px);visibility:hidden;transition:opacity .25s var(--ease),transform .25s var(--ease),visibility 0s linear .25s}
+.index.is-open{opacity:1;transform:none;visibility:visible;transition:opacity .25s var(--ease),transform .25s var(--ease),visibility 0s}
+.index-label{display:block;padding:12px 10px 6px;font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3)}
+.index button{display:flex;align-items:center;gap:12px;width:100%;padding:8px 10px;cursor:pointer;border:0;border-radius:8px;background:none;text-align:left;font-size:.88rem;color:var(--text-2)}
+.index button b{font-family:var(--mono);font-size:.7rem;font-weight:500;color:var(--text-3);width:20px}
+.index button:hover{background:var(--surface-hover);color:var(--text)}
+.index button[aria-current="true"]{background:var(--accent-soft);color:var(--text)}
+
+/* Mapbox (solo si carga en Netlify) */
+.mk{width:22px;height:22px}
+.mk span{display:block;width:14px;height:14px;margin:4px;border-radius:50%;background:var(--c,var(--accent));border:2px solid #fff;box-shadow:0 0 0 6px color-mix(in srgb,var(--c,var(--accent)) 25%,transparent)}
+
+/* Responsivo */
+@media (max-width:1100px){
+  .cards--4,.cadence{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .arch{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .layer{margin-right:0}
+  .layer::after,.layer::before{display:none}
+  .milestones{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .panel-head{flex-direction:column}
+  .pay{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .slide[data-layout="map"] .panel{margin-top:auto}
+  body{overflow:auto}
+  .panel,.panel--wide,.panel--full{width:100%}
+  .slide{padding-top:calc(var(--top) - 10px)}
+  .cards--2,.cards--3,.cols,.scope,.parts,.contacts,.profile-wrap{grid-template-columns:1fr}
+  .profile-wrap svg{max-width:220px}
+  .scrim[data-mode="side"]::after{background:rgba(5,10,20,.82)}
+  .brand-sep,.brand-client,.hide-sm{display:none}
+  .pay,.milestones{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .shift-row,.shift-head{grid-template-columns:1fr}
+  .shift-row svg{transform:rotate(90deg)}
+  .shift-head span:nth-child(2){display:none}
+  .conf-badge{display:none}
+}
+@media (max-width:560px){
+  .cards--4,.cadence,.arch,.live-grid{grid-template-columns:1fr}
+  .slide-title{display:none}
+  .budget .barc{display:none}
+}
+@media (max-height:820px) and (min-width:901px){
+  h2{font-size:clamp(1.4rem,2.1vw,2rem);margin-bottom:6px}
+  .lead{font-size:.92rem;line-height:1.5}
+  .panel{padding:clamp(18px,2vw,28px)}
+  .cards{margin-top:14px;gap:10px}
+  .card{padding:14px}
+  .card p,.card li{font-size:.82rem}
+  .panel--cover .hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
+}
+</style>
+
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="map" aria-hidden="true" hidden></div>
+<div class="scrim" id="scrim" data-mode="cover"></div>
+<div class="edges"></div>
+<div class="grid"></div>
+<div class="progress" id="progress-bar"><span id="progress"></span></div>
+
+<div class="conf-badge">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+  Confidencial · Propuesta técnica
+</div>
+
+<header class="brand">
+  <img class="brand-logo" src="data:image/png;base64,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" alt="Smability">
+  <span class="brand-sep"></span>
+  <span class="brand-client">TNC México · Grupo Herdez</span>
+</header>
+
+<main class="deck" id="deck">
+
+  <!-- PORTADA -->
+  <section class="slide" data-layout="cover" data-title="Portada" data-view="overview">
+    <div class="panel panel--cover">
+      <span class="kicker rv" style="--i:0">Propuesta técnica · Piloto 2026–2028</span>
+      <h1 class="rv" style="--i:1">Suelo vivo, <span class="grad">medido cada 15 minutos</span></h1>
+      <p class="cover-sub rv" style="--i:2">Piloto SMAAgro de monitoreo continuo de suelo y agua en la cadena de abasto de Grupo Herdez · Sinaloa o Durango</p>
+      <div class="parts">
+        <button type="button" class="part rv" style="--i:3" data-go="2"><span class="part-num">Parte I</span><span class="part-title">Quiénes somos, contexto y alcance</span></button>
+        <button type="button" class="part rv" style="--i:4" data-go="6"><span class="part-num">Parte II</span><span class="part-title">Discovery y solución técnica</span></button>
+        <button type="button" class="part rv" style="--i:5" data-go="15"><span class="part-num">Parte III</span><span class="part-title">Resultados e impacto</span></button>
+        <button type="button" class="part rv" style="--i:6" data-go="17"><span class="part-num">Parte IV</span><span class="part-title">Cronograma, equipo y presupuesto</span></button>
+      </div>
+      <div class="cover-meta rv" style="--i:7">
+        <span><strong>Horacio Jiménez</strong> · Director General</span>
+        <span><strong>Octavio Jiménez</strong> · Director de Operaciones</span>
+      </div>
+      <p class="conf-note rv" style="--i:8">Documento confidencial preparado para The Nature Conservancy México y Grupo Herdez. Prohibida su reproducción o distribución sin autorización de Smability.</p>
+      <p class="hint rv" style="--i:9"><kbd>←</kbd> <kbd>→</kbd> navegar &nbsp;·&nbsp; <kbd>M</kbd> índice &nbsp;·&nbsp; <kbd>F</kbd> pantalla completa</p>
+    </div>
+  </section>
+
+  <!-- QUIÉNES SOMOS -->
+  <section class="slide" data-layout="full" data-title="Quiénes somos" data-part="I" data-view="overview-dim">
+    <div class="panel panel--full">
+      <div class="panel-head">
+        <div>
+          <span class="kicker rv" style="--i:0">Parte I · Quiénes somos</span>
+          <h2 class="rv" style="--i:1">Smability: del sensor en campo a la alerta en el celular</h2>
+        </div>
+        <a class="btn-primary rv" style="--i:2" href="https://smability-digitaltwin.netlify.app/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>
+          Ver gemelo digital
+        </a>
+      </div>
+      <p class="lead rv" style="--i:2">Empresa mexicana de inteligencia ambiental con nueve años de operación pagada. Diseñamos y fabricamos en México nuestros equipos, los calibramos de forma autónoma, convertimos sus datos en modelos en SMAA OS y los entregamos como alertas por mensajería. Somos dueños de cada capa.</p>
+      <div class="cards cards--4">
+        <div class="card card--plain metric rv" style="--i:3"><span class="metric-value" data-count="9">9</span><span class="metric-label">Años de operación</span><p class="lead">Hardware propio vendido, instalado y mantenido desde 2017</p></div>
+        <div class="card card--plain metric rv" style="--i:4"><span class="metric-value" data-count="60" data-suffix="+">60+</span><span class="metric-label">Nodos vendidos</span><p class="lead">En México, Guatemala y Colombia</p></div>
+        <div class="card card--plain metric rv" style="--i:5"><span class="metric-value" data-count="28">28</span><span class="metric-label">Clientes</span><p class="lead">Con rotación anual menor a 5 % en institucionales</p></div>
+        <div class="card card--plain metric rv" style="--i:6"><span class="metric-value">0.91</span><span class="metric-label">R² de ozono</span><p class="lead">Validado contra ICAyCC-UNAM; sin calibrar era 0.72</p></div>
+      </div>
+      <h3 class="rv" style="--i:7;margin-top:18px">Cuatro capas, un ciclo cerrado</h3>
+      <div class="cards cards--4" style="margin-top:0">
+        <div class="card rv" style="--i:8;--c:var(--accent)"><span class="card-num">01 · Dispositivos</span><h4>SMAA · CHAAK · SMAWA · SMAAmicro</h4><p>Electrónica, firmware y carcasas propias. Aire, lluvia, nivel de agua e islas de calor.</p></div>
+        <div class="card rv" style="--i:9;--c:var(--c-sal)"><span class="card-num">02 · Autocalibración</span><h4>Mínimo mantenimiento</h4><p>Modelos de aprendizaje automático corrigen la deriva de cada equipo, con actualización remota.</p></div>
+        <div class="card rv" style="--i:10;--c:var(--c-vida)"><span class="card-num">03 · SMAA OS</span><h4>Modelos y APIs</h4><p>Modelos de aire y lluvia en tiempo real sobre AWS. APIs abiertas por equipo o por red.</p></div>
+        <div class="card rv" style="--i:11;--c:var(--c-pol)"><span class="card-num">04 · AIreGPT</span><h4>Alertas hiperlocales</h4><p>Agente de IA en Telegram hoy y en WhatsApp desde diciembre 2026 – enero 2027.</p></div>
+      </div>
+      <div class="chips rv" style="--i:12">
+        <span class="chip">SEDEMA</span><span class="chip">SECTEI</span><span class="chip">UNAM</span><span class="chip">IBERO</span><span class="chip">ITESO</span><span class="chip">Greenpeace México</span><span class="chip">GIZ</span><span class="chip">SkyAlert</span><span class="chip">Corredor Verde</span><span class="chip">Fondo EPIC · U. de Chicago</span><span class="chip">Solicitud de patente con IBERO</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEXTO -->
+  <section class="slide" data-layout="side" data-title="El reto" data-part="I" data-view="region">
+    <div class="panel panel--wide">
+      <span class="kicker rv" style="--i:0">Parte I · Contexto</span>
+      <h2 class="rv" style="--i:1">Sin datos de suelo, los incentivos se diseñan a ciegas</h2>
+      <p class="lead rv" style="--i:2">La propuesta de TNC a Grupo Herdez plantea que la agricultura regenerativa no escala por falta de incentivos alineados, no por falta de prácticas. Para alinear incentivos se necesita evidencia continua de lo que pasa en el suelo de los proveedores.</p>
+      <div class="cards cards--3">
+        <div class="card rv" style="--i:3;--c:var(--c-agua)"><span class="card-num">Estrés hídrico</span><h4>Agua de riego y acuíferos</h4><p>Cuencas de abasto con disponibilidad limitada. Hoy nadie sabe cuánta agua aplicada se pierde por drenaje profundo.</p></div>
+        <div class="card rv" style="--i:4;--c:var(--c-sal)"><span class="card-num">Degradación</span><h4>Salinidad y pérdida de materia orgánica</h4><p>El suelo se degrada en silencio. Se detecta cuando el rendimiento ya cayó, años después.</p></div>
+        <div class="card rv" style="--i:5;--c:var(--c-pol)"><span class="card-num">Incentivos</span><h4>Subsidios que premian volumen</h4><p>Los programas públicos privilegian la productividad inmediata y pueden acelerar la degradación.</p></div>
+      </div>
+      <div class="note rv" style="--i:6">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span><strong>Dónde encaja el piloto.</strong> El programa de TNC (USD 350K en 3 años) construye líneas base y traduce evidencia en política. Este piloto aporta la pieza que falta: <strong>medición continua en campo</strong> en una cadena prioritaria para Herdez.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALCANCE -->
+  <section class="slide" data-layout="full" data-title="1 · Alcance del piloto" data-part="I" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">01 · Alcance del piloto</span>
+      <h2 class="rv" style="--i:1">Un sitio, una parcela testigo y una intervenida, 15 meses</h2>
+      <p class="lead rv" style="--i:2"><strong style="color:var(--text)">Objetivo:</strong> elegir con evidencia el mejor sitio entre Sinaloa y Durango, y ahí demostrar con SMAAgro cuánto cambia el suelo cuando se interviene, contra una parcela testigo que se mide pero no se toca.</p>
+      <div class="cards cards--4">
+        <div class="card card--plain metric rv" style="--i:3"><span class="metric-value" data-count="1">1</span><span class="metric-label">Sitio</span><p class="lead">Sinaloa o Durango, definido en discovery</p></div>
+        <div class="card card--plain metric rv" style="--i:4"><span class="metric-value" data-count="4">4</span><span class="metric-label">SMAAgro</span><p class="lead">2 en testigo, 2 en parcela intervenida</p></div>
+        <div class="card card--plain metric rv" style="--i:5"><span class="metric-value" data-count="2">2</span><span class="metric-label">Equipos de agua</span><p class="lead">1 CHAAK y 1 SMAWA en el pozo</p></div>
+        <div class="card card--plain metric rv" style="--i:6"><span class="metric-value" data-count="15">15</span><span class="metric-label">Meses</span><p class="lead">Nov 2026 – Ene 2028</p></div>
+      </div>
+      <div class="scope">
+        <div class="yes rv" style="--i:7">
+          <h3>Incluye</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Fase de discovery: selección de sitio y validación del pozo</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Estudio de mercado y selección de la sonda de suelo</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Desarrollo, pruebas e instalación de SMAAgro, CHAAK y SMAWA</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Gemelo digital como guía de instalación para el agricultor</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>API y modelos base y predictivos en SMAA OS, <strong style="color:var(--text)">sin cobro de SaaS</strong></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Brief de política pública y 2 presentaciones en congresos o foros</li>
+          </ul>
+        </div>
+        <div class="no rv" style="--i:8">
+          <h3>Fuera de alcance (fase 2)</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg>Segundo sitio o escalamiento a otras cadenas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg>Sensores continuos de pH y NPK (se miden por laboratorio)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg>Integraciones con plataformas de terceros: el API queda abierto para consumo externo</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg>Control automático de riego y certificación de prácticas</li>
+          </ul>
+          <div class="chips">
+            <span class="chip"><b>PI:</b> SMAAgro, firmware, SMAA OS y modelos, de Smability</span>
+            <span class="chip"><b>Datos:</b> uso perpetuo para TNC y Herdez</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VARIABLES -->
+  <section class="slide" data-layout="side" data-title="Variables críticas" data-part="I" data-view="region">
+    <div class="panel panel--wide">
+      <span class="kicker rv" style="--i:0">01 · Alcance · Variables</span>
+      <h2 class="rv" style="--i:1">Tres variables críticas en continuo, el resto por campaña</h2>
+      <p class="lead rv" style="--i:2">SMAAgro mide en continuo lo que cambia en horas. Lo que cambia en meses o años se mide en laboratorio, al inicio y al cierre.</p>
+      <div class="cards">
+        <div class="card var rv" style="--i:3;--c:var(--c-hum)"><span class="dot"></span><h4>Humedad volumétrica del perfil</h4><span class="unit">% VWC · 6 prof.</span><p>Cuánta agua hay en la zona de raíz y cuánta se escapa por debajo de 60 cm. Base para eficiencia de riego y estrés hídrico.</p></div>
+        <div class="card var rv" style="--i:4;--c:var(--c-sal)"><span class="dot"></span><h4>Salinidad (conductividad eléctrica)</h4><span class="unit">dS/m · 6 prof.</span><p>Acumulación de sales por riego y fertilización. Cada dS/m sobre el umbral del cultivo resta rendimiento.</p></div>
+        <div class="card var rv" style="--i:5;--c:var(--c-tmp)"><span class="dot"></span><h4>Temperatura del suelo</h4><span class="unit">°C · 6 prof.</span><p>Controla la actividad biológica y la mineralización de nutrientes. Es el indicador continuo de vida del suelo.</p></div>
+      </div>
+      <h3 class="rv" style="--i:6;margin-top:18px">Deseables (nice to have)</h3>
+      <div class="tbl-wrap rv" style="--i:7">
+        <table class="nice">
+          <thead><tr><th>Variable</th><th>Cómo se mide</th><th>Por qué</th></tr></thead>
+          <tbody>
+            <tr><td>Lluvia, ET₀, viento</td><td><span class="tag tag--on">Continuo · CHAAK</span></td><td>Cierra el balance hídrico</td></tr>
+            <tr><td>Nivel del pozo</td><td><span class="tag tag--on">Continuo · SMAWA</span></td><td>Presión sobre el acuífero</td></tr>
+            <tr><td>pH, materia orgánica, NPK</td><td><span class="tag tag--lab">Laboratorio t₀ / t₁</span></td><td>Cambian en meses; sensores in situ derivan</td></tr>
+            <tr><td>Respiración del suelo</td><td><span class="tag tag--lab">Laboratorio t₀ / t₁</span></td><td>Indicador directo de vida microbiana</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCOVERY -->
+  <section class="slide" data-layout="side" data-title="Fase 0 · Discovery" data-part="II" data-view="sites">
+    <div class="panel panel--wide">
+      <span class="kicker rv" style="--i:0">Fase 0 · Discovery · Consultoría</span>
+      <h2 class="rv" style="--i:1">Primero elegimos el sitio, después instalamos</h2>
+      <p class="lead rv" style="--i:2">En los meses 1 y 2 visitamos proveedores de Herdez en Sinaloa y en Durango. Se evalúan con la misma matriz y se elige <strong style="color:var(--text)">un solo sitio</strong>. Los criterios marcados como filtro son obligatorios.</p>
+      <div class="tbl-wrap rv" style="--i:3;margin-top:16px">
+        <table class="nice crit">
+          <thead><tr><th>Criterio</th><th>Cómo se valida</th><th>Tipo</th></tr></thead>
+          <tbody>
+            <tr><td>Pozo con título vigente</td><td>Consulta en el REPDA de CONAGUA y título de concesión del productor</td><td><span class="tag tag--lab">Filtro</span></td></tr>
+            <tr><td>Nivel estático ≤ 30 m</td><td>Medición del tirante al espejo de agua con sonda de nivel en visita</td><td><span class="tag tag--lab">Filtro</span></td></tr>
+            <tr><td>Cobertura celular</td><td>Prueba de señal en parcela; SMAAgro no guarda datos localmente</td><td><span class="tag tag--lab">Filtro</span></td></tr>
+            <tr><td>Proveedor de Herdez dispuesto</td><td>Carta de participación; acepta parcela testigo sin intervenir</td><td><span class="tag tag--lab">Filtro</span></td></tr>
+            <tr><td>Servicio eléctrico en el pozo</td><td>Toma para CHAAK (5 V / 3 A); si no existe, kit solar</td><td><span class="tag tag--on">Puntaje</span></td></tr>
+            <tr><td>Parcelas comparables</td><td>Misma textura, cultivo y fuente de agua en testigo e intervenida</td><td><span class="tag tag--on">Puntaje</span></td></tr>
+            <tr><td>Cultivo prioritario y calendario</td><td>Tomate, chile o maíz con ciclo dentro de la ventana del piloto</td><td><span class="tag tag--on">Puntaje</span></td></tr>
+            <tr><td>Acceso y seguridad</td><td>Visita, distancia a ciudad, riesgo para el equipo</td><td><span class="tag tag--on">Puntaje</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cards cards--2">
+        <div class="card rv" style="--i:4;--c:var(--c-hum)"><span class="card-num">Entregable D1 · Mes 2</span><h4>Informe de selección de sitio</h4><p>Matriz ponderada, ficha del pozo, fotos, señal celular y ubicación de testigo e intervenida.</p></div>
+        <div class="card rv" style="--i:5;--c:var(--c-sal)"><span class="card-num">Entregable D2 · Mes 2</span><h4>Informe de selección de sonda</h4><p>Análisis de mercado y prueba de banco de dos finalistas. Ver lámina de sondas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARQUITECTURA -->
+  <section class="slide" data-layout="full" data-title="2 · Arquitectura SMAAgro" data-part="II" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">02 · Arquitectura del sistema</span>
+      <h2 class="rv" style="--i:1">SMAAgro sobre las cuatro capas de Smability</h2>
+      <p class="lead rv" style="--i:2">SMAAgro hereda de SMAWA y SMAA la energía solar, el módem celular, la carcasa y la nube. Lo nuevo es la sonda de suelo y los modelos agrícolas en SMAA OS. CHAAK y SMAWA se instalan en el pozo como equipos independientes.</p>
+      <div class="arch">
+        <div class="layer rv" style="--i:3">
+          <span class="lyr">01 · Dispositivos</span><h4>En la parcela y el pozo</h4>
+          <div class="blk"><b>SMAAgro × 4</b>Sonda de perfil SDI-12: humedad, salinidad y temperatura a 6 profundidades</div>
+          <div class="blk blk--sa"><b>CHAAK · en el pozo</b>Viento ultrasónico, lluvia por radar, radiación, T, HR y presión</div>
+          <div class="blk blk--sa"><b>SMAWA · en el pozo</b>Nivel del agua con sonda de presión</div>
+        </div>
+        <div class="layer rv" style="--i:4">
+          <span class="lyr">02 · Calibración</span><h4>Dato confiable</h4>
+          <div class="blk"><b>Curva del sitio</b>Por profundidad, contra laboratorio y gravimétrico</div>
+          <div class="blk"><b>Corrección de deriva</b>Modelos de aprendizaje automático, como en SMAA</div>
+          <div class="blk"><b>Actualización remota</b>Firmware y coeficientes por OTA</div>
+        </div>
+        <div class="layer rv" style="--i:5">
+          <span class="lyr">03 · SMAA OS</span><h4>Datos y modelos</h4>
+          <div class="blk"><b>Nube AWS sin servidores</b>Lambda, API Gateway y S3</div>
+          <div class="blk"><b>Modelos base</b>Balance hídrico, salinidad, vida del suelo</div>
+          <div class="blk"><b>Modelo predictivo</b>Humedad y necesidad de riego a 24–72 h</div>
+          <div class="blk"><b>API abierta</b>Libre para consumo externo</div>
+        </div>
+        <div class="layer rv" style="--i:6">
+          <span class="lyr">04 · AIreGPT</span><h4>Al agricultor</h4>
+          <div class="blk"><b>Alertas de riego y salinidad</b>Por Telegram y WhatsApp, en español</div>
+          <div class="blk"><b>Tablero web</b>Testigo contra intervenida, para TNC y Herdez</div>
+          <div class="blk"><b>Gemelo digital</b>Guía 3D de instalación con datos en vivo</div>
+        </div>
+      </div>
+      <div class="flow rv" style="--i:7">
+        <div><b>01 · Mide</b>Cada 15–20 min en el perfil</div>
+        <div><b>02 · Se calibra</b>Curva del sitio y deriva</div>
+        <div><b>03 · Transmite</b>Celular 2G/4G, SIM Hologram</div>
+        <div><b>04 · Modela</b>Base y predictivo en SMAA OS</div>
+        <div><b>05 · Alerta</b>AIreGPT al celular del productor</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FICHA SMAAGRO -->
+  <section class="slide" data-layout="full" data-title="Ficha técnica SMAAgro" data-part="II" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">02 · Arquitectura · Ficha técnica preliminar</span>
+      <h2 class="rv" style="--i:1">SMAAgro: suelo medido en el perfil, con panel solar y envío celular</h2>
+      <p class="lead rv" style="--i:2">Especificación de partida basada en SMAA y SMAWA. Los valores marcados como objetivo se confirman en las pruebas de banco y con la sonda elegida en el informe D2.</p>
+      <div class="cols">
+        <div class="tbl-wrap rv" style="--i:3">
+          <table class="nice spec">
+            <tbody>
+              <tr><td>Mide</td><td>Humedad volumétrica, conductividad eléctrica y temperatura, a 10, 20, 30, 40, 50 y 60 cm</td></tr>
+              <tr><td>Resolución</td><td>Una lectura cada 15 a 20 min · 18 canales por lectura</td></tr>
+              <tr><td>Sonda</td><td>Comercial de perfil con salida SDI-12, seleccionada en el informe D2</td></tr>
+              <tr><td>Energía</td><td>Panel solar 10 W y batería 72 Wh, como SMAA</td></tr>
+              <tr><td>Autonomía</td><td>Objetivo ≥ 5 días sin sol. SMAA logra 3.8 días leyendo cada minuto; SMAAgro lee 15 a 20 veces menos</td></tr>
+              <tr><td>Datos</td><td>Celular 2G/4G, SIM Hologram multioperador · nube AWS · API</td></tr>
+              <tr><td>Almacenamiento</td><td>Sin respaldo local: cada lectura se envía al momento</td></tr>
+              <tr><td>Ubicación</td><td>GPS integrado</td></tr>
+              <tr><td>Carcasa</td><td>Nylon, diseño y fabricación propios en México</td></tr>
+              <tr><td>Montaje</td><td>Tubo Ø43 mm en poste fuera del paso de maquinaria; sonda enterrada en la hilera</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display:grid;gap:12px">
+          <div class="card rv" style="--i:4;--c:var(--c-agua)">
+            <span class="card-num">CHAAK en el pozo</span>
+            <h4>Necesita toma eléctrica de 5 V / 3 A</h4>
+            <p>CHAAK consume 4 W y no lleva panel. Por eso va en el pozo, junto al servicio eléctrico de la bomba. Si el pozo no tiene toma, se agrega un kit solar. Sus variables completan la evapotranspiración FAO-56.</p>
+          </div>
+          <div class="card rv" style="--i:5;--c:var(--c-agua)">
+            <span class="card-num">SMAWA en el pozo</span>
+            <h4>Nivel estático y dinámico</h4>
+            <p>Sonda de presión sumergida. Con un tirante de 30 m o menos, la instalación es sencilla y el abatimiento por bombeo se mide directamente.</p>
+          </div>
+          <div class="card rv" style="--i:6;--c:var(--c-vida)">
+            <span class="card-num">Incluido en el piloto</span>
+            <h4>Sin cobro de servicio anual</h4>
+            <p>SIM y datos, plataforma, tablero, API, calibración y alertas, durante los 15 meses.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SONDAS -->
+  <section class="slide" data-layout="full" data-title="Selección de sonda" data-part="II" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">02 · Arquitectura · Entregable D2</span>
+      <h2 class="rv" style="--i:1">¿Qué sonda del mercado sirve mejor al campo mexicano?</h2>
+      <p class="lead rv" style="--i:2">Antes de fabricar, comparamos las sondas comerciales compatibles con SMAAgro (SDI-12, humedad, salinidad y temperatura). Las dos mejor calificadas pasan a prueba de banco con suelo del sitio elegido.</p>
+      <div class="tbl-wrap rv" style="--i:3;margin-top:16px">
+        <table class="nice probes">
+          <thead><tr><th>Sonda</th><th>Tecnología</th><th>Medición</th><th>A favor</th><th>A revisar para México</th></tr></thead>
+          <tbody>
+            <tr><td>Sentek Drill &amp; Drop</td><td>Capacitancia</td><td>Perfil, cada 10 cm hasta 120 cm</td><td>Instalación rápida sin lodo; enterrable, fuera del paso de maquinaria</td><td>Costo y soporte técnico local</td></tr>
+            <tr><td>EnviroPro</td><td>Capacitancia</td><td>Perfil, cada 10 cm</td><td>Perfil completo en un solo tubo; bajo mantenimiento</td><td>Distribución en México</td></tr>
+            <tr><td>Campbell SoilVUE10</td><td>TDR</td><td>Perfil, 0.5 o 1 m</td><td>Precisión TDR en perfil</td><td>Costo por punto más alto</td></tr>
+            <tr><td>METER TEROS 12</td><td>Capacitancia</td><td>Un punto por sensor</td><td>Bajo costo por sensor; amplia literatura</td><td>Requiere excavar una calicata por perfil</td></tr>
+            <tr><td>Stevens HydraProbe</td><td>Coaxial</td><td>Un punto por sensor</td><td>Robusta; buena respuesta en suelos salinos</td><td>Excavación y varios cables por perfil</td></tr>
+            <tr><td>Acclima TDR-315H</td><td>TDR</td><td>Un punto por sensor</td><td>Precisión TDR a costo moderado</td><td>Excavación; soporte local</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cols">
+        <div class="rv" style="--i:4">
+          <h3>Criterios de evaluación para México</h3>
+          <div class="chips" style="margin-top:0">
+            <span class="chip chip--c" style="--c:var(--c-sal)">Mide salinidad confiable en suelos regados</span>
+            <span class="chip chip--c" style="--c:var(--c-earth)">Desempeño en arcillas expansivas</span>
+            <span class="chip chip--c" style="--c:var(--c-hum)">Perfil sin excavación</span>
+            <span class="chip chip--c" style="--c:var(--c-hum)">Compatible SDI-12 con SMAAgro</span>
+            <span class="chip chip--c" style="--c:var(--c-agua)">Costo por punto de perfil</span>
+            <span class="chip chip--c" style="--c:var(--c-vida)">Distribuidor, garantía y refacciones en México</span>
+            <span class="chip chip--c" style="--c:var(--c-tmp)">Retiro y reinstalación entre ciclos</span>
+          </div>
+        </div>
+        <div class="rv" style="--i:5">
+          <div class="note" style="margin-top:0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span><strong>Hipótesis preliminar.</strong> Una sonda capacitiva de perfil se ajusta mejor al agricultor mexicano: se instala en minutos con barrena, se retira entre ciclos de hortaliza y mide salinidad en cada profundidad. La decisión final sale de la matriz ponderada y la prueba de banco, y se entrega como informe D2 en el mes 2.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMPLAZAMIENTO -->
+  <section class="slide" data-layout="side" data-title="3 · Emplazamiento" data-part="II" data-view="site">
+    <div class="panel panel--wide">
+      <span class="kicker rv" style="--i:0">03 · Integración y emplazamiento</span>
+      <h2 class="rv" style="--i:1">Testigo contra intervenida, con el mismo pozo</h2>
+      <p class="lead rv" style="--i:2">Ambas parcelas se miden igual. En la testigo el productor sigue su manejo de siempre; en la intervenida se aplican las prácticas acordadas con TNC y Herdez. La diferencia entre ambas es el resultado del piloto.</p>
+      <div class="cards cards--2">
+        <div class="card rv" style="--i:3;--c:var(--text-3)"><span class="card-num">Parcela testigo</span><h4>Se mide, no se interviene</h4><ul><li>2 SMAAgro</li><li>Manejo habitual del productor</li><li>Línea de comparación</li></ul></div>
+        <div class="card rv" style="--i:4;--c:var(--c-vida)"><span class="card-num">Parcela intervenida</span><h4>Se mide y se interviene</h4><ul><li>2 SMAAgro</li><li>Riego guiado por datos, coberturas, materia orgánica</li><li>Alertas al agricultor</li></ul></div>
+      </div>
+      <div class="profile-wrap rv" style="--i:5">
+        <svg viewBox="0 0 200 250" role="img" aria-label="Esquema de instalación de la sonda en el perfil de suelo">
+          <rect x="0" y="40" width="200" height="210" fill="rgba(192,138,91,.10)"/>
+          <rect x="0" y="40" width="200" height="105" fill="rgba(74,222,128,.07)"/>
+          <line x1="0" y1="40" x2="200" y2="40" stroke="#c08a5b" stroke-width="2"/>
+          <path d="M150 40 C150 25 144 14 150 4 M150 22 C158 16 164 18 168 12 M150 28 C142 22 136 24 132 18" stroke="#4ade80" stroke-width="2" fill="none"/>
+          <path d="M150 42 C146 70 156 90 148 120 M150 50 C160 72 170 84 176 104 M149 58 C138 76 130 90 128 110" stroke="rgba(74,222,128,.55)" stroke-width="1.4" fill="none"/>
+          <circle cx="112" cy="38" r="4" fill="#60a5fa"/>
+          <text x="104" y="30" fill="#7d8ba1" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="end">gotero</text>
+          <rect x="64" y="34" width="14" height="196" rx="6" fill="#0f172a" stroke="#22d3ee" stroke-width="1.5"/>
+          <g fill="#22d3ee"><circle cx="71" cy="56" r="3"/><circle cx="71" cy="88" r="3"/><circle cx="71" cy="120" r="3"/><circle cx="71" cy="152" r="3"/><circle cx="71" cy="184" r="3"/><circle cx="71" cy="216" r="3"/></g>
+          <g fill="#b4c0d3" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="end"><text x="56" y="59">10 cm</text><text x="56" y="91">20</text><text x="56" y="123">30</text><text x="56" y="155">40</text><text x="56" y="187">50</text><text x="56" y="219">60</text></g>
+          <text x="196" y="140" fill="#4ade80" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="end">zona de raíz</text>
+          <text x="196" y="242" fill="#c08a5b" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="end">drenaje profundo</text>
+          <path d="M100 232 l0 12 M96 240 l4 5 4-5" stroke="#c08a5b" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div style="display:grid;gap:10px">
+          <div class="card" style="--c:var(--accent)">
+            <span class="card-num">Gemelo digital SMAAgro</span>
+            <h4>Guía de instalación para el agricultor</h4>
+            <p>Modelo 3D en el navegador, como el que ya existe para SMAA y CHAAK: muestra dónde y a qué profundidad va la sonda, cómo orientar el panel solar y, al tocar el equipo, sus datos en vivo.</p>
+            <a class="btn-primary" style="margin-top:12px" href="https://smability-digitaltwin.netlify.app/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>Ver gemelo digital actual</a>
+          </div>
+          <ul class="card" style="--c:var(--accent);list-style:none;display:grid;gap:6px;padding:14px 16px">
+            <li>Sonda en la hilera, a 10–15 cm del gotero, en la zona de raíz</li>
+            <li>Panel solar sin sombra; equipo fuera del paso de maquinaria</li>
+            <li>Muestra de suelo, GPS y foto en cada punto al instalar</li>
+            <li>Retiro y reinstalación entre ciclos si el cultivo lo exige</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRUEBAS -->
+  <section class="slide" data-layout="side" data-title="4 · Pruebas" data-part="II" data-view="site">
+    <div class="panel panel--wide">
+      <span class="kicker rv" style="--i:0">04 · Pruebas</span>
+      <h2 class="rv" style="--i:1">Tres etapas de prueba antes de confiar en un dato</h2>
+      <ol class="steps">
+        <li class="rv" style="--i:2"><div class="step-when">Banco (FAT) · Meses 3–4</div><div class="step-title">Pruebas en laboratorio Smability</div><div class="step-text">Lectura SDI-12 de la sonda elegida, consumo y autonomía solar, reconexión celular tras cortes de red, gabinete expuesto a más de 45 °C.</div></li>
+        <li class="rv" style="--i:3"><div class="step-when">Campo controlado (SAT) · Meses 5–6</div><div class="step-title">Seis semanas en el sitio elegido</div><div class="step-text">Primeros equipos en parcela real. Lecturas contra muestras gravimétricas y conductímetro portátil. Ajuste de firmware y montaje con ayuda del gemelo digital.</div></li>
+        <li class="rv" style="--i:4"><div class="step-when">Operación · Meses 6–15</div><div class="step-title">Aceptación continua</div><div class="step-text">Reporte mensual de disponibilidad, completitud y deriva. Visita de verificación trimestral.</div></li>
+      </ol>
+      <h3 class="rv" style="--i:5;margin-top:20px">Criterios de aceptación</h3>
+      <div class="tbl-wrap rv" style="--i:6">
+        <table class="nice">
+          <thead><tr><th>Indicador</th><th>Meta</th></tr></thead>
+          <tbody>
+            <tr><td>Disponibilidad del equipo</td><td>≥ 95 % del tiempo en línea</td></tr>
+            <tr><td>Completitud de datos</td><td>≥ 95 % de lecturas esperadas en SMAA OS</td></tr>
+            <tr><td>Latencia</td><td>Dato en la API en menos de 5 min tras la lectura</td></tr>
+            <tr><td>Error de humedad calibrada</td><td>≤ ±3 % VWC contra gravimétrico</td></tr>
+            <tr><td>Autonomía energética</td><td>≥ 5 días nublados sin interrupción</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALIBRACIÓN -->
+  <section class="slide" data-layout="side" data-title="5 · Calibración" data-part="II" data-view="site">
+    <div class="panel panel--wide">
+      <span class="kicker rv" style="--i:0">05 · Calibración</span>
+      <h2 class="rv" style="--i:1">Calibración propia del sitio y por profundidad</h2>
+      <p class="lead rv" style="--i:2">Las sondas traen ecuaciones de fábrica. En arcillas expansivas y suelos salinos eso no basta: la conductividad altera la lectura de humedad. El sitio elegido recibe su propia curva.</p>
+      <div class="cols">
+        <ol class="steps" style="margin-top:6px">
+          <li class="rv" style="--i:3"><div class="step-when">Paso 1</div><div class="step-title">Caracterización inicial t₀</div><div class="step-text">Muestreo por estrato 0–20, 20–40 y 40–60 cm en cada SMAAgro.</div></li>
+          <li class="rv" style="--i:4"><div class="step-when">Paso 2</div><div class="step-title">Tres estados de humedad</div><div class="step-text">Muestras gravimétricas con cilindro de densidad aparente en suelo seco, intermedio y tras riego.</div></li>
+          <li class="rv" style="--i:5"><div class="step-when">Paso 3</div><div class="step-title">Ajuste de curvas</div><div class="step-text">Humedad contra VWC gravimétrico. Salinidad contra CE del extracto de pasta saturada.</div></li>
+          <li class="rv" style="--i:6"><div class="step-when">Paso 4</div><div class="step-title">Verificación trimestral</div><div class="step-text">Deriva contra conductímetro y termómetro de referencia. Muestreo final t₁ en el mes 14.</div></li>
+        </ol>
+        <div class="rv" style="--i:7">
+          <h3>Análisis de laboratorio t₀ y t₁</h3>
+          <div class="chips" style="margin-top:0">
+            <span class="chip">Textura (Bouyoucos)</span><span class="chip">Densidad aparente</span><span class="chip">Materia orgánica (Walkley-Black)</span><span class="chip">pH</span><span class="chip">CE extracto saturado</span><span class="chip">CIC</span><span class="chip">N, P, K</span><span class="chip">Respiración del suelo</span>
+          </div>
+          <div class="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4 19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2L14 9V3"/></svg>
+            <span>Muestreo y análisis conforme a <strong>NOM-021-RECNAT-2000</strong>, en laboratorio acreditado. Candidatos: INIFAP, Universidad Autónoma de Sinaloa o Universidad Juárez del Estado de Durango, según el sitio.</span>
+          </div>
+          <div class="cards" style="margin-top:12px">
+            <div class="card card--plain metric"><span class="metric-value">≈ 40</span><span class="metric-label">Muestras de laboratorio</span><p class="lead">4 equipos × 3 estratos × t₀/t₁, más gravimétricas de calibración</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- API -->
+  <section class="slide" data-layout="full" data-title="6 · API · SMAA OS" data-part="II" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">06 · API · SMAA OS</span>
+      <h2 class="rv" style="--i:1">Un API abierto, servido por SMAA OS</h2>
+      <p class="lead rv" style="--i:2">REST con JSON y llave por organización. El API queda libre para consumo externo: TNC, Herdez o cualquier tercero autorizado lo usan sin integraciones a la medida. Sin costo de suscripción durante el piloto.</p>
+      <div class="cols">
+        <div class="rv" style="--i:3">
+          <h3>Endpoints v1</h3>
+          <div class="endpoints">
+            <div class="ep"><span class="m">GET</span><code>/v1/sites</code><small>Sitio, parcelas testigo e intervenida, equipos</small></div>
+            <div class="ep"><span class="m">GET</span><code>/v1/devices/{id}/latest</code><small>Última lectura del perfil completo</small></div>
+            <div class="ep"><span class="m">GET</span><code>/v1/devices/{id}/series?var=vwc&amp;depth=30&amp;agg=1h</code><small>Series por variable, profundidad y agregación (15 min, 1 h, 1 d)</small></div>
+            <div class="ep"><span class="m">GET</span><code>/v1/sites/{id}/water-balance?from=&amp;to=</code><small>Lluvia, riego detectado, ET del cultivo y drenaje profundo</small></div>
+            <div class="ep"><span class="m">GET</span><code>/v1/sites/{id}/forecast</code><small>Pronóstico de humedad y riego recomendado a 24–72 h</small></div>
+            <div class="ep"><span class="m">GET</span><code>/v1/sites/{id}/compare</code><small>Testigo contra intervenida: índices y diferencias</small></div>
+            <div class="ep"><span class="m post">POST</span><code>/v1/alerts/subscriptions</code><small>Alertas por WhatsApp o Telegram</small></div>
+          </div>
+        </div>
+        <div class="rv" style="--i:4">
+          <h3>Respuesta · /devices/SMAAGRO-03/latest</h3>
+<pre class="json">{
+  <span class="k">"device"</span>: <span class="s">"SMAAGRO-03"</span>,
+  <span class="k">"plot"</span>: <span class="s">"intervenida"</span>,
+  <span class="k">"ts"</span>: <span class="s">"2027-06-14T09:15:00-06:00"</span>,
+  <span class="k">"profile"</span>: [
+    { <span class="k">"depth_cm"</span>: <span class="n">10</span>, <span class="k">"vwc"</span>: <span class="n">31.4</span>, <span class="k">"ec_dsm"</span>: <span class="n">1.8</span>, <span class="k">"t_c"</span>: <span class="n">21.6</span> },
+    { <span class="k">"depth_cm"</span>: <span class="n">30</span>, <span class="k">"vwc"</span>: <span class="n">34.9</span>, <span class="k">"ec_dsm"</span>: <span class="n">2.1</span>, <span class="k">"t_c"</span>: <span class="n">20.2</span> },
+    { <span class="k">"depth_cm"</span>: <span class="n">60</span>, <span class="k">"vwc"</span>: <span class="n">38.2</span>, <span class="k">"ec_dsm"</span>: <span class="n">2.6</span>, <span class="k">"t_c"</span>: <span class="n">19.5</span> }
+  ],
+  <span class="k">"qc"</span>: <span class="s">"ok"</span>, <span class="k">"calibration"</span>: <span class="s">"sitio-v1.2"</span>
+}</pre>
+          <div class="live" id="live">
+            <div class="live-head"><span class="live-dot off" id="live-dot"></span><span id="live-status">Referencia en vivo · humedad y temperatura del suelo modeladas (Open-Meteo)</span></div>
+            <div class="live-grid">
+              <div class="live-site"><span>Culiacán · 9–27 cm</span><strong id="lv-cln-m">31</strong><em>% VWC</em> · <strong id="lv-cln-t">24</strong><em>°C</em></div>
+              <div class="live-site"><span>Durango · 9–27 cm</span><strong id="lv-dgo-m">18</strong><em>% VWC</em> · <strong id="lv-dgo-t">15</strong><em>°C</em></div>
+            </div>
+            <p class="live-foot" id="live-foot">Valores de ejemplo. Al publicar en Netlify se consultan en vivo; en el piloto se sustituyen por los equipos SMAAgro.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODELO -->
+  <section class="slide" data-layout="full" data-title="7 · Modelo de suelo" data-part="II" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">07 · Modelo de suelo · enfoque mexicano</span>
+      <h2 class="rv" style="--i:1">Producir hoy sin agotar el suelo de mañana</h2>
+      <p class="lead rv" style="--i:2">SMAA OS corre dos familias de modelos. Los base explican lo que pasa en el suelo; los predictivos anticipan lo que va a pasar. Ambos comparan la parcela testigo contra la intervenida.</p>
+      <div class="cards cards--4">
+        <div class="card rv" style="--i:3;--c:var(--c-hum)"><span class="card-num">Base · Agua</span><h4>Balance hídrico por capas</h4><p>Lluvia y riego entran; evapotranspiración FAO-56 y drenaje bajo 60 cm salen. Detecta sobre-riego y lixiviación de nitrógeno.</p></div>
+        <div class="card rv" style="--i:4;--c:var(--c-sal)"><span class="card-num">Base · Sales</span><h4>Riesgo de salinización</h4><p>Tendencia de CE en la zona de raíz contra el umbral del cultivo. Recomienda fracción de lavado.</p></div>
+        <div class="card rv" style="--i:5;--c:var(--c-tmp)"><span class="card-num">Base · Vida</span><h4>Días de suelo vivo</h4><p>Temperatura y humedad estiman días biológicamente activos e integran el cambio de materia orgánica t₀–t₁.</p></div>
+        <div class="card rv" style="--i:6;--c:var(--c-vida)"><span class="card-num">Predictivo</span><h4>Humedad y riego a 24–72 h</h4><p>Pronóstico con datos de CHAAK y del perfil. Avisa al agricultor cuándo y cuánto regar, por WhatsApp o Telegram.</p></div>
+      </div>
+      <div class="cols">
+        <div class="rv" style="--i:7">
+          <h3>Umbral de salinidad por cultivo · CEe en dS/m</h3>
+          <div class="thr" id="thr"></div>
+          <p class="lead" style="font-size:.76rem;margin-top:8px;color:var(--text-3)">Umbrales y pérdida de rendimiento por dS/m sobre el umbral, según FAO 29 (Ayers y Westcot). Escala de 0 a 6 dS/m.</p>
+        </div>
+        <div class="rv" style="--i:8">
+          <h3>Lo mexicano del modelo</h3>
+          <div class="chips" style="margin-top:0">
+            <span class="chip chip--c" style="--c:var(--c-earth)">Vertisoles de Sinaloa o suelos del altiplano duranguense</span>
+            <span class="chip chip--c" style="--c:var(--c-agua)">Pozo con título en REPDA</span>
+            <span class="chip chip--c" style="--c:var(--c-agua)">Nivel del acuífero con SMAWA</span>
+            <span class="chip chip--c" style="--c:var(--c-sal)">Costo de bombeo con tarifa 9-CU</span>
+            <span class="chip chip--c" style="--c:var(--c-earth)">NOM-021-RECNAT-2000</span>
+            <span class="chip chip--c" style="--c:var(--c-vida)">Alertas en español por WhatsApp y Telegram</span>
+            <span class="chip chip--c" style="--c:var(--c-pol)">Indicadores para PSADR, PECC y NDC 3.0</span>
+          </div>
+          <div class="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span>Cada m³ de agua ahorrado se traduce en kWh de bombeo y en pesos. Con un pozo de menos de 30 m de tirante, el ahorro es medible desde el primer ciclo.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section class="slide" data-layout="side" data-title="8 · Resultados esperados" data-part="III" data-view="site">
+    <div class="panel panel--wide">
+      <span class="kicker rv" style="--i:0">Parte III · 08 · Resultados esperados</span>
+      <h2 class="rv" style="--i:1">Lo que tendrá Herdez al cierre del piloto</h2>
+      <div class="cards cards--4">
+        <div class="card card--plain metric rv" style="--i:2"><span class="metric-value" data-count="2" data-suffix="M">2M</span><span class="metric-label">Lecturas de suelo</span><p class="lead">Aprox., 4 equipos × 18 canales</p></div>
+        <div class="card card--plain metric rv" style="--i:3"><span class="metric-value" data-count="1">1</span><span class="metric-label">Ciclo completo</span><p class="lead">Del cultivo elegido</p></div>
+        <div class="card card--plain metric rv" style="--i:4"><span class="metric-value" data-count="1">1</span><span class="metric-label">Comparativo</span><p class="lead">Testigo contra intervenida</p></div>
+        <div class="card card--plain metric rv" style="--i:5"><span class="metric-value" data-count="1">1</span><span class="metric-label">Brief de política</span><p class="lead">Incentivos por resultado medido</p></div>
+      </div>
+      <div class="cards cards--2">
+        <div class="card rv" style="--i:6;--c:var(--c-hum)"><span class="card-num">Evidencia</span><h4>Entregables técnicos</h4><ul><li>Informes de sitio (D1) y de sonda (D2)</li><li>SMAAgro operando con ≥ 95 % de datos</li><li>Línea base de suelo t₀ y cierre t₁</li><li>API abierto, modelos base y predictivos</li><li>Gemelo digital de instalación</li></ul></div>
+        <div class="card rv" style="--i:7;--c:var(--c-pol)"><span class="card-num">Incidencia</span><h4>Entregables de política</h4><ul><li>Brief con criterios de incentivo medibles</li><li>2 presentaciones en congresos o foros</li><li>Insumos para el diálogo de TNC con autoridades</li><li>Ruta de escalamiento al segundo estado</li></ul></div>
+      </div>
+      <div class="note rv" style="--i:8">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span><strong>Hipótesis a validar:</strong> la parcela intervenida reduce entre 15 y 30 % el agua aplicada respecto a la testigo, sin afectar rendimiento. El piloto confirmará o descartará esta cifra con datos propios.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARADIGMA -->
+  <section class="slide" data-layout="full" data-title="Cambio de paradigma" data-part="III" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Parte III · Por qué importa a Herdez</span>
+      <h2 class="rv" style="--i:1">El cambio de paradigma: <span class="accent">pagar por resultados medidos en el suelo</span></h2>
+      <p class="lead rv" style="--i:2">Hoy los incentivos pagan por insumos o por prácticas declaradas. Con medición continua y barata, y una parcela testigo que sirve de referencia, se puede pagar por lo que realmente cambia en el suelo y en el agua. Eso convierte la sustentabilidad de Herdez en un activo verificable de su cadena de abasto.</p>
+      <div class="cols">
+        <div>
+          <div class="shift-head rv" style="--i:3"><span>Hoy</span><span></span><span>Con el piloto</span></div>
+          <div class="shift" style="margin-top:8px">
+            <div class="shift-row rv" style="--i:4"><div class="from">Un muestreo al año: una foto</div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="to">Una lectura cada 15 minutos: la película</div></div>
+            <div class="shift-row rv" style="--i:5"><div class="from">Subsidio por insumo o práctica declarada</div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="to">Incentivo por diferencia medida contra un testigo</div></div>
+            <div class="shift-row rv" style="--i:6"><div class="from">Rendimiento por hectárea</div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="to">Rendimiento por m³ de agua y por salud del suelo</div></div>
+            <div class="shift-row rv" style="--i:7"><div class="from">Riesgo de abasto invisible</div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="to">Riesgo hídrico y de suelo por proveedor</div></div>
+            <div class="shift-row rv" style="--i:8"><div class="from">Tecnología importada con licencia anual</div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="to">SMAAgro hecho en México, a costo de equipo</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="cards" style="margin-top:0">
+            <div class="card rv" style="--i:9;--c:var(--c-agua)"><span class="card-num">Continuidad de abasto</span><h4>Riesgo hídrico cuantificado</h4><p>Saber qué proveedores dependen de acuíferos bajo presión y cuánta agua pierden. Priorizar dónde invertir primero.</p></div>
+            <div class="card rv" style="--i:10;--c:var(--c-vida)"><span class="card-num">Productividad</span><h4>Proveedores más rentables</h4><p>Menos agua, energía y fertilizante por tonelada. Menos salinización y mayor vida útil de la parcela.</p></div>
+            <div class="card rv" style="--i:11;--c:var(--c-pol)"><span class="card-num">Credibilidad y palanca</span><h4>Evidencia propia para la política</h4><p>Herdez llega a la mesa con TNC y autoridades con datos de su propia cadena, no con promesas.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CRONOGRAMA -->
+  <section class="slide" data-layout="full" data-title="Cronograma" data-part="IV" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Parte IV · Cronograma</span>
+      <h2 class="rv" style="--i:1">15 meses: discovery primero, luego un ciclo completo en campo</h2>
+      <p class="lead rv" style="--i:2">Nov 2026 – Ene 2028. La ventana de medición cubre el ciclo PV 2027 si se elige Durango, o el cierre del OI 2026-27 y el OI 2027-28 completo hasta enero si se elige Sinaloa.</p>
+      <div class="gantt-wrap rv" style="--i:3"><div class="gantt" id="gantt"></div></div>
+      <div class="legend rv" style="--i:4" id="gantt-legend"></div>
+      <div class="milestones rv" style="--i:5" id="milestones"></div>
+    </div>
+  </section>
+
+  <!-- EQUIPO -->
+  <section class="slide" data-layout="full" data-title="Equipo" data-part="IV" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Parte IV · Equipo</span>
+      <h2 class="rv" style="--i:1">Un equipo compacto, con aliados en el sitio</h2>
+      <p class="lead rv" style="--i:2">Smability dirige y ejecuta. El conocimiento agronómico local y la conexión con la política pública vienen de aliados y contrapartes.</p>
+      <h3 class="rv" style="--i:3;margin-top:18px">Smability</h3>
+      <div class="cards cards--3" style="margin-top:0">
+        <div class="card rv" style="--i:4;--c:var(--accent)"><div class="person"><span class="avatar">HJ</span><div><h4>Horacio Jiménez</h4><span class="role">Director General</span><p>Dirección técnica de SMAAgro, prueba de sondas, SMAA OS y relación con TNC y Herdez.</p></div></div></div>
+        <div class="card rv" style="--i:5;--c:var(--accent)"><div class="person"><span class="avatar">OJ</span><div><h4>Octavio Jiménez</h4><span class="role">Director de Operaciones · Líder del piloto</span><p>Discovery, emplazamiento, gemelo digital, calibración, modelos y brief de política.</p></div></div></div>
+        <div class="card rv" style="--i:6;--c:var(--c-hum)"><div class="person"><span class="avatar">IN</span><div><h4>Ingeniería de hardware y datos</h4><span class="role">Apoyo Smability</span><p>Firmware e integración de la sonda, ingesta en SMAA OS, API y alertas.</p></div></div></div>
+      </div>
+      <h3 class="rv" style="--i:8;margin-top:18px">Aliados y contrapartes</h3>
+      <div class="cards cards--4" style="margin-top:0">
+        <div class="card rv" style="--i:9;--c:var(--c-earth)"><div class="person"><span class="avatar">SU</span><div><h4>Asesoría en suelo y agua</h4><span class="role">Externo · por confirmar</span><p>INIFAP, UAS o UJED. Muestreo, laboratorio y validación del pozo.</p></div></div></div>
+        <div class="card rv" style="--i:10;--c:var(--c-earth)"><div class="person"><span class="avatar">TC</span><div><h4>Técnico de campo</h4><span class="role">Local</span><p>Instalación, visitas trimestrales y enlace con el productor.</p></div></div></div>
+        <div class="card rv" style="--i:11;--c:var(--c-vida)"><div class="person"><span class="avatar">TN</span><div><h4>TNC México</h4><span class="role">Contraparte</span><p>Política pública, definición de la intervención y red de extensionistas.</p></div></div></div>
+        <div class="card rv" style="--i:12;--c:var(--c-vida)"><div class="person"><span class="avatar">GH</span><div><h4>Grupo Herdez</h4><span class="role">Contraparte</span><p>Agronomía de abasto, proveedores candidatos y acceso a parcelas.</p></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESUPUESTO POR ACTIVIDAD -->
+  <section class="slide" data-layout="full" data-title="Presupuesto por actividad" data-part="IV" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Parte IV · Presupuesto · Por actividad</span>
+      <h2 class="rv" style="--i:1">USD 75,000 por actividad del piloto</h2>
+      <p class="lead rv" style="--i:2">Cada actividad suma sus honorarios (horas de Octavio y Horacio Jiménez a USD 130) y sus gastos directos. Sin cobro de SaaS.</p>
+      <div class="tbl-wrap rv" style="--i:3;margin-top:14px">
+        <table class="budget" id="byact">
+          <thead><tr><th>Actividad</th><th class="amt">Horas</th><th class="amt">Honorarios</th><th class="amt">Gastos</th><th class="amt">Total USD</th><th class="pct">%</th><th class="barc"></th></tr></thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+      <div class="split-legend rv" style="--i:4;margin-top:10px"><span><i class="s-fee"></i>Honorarios</span><span><i class="s-cost"></i>Gastos directos</span><span>El detalle de horas y gastos está en la siguiente lámina.</span></div>
+    </div>
+  </section>
+
+  <!-- PRESUPUESTO -->
+  <section class="slide" data-layout="full" data-title="Presupuesto · honorarios y gastos" data-part="IV" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Parte IV · Presupuesto</span>
+      <h2 class="rv" style="--i:1">USD 75,000: honorarios por hora y gastos directos</h2>
+      <p class="lead rv" style="--i:2">Sin cobro de SaaS. Honorarios solo de Octavio y Horacio Jiménez a USD 130/h; lo demás es gasto directo.</p>
+      <div class="split rv" style="--i:3" id="split"></div>
+      <div class="cols cols--even">
+        <div class="rv" style="--i:4">
+          <h3>Honorarios · horas por actividad</h3>
+          <div class="tbl-wrap">
+            <table class="budget" id="fees">
+              <thead><tr><th>Actividad</th><th class="amt">OJ</th><th class="amt">HJ</th><th class="amt">Horas</th><th class="amt">USD</th></tr></thead>
+              <tbody></tbody>
+              <tfoot></tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="rv" style="--i:5">
+          <h3>Gastos directos</h3>
+          <div class="tbl-wrap">
+            <table class="budget" id="costs">
+              <thead><tr><th>Concepto</th><th class="amt">USD</th></tr></thead>
+              <tbody></tbody>
+              <tfoot></tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+      <h3 class="rv" style="--i:6;margin-top:14px">Pagos por hito</h3>
+      <div class="pay rv" style="--i:7">
+        <div><b>25 % · 18,750</b>Firma e inicio de discovery</div>
+        <div><b>20 % · 15,000</b>H1: sitio y sonda seleccionados (mes 2)</div>
+        <div><b>20 % · 15,000</b>H3: SMAAgro en línea (mes 5)</div>
+        <div><b>20 % · 15,000</b>H4: modelos v1 (mes 11)</div>
+        <div><b>15 % · 11,250</b>H5: informe final y brief (mes 15)</div>
+      </div>
+      <p class="lead rv" style="--i:8;font-size:.76rem;margin-top:10px;color:var(--text-3)">OJ: Octavio Jiménez · HJ: Horacio Jiménez. Cifras en USD sin impuestos, sujetas a la sonda elegida en el informe D2 y al tipo de cambio. La propiedad de los equipos al cierre se definirá en el convenio con TNC.</p>
+    </div>
+  </section>
+
+  <!-- CIERRE · MAPA DE CURVAS DE NIVEL -->
+  <section class="slide" data-layout="map" data-title="Cierre · Sinaloa y Durango" data-view="final">
+    <div class="panel panel--map">
+      <span class="kicker rv" style="--i:0">Sinaloa · Durango</span>
+      <h2 class="rv" style="--i:1">Del relieve al dato de suelo</h2>
+      <p class="lead rv" style="--i:2">Siguiente paso: con la confirmación de TNC, en noviembre visitamos proveedores en ambos estados y arrancamos el discovery.</p>
+      <div class="map-contacts rv" style="--i:3">
+        <div><b>Horacio Jiménez</b><span>Director General</span><code>horaciojimenez@smability.io</code></div>
+        <div><b>Octavio Jiménez</b><span>Director de Operaciones</span><code>octaviojimenez@smability.io</code></div>
+      </div>
+      <div class="map-legend rv" style="--i:4">
+        <span><i class="ln major"></i>Curva maestra</span><span><i class="ln"></i>Curva intermedia</span><span><i class="pt"></i>Zona candidata</span>
+      </div>
+      <div class="restart rv" style="--i:5;justify-content:flex-start;margin-top:14px">
+        <button type="button" class="btn-ghost" data-go="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg>Volver al inicio</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+<footer class="bar">
+  <div class="meta">
+    <span id="part-label">TNC · Herdez</span><span class="dot"></span>
+    <span class="hide-sm">26 octubre 2026</span><span class="dot hide-sm"></span>
+    <span class="slide-title" id="slide-title">Portada</span><span class="dot"></span>
+    <button type="button" class="counter-btn" id="btn-index" aria-haspopup="true" aria-expanded="false" title="Índice (M)">
+      <span id="counter">01 / 21</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>
+    </button>
+  </div>
+  <div class="actions">
+    <button class="icon-btn" id="btn-fs" title="Pantalla completa (F)" aria-label="Pantalla completa"><svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
+    <button class="icon-btn" id="btn-prev" aria-label="Lámina anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="icon-btn" id="btn-next" aria-label="Lámina siguiente"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+</footer>
+<nav class="index" id="index" aria-label="Índice de láminas"></nav>
+
+<script>
+/* ===================== CONFIG ===================== */
+const CONFIG = {
+  // Mapbox: solo carga fuera del visor de artifacts (p. ej. Netlify). Si falla, se usa el mapa topográfico propio.
+  mapboxToken: 'pk.eyJ1Ijoia2lsb2JhdG8iLCJhIjoiY21jd2g2b3RzMDJiNDJxcTA0cTFhZmE4OCJ9.u5zPxYCxqEaF2jnj32l4ng',
+  mapStyle: 'mapbox://styles/mapbox/dark-v11',
+  // Referencia en vivo de humedad y temperatura del suelo (Open-Meteo). En el piloto: API de Smability.
+  liveRef: true,
+  refreshMs: 15 * 60 * 1000
+};
+const SITES = [
+  { id:'cln', name:'Valle de Culiacán', sub:'Candidato A · Sinaloa', lng:-107.42, lat:24.80, c:'#22d3ee' },
+  { id:'dgo', name:'Valle del Guadiana', sub:'Candidato B · Durango', lng:-104.66, lat:24.02, c:'#c08a5b' }
+];
+const CITIES = [
+  { name:'Mazatlán', lng:-106.41, lat:23.24 }, { name:'Los Mochis', lng:-108.99, lat:25.79 },
+  { name:'Guasave', lng:-108.47, lat:25.57 }, { name:'Gómez Palacio', lng:-103.50, lat:25.56 }
+];
+// Vistas de cámara por lámina (data-view)
+const VIEWS = {
+  'overview':     { c:[-106.0,24.6], z:1.0,  sites:true,  dim:0,   vivid:0 },
+  'overview-dim': { c:[-106.0,24.6], z:1.0,  sites:false, dim:.55, vivid:0 },
+  'region':       { c:[-105.6,24.45], z:.5,  sites:true,  dim:0,   vivid:0 },
+  'sites':        { c:[-105.6,24.4], z:.5,   sites:true,  dim:0,   vivid:0 },
+  'site':         { c:[-105.6,24.4], z:.5,   sites:true,  dim:.25, vivid:0 },
+  'final':        { c:[-105.9,24.55], z:.95, sites:true,  dim:0,   vivid:1 }
+};
+
+/* ===================== Utilidades ===================== */
+const $  = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt = new Intl.NumberFormat('es-MX');
+
+/* ===================== Mapa topográfico (canvas) =====================
+   Relieve esquemático: llanura costera de Sinaloa, Sierra Madre Occidental y altiplano de Durango. */
+const cv = $('#bg'), ctx = cv.getContext('2d');
+const off = document.createElement('canvas'), octx = off.getContext('2d');
+let W = 0, H = 0, DPR = 1;
+const cam = { lng:-106.0, lat:24.6, z:1.0, dim:0, sites:true, ox:0, vivid:0 };
+let target = { ...cam }, camFrom = null, camT0 = 0, camDur = 2600, dirty = true;
+
+const SIERRA = [[-108.6,27.2],[-107.6,26.4],[-106.9,25.6],[-106.2,24.8],[-105.6,24.0],[-105.2,23.2],[-104.9,22.4],[-104.6,21.6]];
+const COAST  = [[-110.2,26.9],[-109.4,26.3],[-109.1,25.6],[-108.6,25.2],[-108.1,24.8],[-107.6,24.4],[-107.1,24.0],[-106.6,23.6],[-106.3,23.1],[-105.8,22.7],[-105.5,22.1],[-105.3,21.4]];
+function hash(x,y){ let h = Math.sin(x*127.1 + y*311.7) * 43758.5453; return h - Math.floor(h); }
+function vnoise(x,y){
+  const xi=Math.floor(x), yi=Math.floor(y), xf=x-xi, yf=y-yi;
+  const s=t=>t*t*(3-2*t), u=s(xf), v=s(yf);
+  const a=hash(xi,yi), b=hash(xi+1,yi), c=hash(xi,yi+1), d=hash(xi+1,yi+1);
+  return a + (b-a)*u + (c-a)*v + (a-b-c+d)*u*v;
+}
+function distToPoly(px,py,poly){
+  let best = 1e9;
+  for (let i=0;i<poly.length-1;i++){
+    const [x1,y1]=poly[i],[x2,y2]=poly[i+1], dx=x2-x1, dy=y2-y1;
+    const t=Math.max(0,Math.min(1,((px-x1)*dx+(py-y1)*dy)/(dx*dx+dy*dy)));
+    const ex=x1+t*dx-px, ey=y1+t*dy-py; best=Math.min(best,ex*ex+ey*ey);
+  }
+  return Math.sqrt(best);
+}
+function sideOf(px,py,poly){ // >0 al este de la polilínea
+  let bi=0,bd=1e9;
+  for (let i=0;i<poly.length-1;i++){ const d=Math.hypot(poly[i][0]-px,poly[i][1]-py); if(d<bd){bd=d;bi=i;} }
+  const [x1,y1]=poly[bi],[x2,y2]=poly[Math.min(bi+1,poly.length-1)];
+  return (x2-x1)*(py-y1)-(y2-y1)*(px-x1) < 0 ? -1 : 1;
+}
+function elev(lng,lat){
+  const dS = distToPoly(lng,lat,SIERRA), east = sideOf(lng,lat,SIERRA) > 0;
+  const dC = distToPoly(lng,lat,COAST), sea = sideOf(lng,lat,COAST) < 0;
+  if (sea) return -0.2 - Math.min(dC,1)*.3;
+  let e = 0.95*Math.exp(-(dS*dS)/0.35);
+  e += east ? 0.5*(1-Math.exp(-dS*1.6)) : 0.06*Math.min(dC,1.5);
+  e += 0.22*(vnoise(lng*1.7,lat*1.7)-.5) + 0.1*(vnoise(lng*4.1+9,lat*4.1)-.5);
+  return e;
+}
+function scale(){ return Math.min(W,H*1.6) / 6.2 * cam.z; }
+function proj(lng,lat){
+  const s = scale(), k = Math.cos(24.5*Math.PI/180);
+  return [W/2 + cam.ox + (lng-cam.lng)*s*k, H/2 - (lat-cam.lat)*s];
+}
+function unproj(x,y){
+  const s = scale(), k = Math.cos(24.5*Math.PI/180);
+  return [cam.lng + (x - W/2 - cam.ox)/(s*k), cam.lat - (y - H/2)/s];
+}
+function resize(){
+  DPR = Math.min(2, devicePixelRatio || 1);
+  W = innerWidth; H = innerHeight;
+  [cv, off].forEach(c => { c.width = W*DPR; c.height = H*DPR; });
+  cv.style.width = W+'px'; cv.style.height = H+'px';
+  dirty = true; updateOffset(true);
+}
+function renderTerrain(){
+  const c = octx; c.setTransform(DPR,0,0,DPR,0,0);
+  c.clearRect(0,0,W,H);
+  const step = W < 700 ? 14 : 16, cols = Math.ceil(W/step)+1, rows = Math.ceil(H/step)+1;
+  const g = new Float32Array(cols*rows);
+  for (let j=0;j<rows;j++) for (let i=0;i<cols;i++){ const [lng,lat]=unproj(i*step,j*step); g[j*cols+i]=elev(lng,lat); }
+  const levels = []; for (let L=0.02; L<1.4; L+=0.075) levels.push(L);
+  levels.forEach((L, li) => {
+    const major = li % 4 === 0;
+    const vv = cam.vivid;
+    c.strokeStyle = major ? `rgba(125,211,252,${.30+.4*vv})` : `rgba(148,163,184,${.13+.17*vv})`;
+    c.lineWidth = major ? 1.1+.5*vv : .8;
+    c.beginPath();
+    for (let j=0;j<rows-1;j++) for (let i=0;i<cols-1;i++){
+      const a=g[j*cols+i], b=g[j*cols+i+1], cc=g[(j+1)*cols+i+1], d=g[(j+1)*cols+i];
+      const idx = (a>L?8:0)|(b>L?4:0)|(cc>L?2:0)|(d>L?1:0);
+      if (idx===0||idx===15) continue;
+      const x=i*step, y=j*step, lerp=(p,q)=>(L-p)/(q-p);
+      const T=[x+step*lerp(a,b),y], R=[x+step,y+step*lerp(b,cc)], B=[x+step*lerp(d,cc),y+step], Lf=[x,y+step*lerp(a,d)];
+      const seg=(p,q)=>{c.moveTo(p[0],p[1]);c.lineTo(q[0],q[1]);};
+      switch(idx){
+        case 1:case 14:seg(Lf,B);break; case 2:case 13:seg(B,R);break; case 3:case 12:seg(Lf,R);break;
+        case 4:case 11:seg(T,R);break; case 5:seg(Lf,T);seg(B,R);break; case 6:case 9:seg(T,B);break;
+        case 7:case 8:seg(Lf,T);break; case 10:seg(T,R);seg(Lf,B);break;
+      }
+    }
+    c.stroke();
+  });
+  // Línea de costa
+  c.strokeStyle='rgba(34,211,238,.55)'; c.lineWidth=1.6; c.beginPath();
+  COAST.forEach(([lng,lat],k)=>{const [x,y]=proj(lng,lat); k?c.lineTo(x,y):c.moveTo(x,y);}); c.stroke();
+  // Rótulos geográficos
+  c.font='600 10px "JetBrains Mono",monospace'; c.fillStyle='rgba(180,192,211,.55)'; c.textAlign='center';
+  const lab=(t,lng,lat,rot=0)=>{const [x,y]=proj(lng,lat); c.save(); c.translate(x,y); c.rotate(rot); c.fillText(t.split('').join(String.fromCharCode(8202)),0,0); c.restore();};
+  lab('GOLFO DE CALIFORNIA',-108.6,23.9,-0.75);
+  lab('SIERRA MADRE OCCIDENTAL',-105.75,25.15,-0.95);
+  lab('SINALOA',-107.6,25.5,0); lab('DURANGO',-104.3,25.0,0);
+  c.font='500 10px Inter,sans-serif'; c.fillStyle='rgba(180,192,211,.6)'; c.textAlign='left';
+  CITIES.forEach(ct=>{const [x,y]=proj(ct.lng,ct.lat); c.beginPath(); c.arc(x,y,2,0,7); c.fill(); c.fillText(ct.name,x+6,y+3);});
+}
+function drawFrame(now){
+  if (camFrom){
+    const k = Math.min(1,(now-camT0)/camDur), e = k<.5 ? 4*k*k*k : 1-Math.pow(-2*k+2,3)/2;
+    ['lng','lat','z','dim','ox','vivid'].forEach(p => cam[p] = camFrom[p] + (target[p]-camFrom[p])*e);
+    dirty = true; if (k>=1) camFrom = null;
+  }
+  if (dirty){ renderTerrain(); dirty = false; }
+  ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.drawImage(off,0,0);
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  if (target.sites){
+    const t = now/1000;
+    SITES.forEach((s,i)=>{
+      const [x,y] = proj(s.lng,s.lat);
+      const ph = reduceMotion ? .5 : ((t*.55 + i*.5) % 1);
+      ctx.beginPath(); ctx.arc(x,y,8+ph*26,0,7); ctx.strokeStyle=s.c; ctx.globalAlpha=.7*(1-ph); ctx.lineWidth=2; ctx.stroke(); ctx.globalAlpha=1;
+      ctx.beginPath(); ctx.arc(x,y,7,0,7); ctx.fillStyle=s.c; ctx.fill(); ctx.lineWidth=2; ctx.strokeStyle='#fff'; ctx.stroke();
+      ctx.textAlign='left'; ctx.font='700 13px Inter,sans-serif'; ctx.fillStyle='#f1f5f9'; ctx.fillText(s.name,x+14,y-2);
+      ctx.font='600 10px "JetBrains Mono",monospace'; ctx.fillStyle=s.c; ctx.fillText(s.sub.toUpperCase(),x+14,y+13);
+    });
+  }
+  if (cam.dim>0){ ctx.fillStyle=`rgba(5,10,20,${cam.dim})`; ctx.fillRect(0,0,W,H); }
+  requestAnimationFrame(drawFrame);
+}
+function updateOffset(instant){
+  const slide = slides[current]; if (!slide) return;
+  let ox = 0;
+  if ((slide.dataset.layout === 'side' || slide.dataset.layout === 'map') && W >= 900){
+    const p = slide.querySelector('.panel'); const r = p ? p.getBoundingClientRect().right : 0;
+    ox = ((r + W)/2) - W/2;
+  }
+  target.ox = ox; if (instant){ cam.ox = ox; dirty = true; }
+}
+function setView(name, instant){
+  const v = VIEWS[name] || VIEWS.overview;
+  target = { ...target, lng:v.c[0], lat:v.c[1], z:v.z, dim:v.dim, sites:v.sites, vivid:v.vivid||0 };
+  updateOffset(false);
+  if (instant || reduceMotion){ Object.assign(cam, target); dirty = true; camFrom = null; }
+  else { camFrom = { ...cam }; camT0 = performance.now(); }
+  if (map) flyMapbox(name, instant);
+}
+
+/* ===================== Mapbox opcional (Netlify) ===================== */
+let map = null;
+function loadMapbox(){
+  if (!CONFIG.mapboxToken) return;
+  const link = document.createElement('link'); link.rel='stylesheet'; link.href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css';
+  const s = document.createElement('script'); s.src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js';
+  s.onload = () => { try { initMapbox(); } catch(e){ console.warn('[mapbox]', e); } };
+  s.onerror = () => console.info('[deck] Mapbox no disponible; se usa el relieve esquemático.');
+  document.head.append(link, s);
+}
+function initMapbox(){
+  if (!window.mapboxgl || !mapboxgl.supported()) return;
+  mapboxgl.accessToken = CONFIG.mapboxToken;
+  $('#map').hidden = false;
+  map = new mapboxgl.Map({ container:'map', style:CONFIG.mapStyle, center:[-106,24.6], zoom:5.6, pitch:35, keyboard:false, attributionControl:false });
+  map.on('load', () => {
+    map.addSource('dem',{type:'raster-dem',url:'mapbox://mapbox.mapbox-terrain-dem-v1',tileSize:512,maxzoom:14});
+    map.setTerrain({source:'dem',exaggeration:1.5});
+    map.addSource('contours',{type:'vector',url:'mapbox://mapbox.mapbox-terrain-v2'});
+    map.addLayer({id:'contours',type:'line',source:'contours','source-layer':'contour',
+      paint:{'line-color':'#7dd3fc','line-opacity':['match',['get','index'],[5,10],0.6,0.2],'line-width':['match',['get','index'],[5,10],1.2,0.6]}});
+    SITES.forEach(s => { const el=document.createElement('div'); el.className='mk'; el.style.setProperty('--c',s.c); el.innerHTML='<span></span>'; new mapboxgl.Marker({element:el}).setLngLat([s.lng,s.lat]).addTo(map); });
+    cv.style.opacity = '0';
+    flyMapbox(slides[current].dataset.view, true);
+  });
+}
+function flyMapbox(name, instant){
+  const v = VIEWS[name] || VIEWS.overview;
+  const zoom = { 1:5.4, .5:5.5, .95:6.0 }[v.z] || 5.6;
+  const left = target.ox > 0 ? Math.round(target.ox*2) : 0;
+  const camOpts = { center:v.c, zoom, pitch: v.vivid ? 50 : 35, bearing: v.vivid ? -12 : 0, padding:{left,top:0,right:0,bottom:0} };
+  instant || reduceMotion ? map.jumpTo(camOpts) : map.flyTo({ ...camOpts, duration:3000, essential:true });
+  cv.style.opacity = '0';
+}
+
+/* ===================== Contenido generado ===================== */
+const MONTHS = ['N','D','E','F','M','A','M','J','J','A','S','O','N','D','E'];
+const NM = MONTHS.length;
+const WS = {
+  disc:{label:'Discovery',c:'#f472b6'}, dev:{label:'Desarrollo',c:'#22d3ee'}, test:{label:'Pruebas y sondas',c:'#38bdf8'},
+  field:{label:'Campo',c:'#c08a5b'}, lab:{label:'Calibración y laboratorio',c:'#fbbf24'}, data:{label:'SMAA OS y modelos',c:'#4ade80'},
+  pol:{label:'Política y difusión',c:'#a78bfa'}, ops:{label:'Operación',c:'#64748b'}
+};
+const GANTT = [
+  { t:'Discovery: visitas y selección de sitio', w:'disc', s:[[1,2]] },
+  { t:'Validación del pozo: REPDA y nivel estático', w:'disc', s:[[1,2]] },
+  { t:'Estudio de mercado y prueba de sondas', w:'test', s:[[1,2]] },
+  { t:'Integración SMAAgro', w:'dev', s:[[3,4]] },
+  { t:'Pruebas de banco (FAT)', w:'test', s:[[3,4]] },
+  { t:'Gemelo digital de instalación', w:'dev', s:[[3,5]] },
+  { t:'Emplazamiento y pruebas de campo (SAT)', w:'field', s:[[5,6]] },
+  { t:'Calibración: muestreo t₀', w:'lab', s:[[5,7]] },
+  { t:'Operación: testigo e intervenida', w:'ops', s:[[5,15]] },
+  { t:'SMAA OS: API v1 y alertas', w:'data', s:[[3,7]] },
+  { t:'Modelos base y predictivos', w:'data', s:[[7,13]] },
+  { t:'Muestreo final t₁', w:'lab', s:[[14,14]] },
+  { act:'pol', t:'Brief de política pública', w:'pol', s:[[11,14]] },
+  { act:'pol', t:'Congresos y foros', w:'pol', s:[[10,10],[14,14]] },
+  { t:'Informe final y presentación', w:'pol', s:[[15,15]] }
+];
+const SEASONS = [
+  { t:'Si Sinaloa · tomate ciclo OI', c:'#22d3ee', s:[[1,6],[11,15]] },
+  { t:'Si Durango · ciclo PV', c:'#c08a5b', s:[[8,12]] }
+];
+const MS = [
+  { m:2, h:'H1 · Mes 2', d:'Sitio y sonda seleccionados' },
+  { m:4, h:'H2 · Mes 4', d:'FAT aprobado y gemelo digital' },
+  { m:5, h:'H3 · Mes 5', d:'SMAAgro en línea' },
+  { m:11, h:'H4 · Mes 11', d:'Modelos base y predictivo v1' },
+  { m:15, h:'H5 · Mes 15', d:'Informe final y brief' }
+];
+function renderGantt(){
+  const g = $('#gantt'); let h = '<div class="g-h" style="text-align:left;padding-left:12px">Actividad</div>';
+  MONTHS.forEach((m,i)=>{ const yr = i===0?' 26':i===2?' 27':i===14?' 28':''; h += `<div class="g-h${yr?' yr':''}">${m}${yr}</div>`; });
+  const row = (label, color, segs, cls='', isSeason=false, ms=[]) => {
+    let r = `<div class="g-l ${cls}" style="--c:${color}"><i></i>${label}</div>`;
+    for (let m=1;m<=NM;m++){
+      let inner = '';
+      segs.forEach(([a,b]) => { if (m===a){ const span=b-a+1; inner += `<div class="${isSeason?'g-season':'g-bar'}" style="--c:${color};left:3px;width:calc(${span*100}% - 6px)"></div>`; } });
+      ms.filter(x=>x.m===m).forEach(()=>{ inner += '<div class="g-ms" style="left:100%"></div>'; });
+      r += `<div class="g-c ${cls}">${inner}</div>`;
+    }
+    return r;
+  };
+  GANTT.forEach(r => { h += row(r.t, WS[r.w].c, r.s); });
+  SEASONS.forEach((r,k) => { h += row(r.t, r.c, r.s, k===0?'sep':'', true); });
+  h += row('Hitos', '#f1f5f9', [], 'sep', false, MS);
+  g.innerHTML = h;
+  // las barras abarcan varias celdas: permitir desbordamiento visual
+  $$('.g-c', g).forEach(c => c.style.overflow = 'visible');
+  $('#gantt-legend').innerHTML = Object.values(WS).map(w=>`<span><i style="--c:${w.c}"></i>${w.label}</span>`).join('') + '<span><i style="--c:transparent;border:1px solid #64748b;background:repeating-linear-gradient(135deg,#64748b55 0 3px,transparent 3px 6px)"></i>Ciclo de cultivo</span><span><i class="ms"></i>Hito</span>';
+  $('#milestones').innerHTML = MS.map(m=>`<div class="ms-card"><b>${m.h}</b>${m.d}</div>`).join('');
+}
+const RATE = 130;
+const FEES = [
+  { act:'disc', t:'Discovery y selección de sitio (D1)', oj:28, hj:12 },
+  { act:'probe', t:'Estudio de mercado de sondas (D2)', oj:6, hj:14 },
+  { act:'dev', t:'Diseño e integración SMAAgro', oj:4, hj:26 },
+  { act:'twin', t:'Gemelo digital SMAAgro', oj:24, hj:0 },
+  { act:'inst', t:'Emplazamiento y pruebas de campo', oj:12, hj:12 },
+  { act:'cal', t:'Calibración y análisis de laboratorio', oj:12, hj:0 },
+  { act:'os', t:'SMAA OS: API, modelos y alertas', oj:16, hj:24 },
+  { act:'pol', t:'Brief de política pública', oj:24, hj:0 },
+  { act:'pol', t:'Congresos y foros', oj:8, hj:4 },
+  { act:'mgmt', t:'Gestión, reportes e informe final', oj:10, hj:4 }
+];
+const COSTS = [
+  { act:'equip', t:'Equipos: 4 SMAAgro con sonda de perfil', a:12800 },
+  { act:'equip', t:'Equipos: 1 CHAAK y 1 SMAWA para el pozo', a:4100 },
+  { act:'probe', t:'Prototipo y 2 sondas finalistas para prueba de banco', a:3000 },
+  { act:'dev',   t:'Ingeniería de apoyo en hardware (subcontrato)', a:4000 },
+  { act:'os',    t:'Ingeniería de apoyo en datos (subcontrato)', a:2000 },
+  { act:'disc',  t:'Viajes de discovery a Sinaloa y Durango, sonda de nivel', a:3500 },
+  { act:'inst',  t:'Instalación: viaje, postes, materiales y mano de obra local', a:2800 },
+  { act:'ops',   t:'Visitas trimestrales y técnico de campo local', a:2700 },
+  { act:'cal',   t:'Laboratorio de suelos (≈ 40 análisis NOM-021)', a:2600 },
+  { act:'ops',   t:'Conectividad celular y nube durante 13 meses', a:800 },
+  { act:'pol',   t:'Congresos y foros (2), diseño del brief', a:3200 },
+  { act:'mgmt',  t:'Contingencia', a:2300 }
+];
+const ACTS = [
+  { k:'disc',  t:'Discovery y selección de sitio', c:'#f472b6' },
+  { k:'probe', t:'Estudio de mercado de sondas', c:'#38bdf8' },
+  { k:'dev',   t:'Desarrollo e integración SMAAgro', c:'#22d3ee' },
+  { k:'twin',  t:'Gemelo digital de instalación', c:'#7dd3fc' },
+  { k:'equip', t:'Equipos de campo', c:'#c08a5b' },
+  { k:'inst',  t:'Emplazamiento e instalación', c:'#fb7185' },
+  { k:'cal',   t:'Calibración y laboratorio', c:'#fbbf24' },
+  { k:'os',    t:'SMAA OS: API, modelos y alertas', c:'#4ade80' },
+  { k:'ops',   t:'Operación y mantenimiento', c:'#64748b' },
+  { k:'pol',   t:'Política pública y difusión', c:'#a78bfa' },
+  { k:'mgmt',  t:'Gestión del proyecto y contingencia', c:'#94a3b8' }
+];
+function renderByActivity(){
+  const rows = ACTS.map(a => {
+    const h = FEES.filter(f=>f.act===a.k).reduce((s,f)=>s+f.oj+f.hj,0);
+    const fee = h*RATE, cost = COSTS.filter(c=>c.act===a.k).reduce((s,c)=>s+c.a,0);
+    return { ...a, h, fee, cost, tot: fee+cost };
+  });
+  const T = rows.reduce((s,r)=>s+r.tot,0), max = Math.max(...rows.map(r=>r.tot));
+  const H = rows.reduce((s,r)=>s+r.h,0), F = rows.reduce((s,r)=>s+r.fee,0), C = rows.reduce((s,r)=>s+r.cost,0);
+  $('#byact tbody').innerHTML = rows.map(r => `<tr>
+    <td class="name"><span class="cat" style="--c:${r.c}"><i></i>${r.t}</span></td>
+    <td class="amt dim">${r.h||'–'}</td><td class="amt">${r.fee?fmt.format(r.fee):'–'}</td><td class="amt">${r.cost?fmt.format(r.cost):'–'}</td>
+    <td class="amt">${fmt.format(r.tot)}</td><td class="pct">${(r.tot/T*100).toFixed(1)} %</td>
+    <td class="barc"><div class="stack" style="width:${r.tot/max*100}%"><span class="s-fee" style="flex:${r.fee}"></span><span class="s-cost" style="flex:${r.cost}"></span></div></td></tr>`).join('');
+  $('#byact tfoot').innerHTML = `<tr><td>Total</td><td class="amt">${H}</td><td class="amt">${fmt.format(F)}</td><td class="amt">${fmt.format(C)}</td><td class="amt">${fmt.format(T)}</td><td class="pct">100 %</td><td class="barc"></td></tr>`;
+}
+function renderBudget(){
+  const pct = v => (v/75000*100).toFixed(1) + ' %';
+  const hOJ = FEES.reduce((s,f)=>s+f.oj,0), hHJ = FEES.reduce((s,f)=>s+f.hj,0), hrs = hOJ + hHJ, fee = hrs*RATE;
+  const cost = COSTS.reduce((s,c)=>s+c.a,0), total = fee + cost;
+  $('#fees tbody').innerHTML = FEES.map(f => `<tr><td class="name">${f.t}</td><td class="amt dim">${f.oj||'–'}</td><td class="amt dim">${f.hj||'–'}</td><td class="amt">${f.oj+f.hj}</td><td class="amt">${fmt.format((f.oj+f.hj)*RATE)}</td></tr>`).join('');
+  $('#fees tfoot').innerHTML = `<tr><td>Honorarios · USD ${RATE}/h</td><td class="amt">${hOJ}</td><td class="amt">${hHJ}</td><td class="amt">${hrs}</td><td class="amt">${fmt.format(fee)}</td></tr>`;
+  $('#costs tbody').innerHTML = COSTS.map(c => `<tr><td class="name">${c.t}</td><td class="amt">${fmt.format(c.a)}</td></tr>`).join('');
+  $('#costs tfoot').innerHTML = `<tr><td>Gastos directos</td><td class="amt">${fmt.format(cost)}</td></tr>`;
+  $('#split').innerHTML = `<div class="split-bar"><span class="s-fee" style="width:${fee/total*100}%"></span><span class="s-cost" style="width:${cost/total*100}%"></span></div>
+    <div class="split-legend"><span><i class="s-fee"></i>Honorarios <b>USD ${fmt.format(fee)}</b> · ${hrs} h · ${pct(fee)}</span><span><i class="s-cost"></i>Gastos directos <b>USD ${fmt.format(cost)}</b> · ${pct(cost)}</span><span>Total <b>USD ${fmt.format(total)}</b></span></div>`;
+}
+const THR = [ { t:'Tomate', u:2.5, p:9.9 }, { t:'Maíz', u:1.7, p:12 }, { t:'Chile', u:1.5, p:14 } ];
+function renderThr(){
+  $('#thr').innerHTML = THR.map(r => `<div class="thr-row"><b>${r.t}</b><div class="thr-bar"><i style="left:${r.u/6*100}%"></i></div><span class="v">${r.u.toFixed(1)} · −${r.p} %</span></div>`).join('');
+}
+
+/* ===================== Navegación ===================== */
+const slides = $$('.slide');
+let current = 0;
+const PART_LABELS = { I:'I · Contexto', II:'II · Discovery y solución', III:'III · Impacto', IV:'IV · Ejecución' };
+const PART_TITLES = { I:'Parte I · Quiénes somos, contexto y alcance', II:'Parte II · Discovery y solución técnica', III:'Parte III · Resultados e impacto', IV:'Parte IV · Cronograma, equipo y presupuesto' };
+
+function countUp(slide){
+  slide.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseFloat(el.dataset.count), suf = el.dataset.suffix || '';
+    cancelAnimationFrame(el._raf);
+    if (reduceMotion){ el.textContent = target + suf; return; }
+    const t0 = performance.now(), dur = 1200;
+    const tick = now => { const k = Math.min(1,(now-t0)/dur), e = 1-Math.pow(1-k,3); el.textContent = Math.round(target*e) + suf; if (k<1) el._raf = requestAnimationFrame(tick); };
+    el._raf = requestAnimationFrame(tick);
+  });
+}
+function goTo(i, { instant=false } = {}){
+  i = Math.max(0, Math.min(slides.length-1, i)); current = i;
+  slides.forEach((s,k) => { const on = k===i; s.classList.toggle('is-active',on); s.setAttribute('aria-hidden',String(!on)); s.inert = !on; });
+  const pad = n => String(n).padStart(2,'0');
+  $('#progress').style.width = ((i+1)/slides.length)*100 + '%';
+  $('#counter').textContent = `${pad(i+1)} / ${pad(slides.length)}`;
+  $('#slide-title').textContent = slides[i].dataset.title || '';
+  $('#scrim').dataset.mode = slides[i].dataset.layout;
+  const part = slides[i].dataset.part; $('#part-label').textContent = part ? PART_LABELS[part] : 'TNC · Herdez';
+  $('#btn-prev').disabled = i === 0;
+  $$('#index button').forEach(b => b.setAttribute('aria-current', String(+b.dataset.go === i+1)));
+  try { history.replaceState(null,'','#'+(i+1)); } catch(_){}
+  countUp(slides[i]);
+  setView(slides[i].dataset.view, instant);
+}
+const next = () => goTo(current === slides.length-1 ? 0 : current+1);
+const prev = () => goTo(current-1);
+function buildIndex(){
+  let h = '', last = null;
+  slides.forEach((s,k) => {
+    const part = s.dataset.part || '';
+    if (part !== last){ h += `<span class="index-label">${part ? PART_TITLES[part] : (k===0?'Inicio':'Cierre')}</span>`; last = part; }
+    h += `<button type="button" data-go="${k+1}"><b>${String(k+1).padStart(2,'0')}</b>${s.dataset.title}</button>`;
+  });
+  $('#index').innerHTML = h;
+  ['II','III','IV'].forEach(p => { const f = slides.findIndex(s=>s.dataset.part===p); if (f>0){ const m=document.createElement('i'); m.className='progress-split'; m.style.left=(f/slides.length*100)+'%'; $('#progress-bar').appendChild(m); } });
+}
+function toggleIndex(force){ const open = force ?? !$('#index').classList.contains('is-open'); $('#index').classList.toggle('is-open',open); $('#btn-index').setAttribute('aria-expanded',String(open)); }
+document.addEventListener('click', e => {
+  const go = e.target.closest('[data-go]');
+  if (go){ goTo(+go.dataset.go - 1); toggleIndex(false); return; }
+  if (!e.target.closest('#index, #btn-index')) toggleIndex(false);
+});
+$('#btn-index').addEventListener('click', () => toggleIndex());
+function toggleFullscreen(){ if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(()=>{}); else document.exitFullscreen?.(); }
+document.addEventListener('keydown', e => {
+  if (e.target.closest('input, textarea, select')) return;
+  switch (e.key){
+    case 'ArrowRight': case 'PageDown': e.preventDefault(); next(); break;
+    case 'ArrowLeft': case 'PageUp': e.preventDefault(); prev(); break;
+    case ' ': if (!e.target.closest('button,a')){ e.preventDefault(); e.shiftKey ? prev() : next(); } break;
+    case 'Home': e.preventDefault(); goTo(0); break;
+    case 'End': e.preventDefault(); goTo(slides.length-1); break;
+    case 'f': case 'F': toggleFullscreen(); break;
+    case 'm': case 'M': toggleIndex(); break;
+    case 'Escape': toggleIndex(false); break;
+  }
+});
+$('#btn-next').addEventListener('click', next);
+$('#btn-prev').addEventListener('click', prev);
+$('#btn-fs').addEventListener('click', toggleFullscreen);
+// Deslizar en pantallas táctiles
+let tx = null;
+addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
+addEventListener('touchend', e => { if (tx===null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 60) (dx<0 ? next : prev)(); tx = null; }, { passive:true });
+addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1),10); if (n && n-1 !== current) goTo(n-1); });
+addEventListener('resize', () => { resize(); });
+
+/* ===================== Referencia en vivo (Open-Meteo) ===================== */
+async function pollLive(){
+  if (!CONFIG.liveRef) return;
+  try {
+    const q = s => `https://api.open-meteo.com/v1/forecast?latitude=${s.lat}&longitude=${s.lng}&hourly=soil_moisture_9_to_27cm,soil_temperature_18cm&timezone=America%2FMexico_City&forecast_days=1`;
+    const res = await Promise.all(SITES.map(s => fetch(q(s), { cache:'no-store' }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })));
+    res.forEach((d,k) => {
+      const hours = d.hourly.time, now = new Date();
+      let idx = hours.findIndex(t => new Date(t) > now) - 1; if (idx < 0) idx = 0;
+      const m = d.hourly.soil_moisture_9_to_27cm[idx], t = d.hourly.soil_temperature_18cm[idx];
+      $(`#lv-${SITES[k].id}-m`).textContent = (m*100).toFixed(0);
+      $(`#lv-${SITES[k].id}-t`).textContent = t.toFixed(0);
+    });
+    $('#live-dot').classList.remove('off');
+    $('#live-status').textContent = 'En vivo · humedad y temperatura del suelo modeladas (Open-Meteo)';
+    $('#live-foot').textContent = 'Actualizado ' + new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}) + '. Referencia de modelo; en el piloto se sustituye por los equipos SMAAgro.';
+  } catch (err) {
+    console.info('[live] sin conexión a Open-Meteo en este visor; se muestran valores de ejemplo.');
+  }
+  setTimeout(pollLive, CONFIG.refreshMs);
+}
+
+/* ===================== Arranque ===================== */
+renderGantt(); renderBudget(); renderByActivity(); renderThr(); buildIndex();
+resize();
+goTo((parseInt(location.hash.slice(1),10) || 1) - 1, { instant:true });
+requestAnimationFrame(drawFrame);
+loadMapbox();
+pollLive();
+</script>
+
+</body>
+</html>
