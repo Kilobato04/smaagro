@@ -352,9 +352,10 @@ pre.json .n{color:#fbbf24}
 .stack span{height:100%}
 #byact td{padding:6px 12px}
 .social-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.social-row a{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;border:1px solid var(--line-accent);background:var(--accent-soft);color:var(--text);text-decoration:none;font-size:.8rem;font-weight:550;transition:background .2s,color .2s}
-.social-row a:hover{background:var(--accent);color:#03121c}
-.social-row svg{width:15px;height:15px}
+.social-row{gap:4px 14px;margin-top:14px}
+.social-row a{display:inline-flex;align-items:center;gap:6px;padding:2px 0;color:var(--text-3);text-decoration:none;font-size:.74rem;transition:color .2s}
+.social-row a:hover{color:var(--text)}
+.social-row svg{width:13px;height:13px;opacity:.8}
 .wins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
 .win{min-width:0;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
 .win-head,.win-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;flex-wrap:wrap}
@@ -371,6 +372,16 @@ pre.json .n{color:#fbbf24}
 .win-map.is-live .win-fb{display:none}
 .mk b{position:absolute;left:24px;top:2px;white-space:nowrap;font:700 12px Inter,sans-serif;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8)}
 .mk{position:relative}
+/* Sin bordes de color en cajas */
+.card::before{display:none!important}
+.card:hover{border-color:var(--line)!important}
+.win-head{box-shadow:none}
+.chip--c{border-color:var(--line)!important}
+.to{border-color:var(--line)!important}
+.blk--sa{border-color:var(--line)!important}
+.live{border-color:var(--line)!important}
+.layer::before{border-left-color:var(--text-3)!important}
+.layer::after{background:var(--line)!important}
 /* Footer */
 .bar{position:fixed;left:var(--gutter);right:var(--gutter);bottom:calc(var(--bar-bottom) + env(safe-area-inset-bottom,0px));z-index:30;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none}
 .bar>*{pointer-events:auto}
@@ -454,7 +465,7 @@ pre.json .n{color:#fbbf24}
 
 <div class="conf-badge">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-  Confidencial · Propuesta técnica
+  Confidencial · Propuesta técnica-económica
 </div>
 
 <header class="brand">
@@ -565,7 +576,7 @@ pre.json .n{color:#fbbf24}
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Estudio de mercado y selección de la sonda de suelo</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Desarrollo, pruebas e instalación de SMAAgro, CHAAK y SMAWA</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Gemelo digital como guía de instalación para el agricultor</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>API y modelos base y predictivos en SMAA OS, <strong style="color:var(--text)">sin cobro de SaaS</strong></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>API y modelos base y predictivos en SMAA OS <span class="tag tag--on" style="margin-left:4px">Sin cobro de SaaS</span></span></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Brief de política pública y 2 presentaciones en congresos o foros</li>
           </ul>
         </div>
@@ -643,8 +654,8 @@ pre.json .n{color:#fbbf24}
   <!-- PARCELAS CANDIDATAS -->
   <section class="slide" data-layout="full" data-title="Parcelas candidatas" data-part="II" data-view="overview-dim" data-wins="1">
     <div class="panel panel--full">
-      <span class="kicker rv" style="--i:0">Fase 0 · Discovery · Parcelas candidatas</span>
-      <h2 class="rv" style="--i:1">Dos parcelas candidatas, vistas a la misma escala</h2>
+      <span class="kicker rv" style="--i:0">Fase 0 · Discovery · Parcelas candidatas preliminares</span>
+      <h2 class="rv" style="--i:1">Dos parcelas candidatas preliminares, a la misma escala</h2>
       <p class="lead rv" style="--i:2">Cada ventana muestra la parcela a nivel de predio. El discovery confirma en campo el pozo, el nivel estático y la señal celular de cada una antes de elegir.</p>
       <div class="wins">
         <div class="win rv" style="--c:#22d3ee">
@@ -676,6 +687,10 @@ pre.json .n{color:#fbbf24}
       </div>
       <div class="chips rv" style="--i:5">
         <span class="chip"><b>Por validar en ambas:</b> título del pozo en REPDA</span><span class="chip">nivel estático ≤ 30 m</span><span class="chip">toma eléctrica para CHAAK</span><span class="chip">señal 2G/4G</span><span class="chip">espacio para testigo e intervenida</span>
+      </div>
+      <div class="note rv" style="--i:6">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span><strong>Ubicaciones preliminares.</strong> Estas parcelas son una referencia inicial para el análisis. Las parcelas definitivas se definirán con TNC y Grupo Herdez al inicio del discovery, a partir de su red de proveedores.</span>
       </div>
     </div>
   </section>
@@ -1145,7 +1160,7 @@ pre.json .n{color:#fbbf24}
         <div><b>Octavio Jiménez</b><span>Director de Operaciones</span><code>octaviojimenez@smability.io</code></div>
       </div>
       <div class="map-legend rv" style="--i:4">
-        <span><i class="ln major"></i>Curva maestra</span><span><i class="ln"></i>Curva intermedia</span><span><i class="pt"></i>Zona candidata</span>
+        <span><i class="ln major"></i>Curva maestra</span><span><i class="ln"></i>Curva intermedia</span><span><i class="pt"></i>Parcela candidata (preliminar)</span>
       </div>
       <div class="restart rv" style="--i:5;justify-content:flex-start;margin-top:14px">
         <button type="button" class="btn-ghost" data-go="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg>Volver al inicio</button>
