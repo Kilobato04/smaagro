@@ -382,6 +382,17 @@ pre.json .n{color:#fbbf24}
 .live{border-color:var(--line)!important}
 .layer::before{border-left-color:var(--text-3)!important}
 .layer::after{background:var(--line)!important}
+.plink{display:inline-flex;align-items:center;gap:5px;color:var(--text);text-decoration:none;border-bottom:1px dotted var(--text-3)}
+.plink svg{width:12px;height:12px;color:var(--text-3)}
+.plink:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.plink:hover svg{color:var(--accent)}
+.slide.tight .steps{margin-top:12px;gap:10px}
+.slide.tight .step-text{font-size:.84rem;line-height:1.45}
+.slide.tight .nice td,.slide.tight .nice th{padding:6px 10px}
+.slide.tight .note{margin-top:10px;padding:9px 12px}
+.slide.tight h3{margin-top:12px!important}
+.slide.tight .cards{margin-top:14px}
+.slide.tight .card{padding:14px 16px}
 /* Footer */
 .bar{position:fixed;left:var(--gutter);right:var(--gutter);bottom:calc(var(--bar-bottom) + env(safe-area-inset-bottom,0px));z-index:30;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none}
 .bar>*{pointer-events:auto}
@@ -515,7 +526,7 @@ pre.json .n{color:#fbbf24}
         <div class="card card--plain metric rv" style="--i:3"><span class="metric-value" data-count="9">9</span><span class="metric-label">Años de operación</span><p class="lead">Hardware propio vendido, instalado y mantenido desde 2017</p></div>
         <div class="card card--plain metric rv" style="--i:4"><span class="metric-value" data-count="60" data-suffix="+">60+</span><span class="metric-label">Nodos vendidos</span><p class="lead">En México, Guatemala y Colombia</p></div>
         <div class="card card--plain metric rv" style="--i:5"><span class="metric-value" data-count="28">28</span><span class="metric-label">Clientes</span><p class="lead">Con rotación anual menor a 5 % en institucionales</p></div>
-        <div class="card card--plain metric rv" style="--i:6"><span class="metric-value">0.91</span><span class="metric-label">R² de ozono</span><p class="lead">Validado contra ICAyCC-UNAM; sin calibrar era 0.72</p></div>
+        <div class="card card--plain metric rv" style="--i:6"><span class="metric-value" data-count="1">1</span><span class="metric-label">Patente en trámite</span><p class="lead">Con IBERO CDMX · MX/a/2024/015266</p></div>
       </div>
       <h3 class="rv" style="--i:7;margin-top:18px">Cuatro capas, un ciclo cerrado</h3>
       <div class="cards cards--4" style="margin-top:0">
@@ -525,7 +536,7 @@ pre.json .n{color:#fbbf24}
         <div class="card rv" style="--i:11;--c:var(--c-pol)"><span class="card-num">04 · AIreGPT</span><h4>Alertas hiperlocales</h4><p>Agente de IA en Telegram hoy y en WhatsApp desde diciembre 2026 – enero 2027.</p></div>
       </div>
       <div class="chips rv" style="--i:12">
-        <span class="chip">SEDEMA</span><span class="chip">SECTEI</span><span class="chip">UNAM</span><span class="chip">IBERO</span><span class="chip">ITESO</span><span class="chip">Greenpeace México</span><span class="chip">GIZ</span><span class="chip">SkyAlert</span><span class="chip">Corredor Verde</span><span class="chip">Fondo EPIC · U. de Chicago</span><span class="chip">Solicitud de patente con IBERO</span>
+        <span class="chip">SEDEMA</span><span class="chip">SECTEI</span><span class="chip">UNAM</span><span class="chip">IBERO</span><span class="chip">ITESO</span><span class="chip">Greenpeace México</span><span class="chip">GIZ</span><span class="chip">SkyAlert</span><span class="chip">Corredor Verde</span><span class="chip">Fondo EPIC · U. de Chicago</span>
       </div>
       <div class="social-row rv" style="--i:13">
         <a href="https://smability.io" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><text x="12" y="16.6" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="currentColor">S</text></svg>smability.io</a>
@@ -564,7 +575,7 @@ pre.json .n{color:#fbbf24}
       <p class="lead rv" style="--i:2"><strong style="color:var(--text)">Objetivo:</strong> elegir con evidencia el mejor sitio entre Sinaloa y Durango, y ahí demostrar con SMAAgro cuánto cambia el suelo cuando se interviene, contra una parcela testigo que se mide pero no se toca.</p>
       <div class="cards cards--4">
         <div class="card card--plain metric rv" style="--i:3"><span class="metric-value" data-count="1">1</span><span class="metric-label">Sitio</span><p class="lead">Sinaloa o Durango, definido en discovery</p></div>
-        <div class="card card--plain metric rv" style="--i:4"><span class="metric-value" data-count="4">4</span><span class="metric-label">SMAAgro</span><p class="lead">2 en testigo, 2 en parcela intervenida</p></div>
+        <div class="card card--plain metric rv" style="--i:4"><span class="metric-value" data-count="2">2</span><span class="metric-label">SMAAgro</span><p class="lead">1 en testigo, 1 en parcela intervenida</p></div>
         <div class="card card--plain metric rv" style="--i:5"><span class="metric-value" data-count="2">2</span><span class="metric-label">Equipos de agua</span><p class="lead">1 CHAAK y 1 SMAWA en el pozo</p></div>
         <div class="card card--plain metric rv" style="--i:6"><span class="metric-value" data-count="15">15</span><span class="metric-label">Meses</span><p class="lead">Nov 2026 – Ene 2028</p></div>
       </div>
@@ -584,9 +595,10 @@ pre.json .n{color:#fbbf24}
           <h3>Fuera de alcance (fase 2)</h3>
           <ul>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg>Segundo sitio o escalamiento a otras cadenas</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg>Sensores continuos de pH y NPK (se miden por laboratorio)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg>Sensores continuos de pH y NPK (se toman del data room de TNC)</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg>Integraciones con plataformas de terceros: el API queda abierto para consumo externo</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg>Control automático de riego y certificación de prácticas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 12h12"/></svg>Kit solar para CHAAK y SMAWA si el pozo no tiene toma eléctrica (se cotiza aparte)</li>
           </ul>
           <div class="chips">
             <span class="chip"><b>PI:</b> SMAAgro, firmware, SMAA OS y modelos, de Smability</span>
@@ -602,7 +614,7 @@ pre.json .n{color:#fbbf24}
     <div class="panel panel--wide">
       <span class="kicker rv" style="--i:0">01 · Alcance · Variables</span>
       <h2 class="rv" style="--i:1">Tres variables críticas en continuo, el resto por campaña</h2>
-      <p class="lead rv" style="--i:2">SMAAgro mide en continuo lo que cambia en horas. Lo que cambia en meses o años se mide en laboratorio, al inicio y al cierre.</p>
+      <p class="lead rv" style="--i:2">SMAAgro mide en continuo lo que cambia en horas. Lo que cambia en meses o años se toma del banco de datos de suelo de TNC y, si es viable, de un laboratorio local.</p>
       <div class="cards">
         <div class="card var rv" style="--i:3;--c:var(--c-hum)"><span class="dot"></span><h4>Humedad volumétrica del perfil</h4><span class="unit">% VWC · 6 prof.</span><p>Cuánta agua hay en la zona de raíz y cuánta se escapa por debajo de 60 cm. Base para eficiencia de riego y estrés hídrico.</p></div>
         <div class="card var rv" style="--i:4;--c:var(--c-sal)"><span class="dot"></span><h4>Salinidad (conductividad eléctrica)</h4><span class="unit">dS/m · 6 prof.</span><p>Acumulación de sales por riego y fertilización. Cada dS/m sobre el umbral del cultivo resta rendimiento.</p></div>
@@ -615,8 +627,8 @@ pre.json .n{color:#fbbf24}
           <tbody>
             <tr><td>Lluvia, ET₀, viento</td><td><span class="tag tag--on">Continuo · CHAAK</span></td><td>Cierra el balance hídrico</td></tr>
             <tr><td>Nivel del pozo</td><td><span class="tag tag--on">Continuo · SMAWA</span></td><td>Presión sobre el acuífero</td></tr>
-            <tr><td>pH, materia orgánica, NPK</td><td><span class="tag tag--lab">Laboratorio t₀ / t₁</span></td><td>Cambian en meses; sensores in situ derivan</td></tr>
-            <tr><td>Respiración del suelo</td><td><span class="tag tag--lab">Laboratorio t₀ / t₁</span></td><td>Indicador directo de vida microbiana</td></tr>
+            <tr><td>pH, materia orgánica, NPK</td><td><span class="tag tag--lab">Data room TNC · lab opcional</span></td><td>Cambian en meses; sensores in situ derivan</td></tr>
+            <tr><td>Textura y densidad aparente</td><td><span class="tag tag--lab">Data room TNC · lab opcional</span></td><td>Ajustan la curva de la sonda</td></tr>
           </tbody>
         </table>
       </div>
@@ -637,7 +649,7 @@ pre.json .n{color:#fbbf24}
             <tr><td>Nivel estático ≤ 30 m</td><td>Medición del tirante al espejo de agua con sonda de nivel en visita</td><td><span class="tag tag--lab">Filtro</span></td></tr>
             <tr><td>Cobertura celular</td><td>Prueba de señal en parcela; SMAAgro no guarda datos localmente</td><td><span class="tag tag--lab">Filtro</span></td></tr>
             <tr><td>Proveedor de Herdez dispuesto</td><td>Carta de participación; acepta parcela testigo sin intervenir</td><td><span class="tag tag--lab">Filtro</span></td></tr>
-            <tr><td>Servicio eléctrico en el pozo</td><td>Toma para CHAAK (5 V / 3 A); si no existe, kit solar</td><td><span class="tag tag--on">Puntaje</span></td></tr>
+            <tr><td>Servicio eléctrico en el pozo</td><td>Toma para CHAAK y SMAWA; si no existe, kit solar con integración, cotizado aparte</td><td><span class="tag tag--on">Puntaje</span></td></tr>
             <tr><td>Parcelas comparables</td><td>Misma textura, cultivo y fuente de agua en testigo e intervenida</td><td><span class="tag tag--on">Puntaje</span></td></tr>
             <tr><td>Cultivo prioritario y calendario</td><td>Tomate, chile o maíz con ciclo dentro de la ventana del piloto</td><td><span class="tag tag--on">Puntaje</span></td></tr>
             <tr><td>Acceso y seguridad</td><td>Visita, distancia a ciudad, riesgo para el equipo</td><td><span class="tag tag--on">Puntaje</span></td></tr>
@@ -704,13 +716,13 @@ pre.json .n{color:#fbbf24}
       <div class="arch">
         <div class="layer rv" style="--i:3">
           <span class="lyr">01 · Dispositivos</span><h4>En la parcela y el pozo</h4>
-          <div class="blk"><b>SMAAgro × 4</b>Sonda de perfil SDI-12: humedad, salinidad y temperatura a 6 profundidades</div>
+          <div class="blk"><b>SMAAgro × 2</b>Sonda de perfil SDI-12: humedad, salinidad y temperatura a 6 profundidades</div>
           <div class="blk blk--sa"><b>CHAAK · en el pozo</b>Viento ultrasónico, lluvia por radar, radiación, T, HR y presión</div>
           <div class="blk blk--sa"><b>SMAWA · en el pozo</b>Nivel del agua con sonda de presión</div>
         </div>
         <div class="layer rv" style="--i:4">
           <span class="lyr">02 · Calibración</span><h4>Dato confiable</h4>
-          <div class="blk"><b>Curva del sitio</b>Por profundidad, contra laboratorio y gravimétrico</div>
+          <div class="blk"><b>Curva por textura</b>Ecuación del fabricante ajustada con datos de suelo de TNC</div>
           <div class="blk"><b>Corrección de deriva</b>Modelos de aprendizaje automático, como en SMAA</div>
           <div class="blk"><b>Actualización remota</b>Firmware y coeficientes por OTA</div>
         </div>
@@ -730,7 +742,7 @@ pre.json .n{color:#fbbf24}
       </div>
       <div class="flow rv" style="--i:7">
         <div><b>01 · Mide</b>Cada 15–20 min en el perfil</div>
-        <div><b>02 · Se calibra</b>Curva del sitio y deriva</div>
+        <div><b>02 · Se calibra</b>Curva por textura y deriva</div>
         <div><b>03 · Transmite</b>Celular 2G/4G, SIM Hologram</div>
         <div><b>04 · Modela</b>Base y predictivo en SMAA OS</div>
         <div><b>05 · Alerta</b>AIreGPT al celular del productor</div>
@@ -765,14 +777,19 @@ pre.json .n{color:#fbbf24}
           <div class="card rv" style="--i:4;--c:var(--c-agua)">
             <span class="card-num">CHAAK en el pozo</span>
             <h4>Necesita toma eléctrica de 5 V / 3 A</h4>
-            <p>CHAAK consume 4 W y no lleva panel. Por eso va en el pozo, junto al servicio eléctrico de la bomba. Si el pozo no tiene toma, se agrega un kit solar. Sus variables completan la evapotranspiración FAO-56.</p>
+            <p>CHAAK consume 4 W y no lleva panel. Por eso va en el pozo, junto al servicio eléctrico de la bomba. Sus variables completan la evapotranspiración FAO-56.</p>
           </div>
           <div class="card rv" style="--i:5;--c:var(--c-agua)">
             <span class="card-num">SMAWA en el pozo</span>
             <h4>Nivel estático y dinámico</h4>
             <p>Sonda de presión sumergida. Con un tirante de 30 m o menos, la instalación es sencilla y el abatimiento por bombeo se mide directamente.</p>
           </div>
-          <div class="card rv" style="--i:6;--c:var(--c-vida)">
+          <div class="card rv" style="--i:6;--c:var(--c-sal)">
+            <span class="card-num">Si el pozo no tiene toma eléctrica</span>
+            <h4>Kit solar, cotizado por separado</h4>
+            <p>Se agrega un kit solar para CHAAK y SMAWA. Incluye el panel y el tiempo de integración, y se cobra aparte del presupuesto del piloto.</p>
+          </div>
+          <div class="card rv" style="--i:7;--c:var(--c-vida)">
             <span class="card-num">Incluido en el piloto</span>
             <h4>Sin cobro de servicio anual</h4>
             <p>SIM y datos, plataforma, tablero, API, calibración y alertas, durante los 15 meses.</p>
@@ -787,17 +804,17 @@ pre.json .n{color:#fbbf24}
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">02 · Arquitectura · Entregable D2</span>
       <h2 class="rv" style="--i:1">¿Qué sonda del mercado sirve mejor al campo mexicano?</h2>
-      <p class="lead rv" style="--i:2">Antes de fabricar, comparamos las sondas comerciales compatibles con SMAAgro (SDI-12, humedad, salinidad y temperatura). Las dos mejor calificadas pasan a prueba de banco con suelo del sitio elegido.</p>
+      <p class="lead rv" style="--i:2">Antes de fabricar, comparamos las sondas comerciales compatibles con SMAAgro (SDI-12, humedad, salinidad y temperatura). Las dos mejor calificadas pasan a prueba de banco con suelo del sitio elegido. Haz clic en cada sonda para ver su ficha.</p>
       <div class="tbl-wrap rv" style="--i:3;margin-top:16px">
         <table class="nice probes">
           <thead><tr><th>Sonda</th><th>Tecnología</th><th>Medición</th><th>A favor</th><th>A revisar para México</th></tr></thead>
           <tbody>
-            <tr><td>Sentek Drill &amp; Drop</td><td>Capacitancia</td><td>Perfil, cada 10 cm hasta 120 cm</td><td>Instalación rápida sin lodo; enterrable, fuera del paso de maquinaria</td><td>Costo y soporte técnico local</td></tr>
-            <tr><td>EnviroPro</td><td>Capacitancia</td><td>Perfil, cada 10 cm</td><td>Perfil completo en un solo tubo; bajo mantenimiento</td><td>Distribución en México</td></tr>
-            <tr><td>Campbell SoilVUE10</td><td>TDR</td><td>Perfil, 0.5 o 1 m</td><td>Precisión TDR en perfil</td><td>Costo por punto más alto</td></tr>
-            <tr><td>METER TEROS 12</td><td>Capacitancia</td><td>Un punto por sensor</td><td>Bajo costo por sensor; amplia literatura</td><td>Requiere excavar una calicata por perfil</td></tr>
-            <tr><td>Stevens HydraProbe</td><td>Coaxial</td><td>Un punto por sensor</td><td>Robusta; buena respuesta en suelos salinos</td><td>Excavación y varios cables por perfil</td></tr>
-            <tr><td>Acclima TDR-315H</td><td>TDR</td><td>Un punto por sensor</td><td>Precisión TDR a costo moderado</td><td>Excavación; soporte local</td></tr>
+            <tr><td><a class="plink" href="https://www.davisinstruments.com/products/sentek-drill-drop-soil-moisture-probe-24-60-cm" target="_blank" rel="noopener">Sentek Drill &amp; Drop<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>Capacitancia</td><td>Perfil, cada 10 cm hasta 120 cm</td><td>Instalación rápida sin lodo; enterrable, fuera del paso de maquinaria</td><td>Costo y soporte técnico local</td></tr>
+            <tr><td><a class="plink" href="https://ictinternational.com/product/enviropro-multidepth-soil-moisture-probes/" target="_blank" rel="noopener">EnviroPro<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>Capacitancia</td><td>Perfil, cada 10 cm</td><td>Perfil completo en un solo tubo; bajo mantenimiento</td><td>Distribución en México</td></tr>
+            <tr><td><a class="plink" href="https://www.campbellsci.es/soilvue10" target="_blank" rel="noopener">Campbell SoilVUE10<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>TDR</td><td>Perfil, 0.5 o 1 m</td><td>Precisión TDR en perfil</td><td>Costo por punto más alto</td></tr>
+            <tr><td><a class="plink" href="https://metergroup.com/products/teros-12/" target="_blank" rel="noopener">METER TEROS 12<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>Capacitancia</td><td>Un punto por sensor</td><td>Bajo costo por sensor; amplia literatura</td><td>Requiere excavar una calicata por perfil</td></tr>
+            <tr><td><a class="plink" href="https://ictinternational.com/product/stevens-hydraprobe/" target="_blank" rel="noopener">Stevens HydraProbe<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>Coaxial</td><td>Un punto por sensor</td><td>Robusta; buena respuesta en suelos salinos</td><td>Excavación y varios cables por perfil</td></tr>
+            <tr><td><a class="plink" href="https://acclima.com/tdr-315h-soil-moisture-sensor/" target="_blank" rel="noopener">Acclima TDR-315H<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>TDR</td><td>Un punto por sensor</td><td>Precisión TDR a costo moderado</td><td>Excavación; soporte local</td></tr>
           </tbody>
         </table>
       </div>
@@ -829,10 +846,10 @@ pre.json .n{color:#fbbf24}
     <div class="panel panel--wide">
       <span class="kicker rv" style="--i:0">03 · Integración y emplazamiento</span>
       <h2 class="rv" style="--i:1">Testigo contra intervenida, con el mismo pozo</h2>
-      <p class="lead rv" style="--i:2">Ambas parcelas se miden igual. En la testigo el productor sigue su manejo de siempre; en la intervenida se aplican las prácticas acordadas con TNC y Herdez. La diferencia entre ambas es el resultado del piloto.</p>
+      <p class="lead rv" style="--i:2">Ambas parcelas se miden igual. En la testigo el productor sigue su manejo de siempre; en la intervenida se aplican las prácticas acordadas con TNC y Herdez. La diferencia entre ambas es el resultado del piloto. Un equipo por parcela basta para demostrar el concepto; una sonda de repuesto protege la comparación si una falla.</p>
       <div class="cards cards--2">
-        <div class="card rv" style="--i:3;--c:var(--text-3)"><span class="card-num">Parcela testigo</span><h4>Se mide, no se interviene</h4><ul><li>2 SMAAgro</li><li>Manejo habitual del productor</li><li>Línea de comparación</li></ul></div>
-        <div class="card rv" style="--i:4;--c:var(--c-vida)"><span class="card-num">Parcela intervenida</span><h4>Se mide y se interviene</h4><ul><li>2 SMAAgro</li><li>Riego guiado por datos, coberturas, materia orgánica</li><li>Alertas al agricultor</li></ul></div>
+        <div class="card rv" style="--i:3;--c:var(--text-3)"><span class="card-num">Parcela testigo</span><h4>Se mide, no se interviene</h4><ul><li>1 SMAAgro</li><li>Manejo habitual del productor</li><li>Línea de comparación</li></ul></div>
+        <div class="card rv" style="--i:4;--c:var(--c-vida)"><span class="card-num">Parcela intervenida</span><h4>Se mide y se interviene</h4><ul><li>1 SMAAgro</li><li>Riego guiado por datos, coberturas, materia orgánica</li><li>Alertas al agricultor</li></ul></div>
       </div>
       <div class="profile-wrap rv" style="--i:5">
         <svg viewBox="0 0 200 250" role="img" aria-label="Esquema de instalación de la sonda en el perfil de suelo">
@@ -869,16 +886,16 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- PRUEBAS -->
-  <section class="slide" data-layout="side" data-title="4 · Pruebas" data-part="II" data-view="site">
+  <section class="slide tight" data-layout="side" data-title="4 · Pruebas" data-part="II" data-view="site">
     <div class="panel panel--wide">
       <span class="kicker rv" style="--i:0">04 · Pruebas</span>
-      <h2 class="rv" style="--i:1">Tres etapas de prueba antes de confiar en un dato</h2>
+      <h2 class="rv" style="--i:1">Tres etapas de prueba</h2>
       <ol class="steps">
         <li class="rv" style="--i:2"><div class="step-when">Banco (FAT) · Meses 3–4</div><div class="step-title">Pruebas en laboratorio Smability</div><div class="step-text">Lectura SDI-12 de la sonda elegida, consumo y autonomía solar, reconexión celular tras cortes de red, gabinete expuesto a más de 45 °C.</div></li>
-        <li class="rv" style="--i:3"><div class="step-when">Campo controlado (SAT) · Meses 5–6</div><div class="step-title">Seis semanas en el sitio elegido</div><div class="step-text">Primeros equipos en parcela real. Lecturas contra muestras gravimétricas y conductímetro portátil. Ajuste de firmware y montaje con ayuda del gemelo digital.</div></li>
+        <li class="rv" style="--i:3"><div class="step-when">Campo controlado (SAT) · Meses 5–6</div><div class="step-title">Seis semanas en el sitio elegido</div><div class="step-text">Primeros equipos en parcela real. Lecturas contra mediciones de referencia en campo. Ajuste de firmware y montaje con ayuda del gemelo digital.</div></li>
         <li class="rv" style="--i:4"><div class="step-when">Operación · Meses 6–15</div><div class="step-title">Aceptación continua</div><div class="step-text">Reporte mensual de disponibilidad, completitud y deriva. Visita de verificación trimestral.</div></li>
       </ol>
-      <h3 class="rv" style="--i:5;margin-top:20px">Criterios de aceptación</h3>
+      <h3 class="rv" style="--i:5;margin-top:20px">Criterios de aceptación · ejemplo preliminar</h3>
       <div class="tbl-wrap rv" style="--i:6">
         <table class="nice">
           <thead><tr><th>Indicador</th><th>Meta</th></tr></thead>
@@ -891,35 +908,38 @@ pre.json .n{color:#fbbf24}
           </tbody>
         </table>
       </div>
+      <div class="note rv" style="--i:7">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span><strong>Solo con fines informativos.</strong> Estos criterios y metas son ilustrativos. Al iniciar la ejecución del piloto se presentan, ajustan y validan con TNC y Grupo Herdez.</span>
+      </div>
     </div>
   </section>
 
   <!-- CALIBRACIÓN -->
-  <section class="slide" data-layout="side" data-title="5 · Calibración" data-part="II" data-view="site">
+  <section class="slide tight" data-layout="side" data-title="5 · Calibración" data-part="II" data-view="site">
     <div class="panel panel--wide">
       <span class="kicker rv" style="--i:0">05 · Calibración</span>
-      <h2 class="rv" style="--i:1">Calibración propia del sitio y por profundidad</h2>
-      <p class="lead rv" style="--i:2">Las sondas traen ecuaciones de fábrica. En arcillas expansivas y suelos salinos eso no basta: la conductividad altera la lectura de humedad. El sitio elegido recibe su propia curva.</p>
-      <div class="cols">
-        <ol class="steps" style="margin-top:6px">
-          <li class="rv" style="--i:3"><div class="step-when">Paso 1</div><div class="step-title">Caracterización inicial t₀</div><div class="step-text">Muestreo por estrato 0–20, 20–40 y 40–60 cm en cada SMAAgro.</div></li>
-          <li class="rv" style="--i:4"><div class="step-when">Paso 2</div><div class="step-title">Tres estados de humedad</div><div class="step-text">Muestras gravimétricas con cilindro de densidad aparente en suelo seco, intermedio y tras riego.</div></li>
-          <li class="rv" style="--i:5"><div class="step-when">Paso 3</div><div class="step-title">Ajuste de curvas</div><div class="step-text">Humedad contra VWC gravimétrico. Salinidad contra CE del extracto de pasta saturada.</div></li>
-          <li class="rv" style="--i:6"><div class="step-when">Paso 4</div><div class="step-title">Verificación trimestral</div><div class="step-text">Deriva contra conductímetro y termómetro de referencia. Muestreo final t₁ en el mes 14.</div></li>
-        </ol>
-        <div class="rv" style="--i:7">
-          <h3>Análisis de laboratorio t₀ y t₁</h3>
-          <div class="chips" style="margin-top:0">
-            <span class="chip">Textura (Bouyoucos)</span><span class="chip">Densidad aparente</span><span class="chip">Materia orgánica (Walkley-Black)</span><span class="chip">pH</span><span class="chip">CE extracto saturado</span><span class="chip">CIC</span><span class="chip">N, P, K</span><span class="chip">Respiración del suelo</span>
-          </div>
-          <div class="note">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4 19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2L14 9V3"/></svg>
-            <span>Muestreo y análisis conforme a <strong>NOM-021-RECNAT-2000</strong>, en laboratorio acreditado. Candidatos: INIFAP, Universidad Autónoma de Sinaloa o Universidad Juárez del Estado de Durango, según el sitio.</span>
-          </div>
-          <div class="cards" style="margin-top:12px">
-            <div class="card card--plain metric"><span class="metric-value">≈ 40</span><span class="metric-label">Muestras de laboratorio</span><p class="lead">4 equipos × 3 estratos × t₀/t₁, más gravimétricas de calibración</p></div>
-          </div>
-        </div>
+      <h2 class="rv" style="--i:1">Calibración práctica con datos de TNC</h2>
+      <p class="lead rv" style="--i:2">Las sondas traen ecuaciones de fábrica por tipo de suelo. Conociendo la textura y salinidad del sitio, que en buena parte vienen del banco de datos de TNC, se elige y ajusta la curva correcta.</p>
+      <div class="cards cards--3">
+        <div class="card rv" style="--i:3;--c:var(--c-vida)"><span class="card-num">Base · Data room TNC</span><h4>Datos de suelo mexicano</h4><p>Perfiles, textura, materia orgánica, pH y salinidad de la zona. Definen la curva y la línea base.</p></div>
+        <div class="card rv" style="--i:4;--c:var(--c-hum)"><span class="card-num">Ajuste · Smability</span><h4>Curva por textura y deriva</h4><p>Ecuación del fabricante ajustada a la textura. SMAA OS corrige la deriva de forma remota.</p></div>
+        <div class="card rv" style="--i:5;--c:var(--c-sal)"><span class="card-num">Opcional · Laboratorio local</span><h4>Verificación en campo</h4><p>Si hay laboratorio cercano, se toman muestras al instalar para afinar la curva. Si no, se sigue igual.</p></div>
+      </div>
+      <div class="tbl-wrap rv" style="--i:6;margin-top:16px">
+        <table class="nice">
+          <thead><tr><th>Dato</th><th>Fuente principal</th><th>Complemento</th></tr></thead>
+          <tbody>
+            <tr><td>Textura y densidad aparente</td><td>Data room TNC</td><td>Laboratorio local (opcional)</td></tr>
+            <tr><td>Materia orgánica, pH, NPK</td><td>Data room TNC</td><td>Laboratorio local (opcional)</td></tr>
+            <tr><td>Salinidad (CE)</td><td>Sonda SMAAgro</td><td>Conductímetro portátil en visitas</td></tr>
+            <tr><td>Humedad volumétrica</td><td>Sonda SMAAgro</td><td>Muestra gravimétrica al instalar (opcional)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note rv" style="--i:7">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span><strong>Complejidad: baja a media.</strong> El laboratorio no condiciona el avance del piloto. Si se logra, mejora la precisión; si no, se trabaja con los datos de TNC y la curva por textura.</span>
       </div>
     </div>
   </section>
@@ -978,7 +998,7 @@ pre.json .n{color:#fbbf24}
       <div class="cards cards--4">
         <div class="card rv" style="--i:3;--c:var(--c-hum)"><span class="card-num">Base · Agua</span><h4>Balance hídrico por capas</h4><p>Lluvia y riego entran; evapotranspiración FAO-56 y drenaje bajo 60 cm salen. Detecta sobre-riego y lixiviación de nitrógeno.</p></div>
         <div class="card rv" style="--i:4;--c:var(--c-sal)"><span class="card-num">Base · Sales</span><h4>Riesgo de salinización</h4><p>Tendencia de CE en la zona de raíz contra el umbral del cultivo. Recomienda fracción de lavado.</p></div>
-        <div class="card rv" style="--i:5;--c:var(--c-tmp)"><span class="card-num">Base · Vida</span><h4>Días de suelo vivo</h4><p>Temperatura y humedad estiman días biológicamente activos e integran el cambio de materia orgánica t₀–t₁.</p></div>
+        <div class="card rv" style="--i:5;--c:var(--c-tmp)"><span class="card-num">Base · Vida</span><h4>Días de suelo vivo</h4><p>Temperatura y humedad estiman días biológicamente activos y se cruzan con la materia orgánica del data room de TNC.</p></div>
         <div class="card rv" style="--i:6;--c:var(--c-vida)"><span class="card-num">Predictivo</span><h4>Humedad y riego a 24–72 h</h4><p>Pronóstico con datos de CHAAK y del perfil. Avisa al agricultor cuándo y cuánto regar, por WhatsApp o Telegram.</p></div>
       </div>
       <div class="cols">
@@ -994,7 +1014,7 @@ pre.json .n{color:#fbbf24}
             <span class="chip chip--c" style="--c:var(--c-agua)">Pozo con título en REPDA</span>
             <span class="chip chip--c" style="--c:var(--c-agua)">Nivel del acuífero con SMAWA</span>
             <span class="chip chip--c" style="--c:var(--c-sal)">Costo de bombeo con tarifa 9-CU</span>
-            <span class="chip chip--c" style="--c:var(--c-earth)">NOM-021-RECNAT-2000</span>
+            <span class="chip chip--c" style="--c:var(--c-earth)">Banco de datos de suelo de TNC</span>
             <span class="chip chip--c" style="--c:var(--c-vida)">Alertas en español por WhatsApp y Telegram</span>
             <span class="chip chip--c" style="--c:var(--c-pol)">Indicadores para PSADR, PECC y NDC 3.0</span>
           </div>
@@ -1013,13 +1033,13 @@ pre.json .n{color:#fbbf24}
       <span class="kicker rv" style="--i:0">Parte III · 08 · Resultados esperados</span>
       <h2 class="rv" style="--i:1">Lo que tendrá Herdez al cierre del piloto</h2>
       <div class="cards cards--4">
-        <div class="card card--plain metric rv" style="--i:2"><span class="metric-value" data-count="2" data-suffix="M">2M</span><span class="metric-label">Lecturas de suelo</span><p class="lead">Aprox., 4 equipos × 18 canales</p></div>
+        <div class="card card--plain metric rv" style="--i:2"><span class="metric-value" data-count="1" data-suffix="M+">1M+</span><span class="metric-label">Lecturas de suelo</span><p class="lead">2 equipos × 18 canales, cada 15 min</p></div>
         <div class="card card--plain metric rv" style="--i:3"><span class="metric-value" data-count="1">1</span><span class="metric-label">Ciclo completo</span><p class="lead">Del cultivo elegido</p></div>
         <div class="card card--plain metric rv" style="--i:4"><span class="metric-value" data-count="1">1</span><span class="metric-label">Comparativo</span><p class="lead">Testigo contra intervenida</p></div>
         <div class="card card--plain metric rv" style="--i:5"><span class="metric-value" data-count="1">1</span><span class="metric-label">Brief de política</span><p class="lead">Incentivos por resultado medido</p></div>
       </div>
       <div class="cards cards--2">
-        <div class="card rv" style="--i:6;--c:var(--c-hum)"><span class="card-num">Evidencia</span><h4>Entregables técnicos</h4><ul><li>Informes de sitio (D1) y de sonda (D2)</li><li>SMAAgro operando con ≥ 95 % de datos</li><li>Línea base de suelo t₀ y cierre t₁</li><li>API abierto, modelos base y predictivos</li><li>Gemelo digital de instalación</li></ul></div>
+        <div class="card rv" style="--i:6;--c:var(--c-hum)"><span class="card-num">Evidencia</span><h4>Entregables técnicos</h4><ul><li>Informes de sitio (D1) y de sonda (D2)</li><li>SMAAgro operando con ≥ 95 % de datos</li><li>Línea base de suelo con datos de TNC</li><li>API abierto, modelos base y predictivos</li><li>Gemelo digital de instalación</li></ul></div>
         <div class="card rv" style="--i:7;--c:var(--c-pol)"><span class="card-num">Incidencia</span><h4>Entregables de política</h4><ul><li>Brief con criterios de incentivo medibles</li><li>2 presentaciones en congresos o foros</li><li>Insumos para el diálogo de TNC con autoridades</li><li>Ruta de escalamiento al segundo estado</li></ul></div>
       </div>
       <div class="note rv" style="--i:8">
@@ -1083,7 +1103,7 @@ pre.json .n{color:#fbbf24}
       </div>
       <h3 class="rv" style="--i:8;margin-top:18px">Aliados y contrapartes</h3>
       <div class="cards cards--4" style="margin-top:0">
-        <div class="card rv" style="--i:9;--c:var(--c-earth)"><div class="person"><span class="avatar">SU</span><div><h4>Asesoría en suelo y agua</h4><span class="role">Externo · por confirmar</span><p>INIFAP, UAS o UJED. Muestreo, laboratorio y validación del pozo.</p></div></div></div>
+        <div class="card rv" style="--i:9;--c:var(--c-earth)"><div class="person"><span class="avatar">SU</span><div><h4>Asesoría en suelo y agua</h4><span class="role">Externo · por confirmar</span><p>INIFAP, UAS o UJED. Revisión de datos de suelo y laboratorio local, si se requiere.</p></div></div></div>
         <div class="card rv" style="--i:10;--c:var(--c-earth)"><div class="person"><span class="avatar">TC</span><div><h4>Técnico de campo</h4><span class="role">Local</span><p>Instalación, visitas trimestrales y enlace con el productor.</p></div></div></div>
         <div class="card rv" style="--i:11;--c:var(--c-vida)"><div class="person"><span class="avatar">TN</span><div><h4>TNC México</h4><span class="role">Contraparte</span><p>Política pública, definición de la intervención y red de extensionistas.</p></div></div></div>
         <div class="card rv" style="--i:12;--c:var(--c-vida)"><div class="person"><span class="avatar">GH</span><div><h4>Grupo Herdez</h4><span class="role">Contraparte</span><p>Agronomía de abasto, proveedores candidatos y acceso a parcelas.</p></div></div></div>
@@ -1160,7 +1180,7 @@ pre.json .n{color:#fbbf24}
         <div><b>Octavio Jiménez</b><span>Director de Operaciones</span><code>octaviojimenez@smability.io</code></div>
       </div>
       <div class="map-legend rv" style="--i:4">
-        <span><i class="ln major"></i>Curva maestra</span><span><i class="ln"></i>Curva intermedia</span><span><i class="pt"></i>Parcela candidata (preliminar)</span>
+        <span><i class="pt"></i>Parcela candidata (preliminar)</span>
       </div>
       <div class="restart rv" style="--i:5;justify-content:flex-start;margin-top:14px">
         <button type="button" class="btn-ghost" data-go="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg>Volver al inicio</button>
@@ -1417,7 +1437,7 @@ const MONTHS = ['N','D','E','F','M','A','M','J','J','A','S','O','N','D','E'];
 const NM = MONTHS.length;
 const WS = {
   disc:{label:'Discovery',c:'#f472b6'}, dev:{label:'Desarrollo',c:'#22d3ee'}, test:{label:'Pruebas y sondas',c:'#38bdf8'},
-  field:{label:'Campo',c:'#c08a5b'}, lab:{label:'Calibración y laboratorio',c:'#fbbf24'}, data:{label:'SMAA OS y modelos',c:'#4ade80'},
+  field:{label:'Campo',c:'#c08a5b'}, lab:{label:'Calibración y datos de suelo',c:'#fbbf24'}, data:{label:'SMAA OS y modelos',c:'#4ade80'},
   pol:{label:'Política y difusión',c:'#a78bfa'}, ops:{label:'Operación',c:'#64748b'}
 };
 const GANTT = [
@@ -1428,11 +1448,12 @@ const GANTT = [
   { t:'Pruebas de banco (FAT)', w:'test', s:[[3,4]] },
   { t:'Gemelo digital de instalación', w:'dev', s:[[3,5]] },
   { t:'Emplazamiento y pruebas de campo (SAT)', w:'field', s:[[5,6]] },
-  { t:'Calibración: muestreo t₀', w:'lab', s:[[5,7]] },
+  { t:'Línea base: data room TNC', w:'lab', s:[[2,4]] },
+  { t:'Calibración y verificación en campo', w:'lab', s:[[5,6]] },
   { t:'Operación: testigo e intervenida', w:'ops', s:[[5,15]] },
   { t:'SMAA OS: API v1 y alertas', w:'data', s:[[3,7]] },
   { t:'Modelos base y predictivos', w:'data', s:[[7,13]] },
-  { t:'Muestreo final t₁', w:'lab', s:[[14,14]] },
+  { t:'Muestreo de cierre (opcional)', w:'lab', s:[[14,14]] },
   { act:'pol', t:'Brief de política pública', w:'pol', s:[[11,14]] },
   { act:'pol', t:'Congresos y foros', w:'pol', s:[[10,10],[14,14]] },
   { t:'Informe final y presentación', w:'pol', s:[[15,15]] }
@@ -1472,30 +1493,32 @@ function renderGantt(){
 }
 const RATE = 130;
 const FEES = [
-  { act:'disc', t:'Discovery y selección de sitio (D1)', oj:28, hj:12 },
+  { act:'disc',  t:'Discovery y selección de sitio (D1)', oj:28, hj:12 },
   { act:'probe', t:'Estudio de mercado de sondas (D2)', oj:6, hj:14 },
-  { act:'dev', t:'Diseño e integración SMAAgro', oj:4, hj:26 },
-  { act:'twin', t:'Gemelo digital SMAAgro', oj:24, hj:0 },
-  { act:'inst', t:'Emplazamiento y pruebas de campo', oj:12, hj:12 },
-  { act:'cal', t:'Calibración y análisis de laboratorio', oj:12, hj:0 },
-  { act:'os', t:'SMAA OS: API, modelos y alertas', oj:16, hj:24 },
-  { act:'pol', t:'Brief de política pública', oj:24, hj:0 },
-  { act:'pol', t:'Congresos y foros', oj:8, hj:4 },
-  { act:'mgmt', t:'Gestión, reportes e informe final', oj:10, hj:4 }
+  { act:'dev',   t:'Diseño e integración SMAAgro', oj:4, hj:30 },
+  { act:'twin',  t:'Gemelo digital SMAAgro', oj:24, hj:0 },
+  { act:'inst',  t:'Emplazamiento y pruebas de campo', oj:10, hj:10 },
+  { act:'cal',   t:'Data room TNC: línea base de suelo', oj:12, hj:4 },
+  { act:'cal',   t:'Calibración y verificación en campo', oj:10, hj:0 },
+  { act:'os',    t:'SMAA OS: API, modelos y alertas', oj:16, hj:30 },
+  { act:'pol',   t:'Brief de política pública', oj:28, hj:0 },
+  { act:'pol',   t:'Congresos y foros', oj:8, hj:6 },
+  { act:'mgmt',  t:'Gestión, reportes e informe final', oj:12, hj:6 }
 ];
 const COSTS = [
-  { act:'equip', t:'Equipos: 4 SMAAgro con sonda de perfil', a:12800 },
+  { act:'equip', t:'Equipos: 2 SMAAgro con sonda de perfil', a:6400 },
+  { act:'equip', t:'Sonda de repuesto (respaldo de la comparación)', a:2000 },
   { act:'equip', t:'Equipos: 1 CHAAK y 1 SMAWA para el pozo', a:4100 },
   { act:'probe', t:'Prototipo y 2 sondas finalistas para prueba de banco', a:3000 },
-  { act:'dev',   t:'Ingeniería de apoyo en hardware (subcontrato)', a:4000 },
-  { act:'os',    t:'Ingeniería de apoyo en datos (subcontrato)', a:2000 },
+  { act:'dev',   t:'Ingeniería de apoyo en hardware (subcontrato)', a:4500 },
+  { act:'os',    t:'Ingeniería de apoyo en datos (subcontrato)', a:2500 },
   { act:'disc',  t:'Viajes de discovery a Sinaloa y Durango, sonda de nivel', a:3500 },
-  { act:'inst',  t:'Instalación: viaje, postes, materiales y mano de obra local', a:2800 },
+  { act:'inst',  t:'Instalación: viaje, postes, materiales y mano de obra local', a:2500 },
   { act:'ops',   t:'Visitas trimestrales y técnico de campo local', a:2700 },
-  { act:'cal',   t:'Laboratorio de suelos (≈ 40 análisis NOM-021)', a:2600 },
-  { act:'ops',   t:'Conectividad celular y nube durante 13 meses', a:800 },
-  { act:'pol',   t:'Congresos y foros (2), diseño del brief', a:3200 },
-  { act:'mgmt',  t:'Contingencia', a:2300 }
+  { act:'cal',   t:'Laboratorio local opcional (textura, MO, CE)', a:1500 },
+  { act:'ops',   t:'Conectividad celular y nube durante 13 meses', a:600 },
+  { act:'pol',   t:'Congresos y foros (2), diseño del brief', a:4000 },
+  { act:'mgmt',  t:'Contingencia', a:2600 }
 ];
 const ACTS = [
   { k:'disc',  t:'Discovery y selección de sitio', c:'#f472b6' },
@@ -1504,7 +1527,7 @@ const ACTS = [
   { k:'twin',  t:'Gemelo digital de instalación', c:'#7dd3fc' },
   { k:'equip', t:'Equipos de campo', c:'#c08a5b' },
   { k:'inst',  t:'Emplazamiento e instalación', c:'#fb7185' },
-  { k:'cal',   t:'Calibración y laboratorio', c:'#fbbf24' },
+  { k:'cal',   t:'Calibración y datos de suelo (TNC)', c:'#fbbf24' },
   { k:'os',    t:'SMAA OS: API, modelos y alertas', c:'#4ade80' },
   { k:'ops',   t:'Operación y mantenimiento', c:'#64748b' },
   { k:'pol',   t:'Política pública y difusión', c:'#a78bfa' },
