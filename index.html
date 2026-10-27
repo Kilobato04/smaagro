@@ -263,7 +263,7 @@ pre.json .n{color:#fbbf24}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
 .legend i.ms{width:9px;height:9px;transform:rotate(45deg);border-radius:1px;background:var(--text)}
-.milestones{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px}
+.milestones{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:12px}
 .ms-card{padding:9px 11px;border-radius:9px;border:1px solid var(--line);background:rgba(15,23,42,.45);font-size:.78rem;color:var(--text-2);line-height:1.35}
 .ms-card b{display:block;font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;color:var(--accent);margin-bottom:3px}
 
@@ -393,6 +393,53 @@ pre.json .n{color:#fbbf24}
 .slide.tight h3{margin-top:12px!important}
 .slide.tight .cards{margin-top:14px}
 .slide.tight .card{padding:14px 16px}
+.ms-card{font:inherit;font-size:.78rem;line-height:1.35;text-align:left;cursor:pointer;color:var(--text-2);transition:background .2s}
+.ms-card:hover{background:var(--surface-hover)}
+.ms-e{display:block;margin-top:4px;font-family:var(--mono);font-size:.64rem;color:var(--text-3);letter-spacing:.04em}
+.pay button{font:inherit;text-align:left;cursor:pointer;padding:8px 12px;border-radius:9px;border:1px solid var(--line);background:rgba(15,23,42,.45);font-size:.78rem;color:var(--text-2);line-height:1.35;transition:background .2s}
+.pay button:hover{background:var(--surface-hover)}
+.pay b{display:block;font-size:1rem;color:var(--text);font-variant-numeric:tabular-nums}
+.pay-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+.dl-link{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:0;border:0;background:none;cursor:pointer;font:inherit;font-size:.8rem;color:var(--accent)}
+.dl-link svg{width:14px;height:14px}
+.dl-link:hover{text-decoration:underline}
+.ecode{display:inline-block;min-width:34px;font-family:var(--mono);font-size:.68rem;font-weight:600;color:var(--accent);letter-spacing:.04em}
+.dl-table{width:100%;border-collapse:collapse;font-size:.84rem}
+.dl-table th{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.dl-table td{padding:7px 12px;border-bottom:1px solid rgba(148,163,184,.09);vertical-align:top;color:var(--text-2)}
+.dl-table .hito b{display:block;font-family:var(--mono);font-size:.78rem;color:var(--text)}
+.dl-table .hito span{font-size:.78rem;color:var(--text-3)}
+.dl-table .mes{white-space:nowrap;font-family:var(--mono);font-size:.74rem}
+.dl-table .ents{display:grid;gap:5px}
+.ent{display:grid;grid-template-columns:40px minmax(0,1fr);gap:6px;align-items:baseline}
+.ent strong{color:var(--text);font-weight:550;font-size:.82rem}
+.ent small{display:block;font-size:.74rem;color:var(--text-3);line-height:1.35}
+.dl-table .amt,.dl-table .pct{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--text)}
+.dl-table th.amt,.dl-table th.pct{text-align:right}
+.dl-table tfoot td{border-top:1px solid var(--line-accent);border-bottom:0;font-weight:700;color:var(--text);padding-top:10px}
+.card li .ecode{min-width:46px}
+.crono .g-l{padding:2px 12px;font-size:.72rem}
+.crono .g-bar{top:4px;bottom:4px}
+.crono .g-season{top:4px;bottom:4px}
+.crono .gantt-wrap{margin-top:10px}
+.crono .legend{margin-top:8px}
+.crono .milestones{margin-top:8px}
+.crono .ms-card{padding:7px 10px}
+.bud #fees td,.bud #costs td{padding:3px 12px;font-size:.78rem}
+.bud .budget td.name{font-size:.78rem}
+.bud #fees th,.bud #costs th{padding:6px 12px}
+.bud .split{margin-top:10px}
+.bud .cols--even{margin-top:10px}
+.bud .pay-head{margin-top:10px}
+.bud .pay{margin-top:6px}
+.bud .pay button{padding:6px 10px}
+.bud .pay b{font-size:.9rem}
+.bud > .panel > p.lead:last-child{margin-top:6px!important}
+.deliv .dl-table td{padding:5px 12px}
+.deliv .ents{gap:3px}
+.deliv .ent small{display:inline;margin-left:6px}
+.deliv .ent strong{font-size:.8rem}
+.deliv .ent{grid-template-columns:36px minmax(0,1fr)}
 /* Footer */
 .bar{position:fixed;left:var(--gutter);right:var(--gutter);bottom:calc(var(--bar-bottom) + env(safe-area-inset-bottom,0px));z-index:30;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none}
 .bar>*{pointer-events:auto}
@@ -536,7 +583,7 @@ pre.json .n{color:#fbbf24}
         <div class="card rv" style="--i:11;--c:var(--c-pol)"><span class="card-num">04 · AIreGPT</span><h4>Alertas hiperlocales</h4><p>Agente de IA en Telegram hoy y en WhatsApp desde diciembre 2026 – enero 2027.</p></div>
       </div>
       <div class="chips rv" style="--i:12">
-        <span class="chip">SEDEMA</span><span class="chip">SECTEI</span><span class="chip">UNAM</span><span class="chip">IBERO</span><span class="chip">ITESO</span><span class="chip">Greenpeace México</span><span class="chip">GIZ</span><span class="chip">SkyAlert</span><span class="chip">Corredor Verde</span><span class="chip">Fondo EPIC · U. de Chicago</span>
+        <span class="chip">SEDEMA</span><span class="chip">SECTEI</span><span class="chip">UNAM</span><span class="chip">IBERO</span><span class="chip">ITESO</span><span class="chip">UAM</span><span class="chip">Anáhuac</span><span class="chip">Greenpeace México</span><span class="chip">GIZ</span><span class="chip">SkyAlert</span><span class="chip">Corredor Verde</span><span class="chip">Fondo EPIC · U. de Chicago</span>
       </div>
       <div class="social-row rv" style="--i:13">
         <a href="https://smability.io" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><text x="12" y="16.6" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="currentColor">S</text></svg>smability.io</a>
@@ -657,9 +704,10 @@ pre.json .n{color:#fbbf24}
         </table>
       </div>
       <div class="cards cards--2">
-        <div class="card rv" style="--i:4;--c:var(--c-hum)"><span class="card-num">Entregable D1 · Mes 2</span><h4>Informe de selección de sitio</h4><p>Matriz ponderada, ficha del pozo, fotos, señal celular y ubicación de testigo e intervenida.</p></div>
-        <div class="card rv" style="--i:5;--c:var(--c-sal)"><span class="card-num">Entregable D2 · Mes 2</span><h4>Informe de selección de sonda</h4><p>Análisis de mercado y prueba de banco de dos finalistas. Ver lámina de sondas.</p></div>
+        <div class="card rv" style="--i:4;--c:var(--c-hum)"><span class="card-num">Entregable E2 · Mes 2</span><h4>Informe de selección de sitio</h4><p>Matriz ponderada, ficha del pozo, fotos, señal celular y ubicación de testigo e intervenida.</p></div>
+        <div class="card rv" style="--i:5;--c:var(--c-sal)"><span class="card-num">Entregable E3 · Mes 2</span><h4>Informe de selección de sonda</h4><p>Análisis de mercado y prueba de banco de dos finalistas. Ver lámina de sondas.</p></div>
       </div>
+      <button type="button" class="dl-link rv" style="--i:6" data-go="22">Ver todos los entregables, hitos y pagos<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div>
   </section>
 
@@ -755,14 +803,14 @@ pre.json .n{color:#fbbf24}
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">02 · Arquitectura · Ficha técnica preliminar</span>
       <h2 class="rv" style="--i:1">SMAAgro: suelo medido en el perfil, con panel solar y envío celular</h2>
-      <p class="lead rv" style="--i:2">Especificación de partida basada en SMAA y SMAWA. Los valores marcados como objetivo se confirman en las pruebas de banco y con la sonda elegida en el informe D2.</p>
+      <p class="lead rv" style="--i:2">Especificación de partida basada en SMAA y SMAWA. Los valores marcados como objetivo se confirman en las pruebas de banco y con la sonda elegida en el entregable E3.</p>
       <div class="cols">
         <div class="tbl-wrap rv" style="--i:3">
           <table class="nice spec">
             <tbody>
               <tr><td>Mide</td><td>Humedad volumétrica, conductividad eléctrica y temperatura, a 10, 20, 30, 40, 50 y 60 cm</td></tr>
               <tr><td>Resolución</td><td>Una lectura cada 15 a 20 min · 18 canales por lectura</td></tr>
-              <tr><td>Sonda</td><td>Comercial de perfil con salida SDI-12, seleccionada en el informe D2</td></tr>
+              <tr><td>Sonda</td><td>Comercial de perfil con salida SDI-12, seleccionada en el entregable E3</td></tr>
               <tr><td>Energía</td><td>Panel solar 10 W y batería 72 Wh, como SMAA</td></tr>
               <tr><td>Autonomía</td><td>Objetivo ≥ 5 días sin sol. SMAA logra 3.8 días leyendo cada minuto; SMAAgro lee 15 a 20 veces menos</td></tr>
               <tr><td>Datos</td><td>Celular 2G/4G, SIM Hologram multioperador · nube AWS · API</td></tr>
@@ -802,7 +850,7 @@ pre.json .n{color:#fbbf24}
   <!-- SONDAS -->
   <section class="slide" data-layout="full" data-title="Selección de sonda" data-part="II" data-view="overview-dim">
     <div class="panel panel--full">
-      <span class="kicker rv" style="--i:0">02 · Arquitectura · Entregable D2</span>
+      <span class="kicker rv" style="--i:0">02 · Arquitectura · Entregable E3</span>
       <h2 class="rv" style="--i:1">¿Qué sonda del mercado sirve mejor al campo mexicano?</h2>
       <p class="lead rv" style="--i:2">Antes de fabricar, comparamos las sondas comerciales compatibles con SMAAgro (SDI-12, humedad, salinidad y temperatura). Las dos mejor calificadas pasan a prueba de banco con suelo del sitio elegido. Haz clic en cada sonda para ver su ficha.</p>
       <div class="tbl-wrap rv" style="--i:3;margin-top:16px">
@@ -810,11 +858,11 @@ pre.json .n{color:#fbbf24}
           <thead><tr><th>Sonda</th><th>Tecnología</th><th>Medición</th><th>A favor</th><th>A revisar para México</th></tr></thead>
           <tbody>
             <tr><td><a class="plink" href="https://www.davisinstruments.com/products/sentek-drill-drop-soil-moisture-probe-24-60-cm" target="_blank" rel="noopener">Sentek Drill &amp; Drop<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>Capacitancia</td><td>Perfil, cada 10 cm hasta 120 cm</td><td>Instalación rápida sin lodo; enterrable, fuera del paso de maquinaria</td><td>Costo y soporte técnico local</td></tr>
-            <tr><td><a class="plink" href="https://ictinternational.com/product/enviropro-multidepth-soil-moisture-probes/" target="_blank" rel="noopener">EnviroPro<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>Capacitancia</td><td>Perfil, cada 10 cm</td><td>Perfil completo en un solo tubo; bajo mantenimiento</td><td>Distribución en México</td></tr>
+            <tr><td><a class="plink" href="https://kisters.eu/app/uploads/2025/01/240625-enviropro-soilprobes-en.pdf" target="_blank" rel="noopener">EnviroPro<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>Capacitancia</td><td>Perfil, cada 10 cm</td><td>Perfil completo en un solo tubo; bajo mantenimiento</td><td>Distribución en México</td></tr>
             <tr><td><a class="plink" href="https://www.campbellsci.es/soilvue10" target="_blank" rel="noopener">Campbell SoilVUE10<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>TDR</td><td>Perfil, 0.5 o 1 m</td><td>Precisión TDR en perfil</td><td>Costo por punto más alto</td></tr>
             <tr><td><a class="plink" href="https://metergroup.com/products/teros-12/" target="_blank" rel="noopener">METER TEROS 12<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>Capacitancia</td><td>Un punto por sensor</td><td>Bajo costo por sensor; amplia literatura</td><td>Requiere excavar una calicata por perfil</td></tr>
-            <tr><td><a class="plink" href="https://ictinternational.com/product/stevens-hydraprobe/" target="_blank" rel="noopener">Stevens HydraProbe<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>Coaxial</td><td>Un punto por sensor</td><td>Robusta; buena respuesta en suelos salinos</td><td>Excavación y varios cables por perfil</td></tr>
-            <tr><td><a class="plink" href="https://acclima.com/tdr-315h-soil-moisture-sensor/" target="_blank" rel="noopener">Acclima TDR-315H<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>TDR</td><td>Un punto por sensor</td><td>Precisión TDR a costo moderado</td><td>Excavación; soporte local</td></tr>
+            <tr><td><a class="plink" href="https://fondriest.com/stevens-hydraprobe-soil-moisture-sensors.htm" target="_blank" rel="noopener">Stevens HydraProbe<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>Coaxial</td><td>Un punto por sensor</td><td>Robusta; buena respuesta en suelos salinos</td><td>Excavación y varios cables por perfil</td></tr>
+            <tr><td><a class="plink" href="https://acclima.com/product/acclima-digital-true-tdr-315h-soil-moisture-sensor-sdi-12" target="_blank" rel="noopener">Acclima TDR-315H<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>TDR</td><td>Un punto por sensor</td><td>Precisión TDR a costo moderado</td><td>Excavación; soporte local</td></tr>
           </tbody>
         </table>
       </div>
@@ -834,7 +882,7 @@ pre.json .n{color:#fbbf24}
         <div class="rv" style="--i:5">
           <div class="note" style="margin-top:0">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-            <span><strong>Hipótesis preliminar.</strong> Una sonda capacitiva de perfil se ajusta mejor al agricultor mexicano: se instala en minutos con barrena, se retira entre ciclos de hortaliza y mide salinidad en cada profundidad. La decisión final sale de la matriz ponderada y la prueba de banco, y se entrega como informe D2 en el mes 2.</span>
+            <span><strong>Hipótesis preliminar.</strong> Una sonda capacitiva de perfil se ajusta mejor al agricultor mexicano: se instala en minutos con barrena, se retira entre ciclos de hortaliza y mide salinidad en cada profundidad. La decisión final sale de la matriz ponderada y la prueba de banco, y se entrega como entregable E3 en el mes 2.</span>
           </div>
         </div>
       </div>
@@ -1039,13 +1087,14 @@ pre.json .n{color:#fbbf24}
         <div class="card card--plain metric rv" style="--i:5"><span class="metric-value" data-count="1">1</span><span class="metric-label">Brief de política</span><p class="lead">Incentivos por resultado medido</p></div>
       </div>
       <div class="cards cards--2">
-        <div class="card rv" style="--i:6;--c:var(--c-hum)"><span class="card-num">Evidencia</span><h4>Entregables técnicos</h4><ul><li>Informes de sitio (D1) y de sonda (D2)</li><li>SMAAgro operando con ≥ 95 % de datos</li><li>Línea base de suelo con datos de TNC</li><li>API abierto, modelos base y predictivos</li><li>Gemelo digital de instalación</li></ul></div>
-        <div class="card rv" style="--i:7;--c:var(--c-pol)"><span class="card-num">Incidencia</span><h4>Entregables de política</h4><ul><li>Brief con criterios de incentivo medibles</li><li>2 presentaciones en congresos o foros</li><li>Insumos para el diálogo de TNC con autoridades</li><li>Ruta de escalamiento al segundo estado</li></ul></div>
+        <div class="card rv" style="--i:6;--c:var(--c-hum)"><span class="card-num">Evidencia</span><h4>Entregables técnicos</h4><ul><li><b class="ecode">E2–E3</b> Informes de sitio y de sonda</li><li><b class="ecode">E5</b> Gemelo digital de instalación</li><li><b class="ecode">E6–E7</b> Red en línea, API y alertas</li><li><b class="ecode">E8–E9</b> Modelos y reporte testigo vs intervenida</li></ul></div>
+        <div class="card rv" style="--i:7;--c:var(--c-pol)"><span class="card-num">Incidencia</span><h4>Entregables de política</h4><ul><li><b class="ecode">E10</b> Informe final y ruta de escalamiento</li><li><b class="ecode">E11</b> Brief con criterios de incentivo medibles</li><li><b class="ecode">E12</b> 2 presentaciones en congresos o foros</li><li>Insumos para el diálogo de TNC con autoridades</li></ul></div>
       </div>
       <div class="note rv" style="--i:8">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
         <span><strong>Hipótesis a validar:</strong> la parcela intervenida reduce entre 15 y 30 % el agua aplicada respecto a la testigo, sin afectar rendimiento. El piloto confirmará o descartará esta cifra con datos propios.</span>
       </div>
+      <button type="button" class="dl-link rv" style="--i:9" data-go="22">Ver entregables, hitos y pagos<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div>
   </section>
 
@@ -1078,11 +1127,11 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- CRONOGRAMA -->
-  <section class="slide" data-layout="full" data-title="Cronograma" data-part="IV" data-view="overview-dim">
+  <section class="slide crono" data-layout="full" data-title="Cronograma" data-part="IV" data-view="overview-dim">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">Parte IV · Cronograma</span>
-      <h2 class="rv" style="--i:1">15 meses: discovery primero, luego un ciclo completo en campo</h2>
-      <p class="lead rv" style="--i:2">Nov 2026 – Ene 2028. La ventana de medición cubre el ciclo PV 2027 si se elige Durango, o el cierre del OI 2026-27 y el OI 2027-28 completo hasta enero si se elige Sinaloa.</p>
+      <h2 class="rv" style="--i:1">15 meses: discovery y un ciclo completo en campo</h2>
+      <p class="lead rv" style="--i:2">Nov 2026 – Ene 2028. Cubre el ciclo PV 2027 en Durango o el OI 2027-28 en Sinaloa.</p>
       <div class="gantt-wrap rv" style="--i:3"><div class="gantt" id="gantt"></div></div>
       <div class="legend rv" style="--i:4" id="gantt-legend"></div>
       <div class="milestones rv" style="--i:5" id="milestones"></div>
@@ -1129,11 +1178,11 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- PRESUPUESTO -->
-  <section class="slide" data-layout="full" data-title="Presupuesto · honorarios y gastos" data-part="IV" data-view="overview-dim">
+  <section class="slide bud" data-layout="full" data-title="Presupuesto · honorarios y gastos" data-part="IV" data-view="overview-dim">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">Parte IV · Presupuesto</span>
       <h2 class="rv" style="--i:1">USD 75,000: honorarios por hora y gastos directos</h2>
-      <p class="lead rv" style="--i:2">Sin cobro de SaaS. Honorarios solo de Octavio y Horacio Jiménez a USD 130/h; lo demás es gasto directo.</p>
+      <p class="lead rv" style="--i:2">Honorarios de Octavio y Horacio Jiménez a USD 130/h. Sin cobro de SaaS.</p>
       <div class="split rv" style="--i:3" id="split"></div>
       <div class="cols cols--even">
         <div class="rv" style="--i:4">
@@ -1157,15 +1206,22 @@ pre.json .n{color:#fbbf24}
           </div>
         </div>
       </div>
-      <h3 class="rv" style="--i:6;margin-top:14px">Pagos por hito</h3>
-      <div class="pay rv" style="--i:7">
-        <div><b>25 % · 18,750</b>Firma e inicio de discovery</div>
-        <div><b>20 % · 15,000</b>H1: sitio y sonda seleccionados (mes 2)</div>
-        <div><b>20 % · 15,000</b>H3: SMAAgro en línea (mes 5)</div>
-        <div><b>20 % · 15,000</b>H4: modelos v1 (mes 11)</div>
-        <div><b>15 % · 11,250</b>H5: informe final y brief (mes 15)</div>
+      <div class="pay-head rv" style="--i:6"><h3 style="margin:0">Pagos por hito</h3><button type="button" class="dl-link" data-go="22" style="margin:0">Ver entregables de cada pago<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+      <div class="pay rv" style="--i:7" id="pay"></div>
+      <p class="lead rv" style="--i:8;font-size:.76rem;margin-top:10px;color:var(--text-3)">OJ: Octavio Jiménez · HJ: Horacio Jiménez. Cifras en USD sin impuestos, sujetas a la sonda elegida en el entregable E3 y al tipo de cambio. La propiedad de los equipos al cierre se definirá en el convenio con TNC.</p>
+    </div>
+  </section>
+
+  <!-- ENTREGABLES Y PAGOS -->
+  <section class="slide deliv" data-layout="full" data-title="Entregables, hitos y pagos" data-part="IV" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Parte IV · Entregables, hitos y pagos</span>
+      <h2 class="rv" style="--i:1">Cada pago contra entregables concretos</h2>
+      <p class="lead rv" style="--i:2">Doce entregables agrupados en seis hitos. Cada pago se libera al aprobar los entregables de su hito. Son los mismos hitos del cronograma y del presupuesto.</p>
+      <div class="tbl-wrap rv" style="--i:3;margin-top:14px">
+        <table class="dl-table" id="dl"><thead><tr><th>Hito</th><th>Mes</th><th>Entregables</th><th class="amt">Pago USD</th><th class="pct">%</th></tr></thead><tbody></tbody><tfoot></tfoot></table>
       </div>
-      <p class="lead rv" style="--i:8;font-size:.76rem;margin-top:10px;color:var(--text-3)">OJ: Octavio Jiménez · HJ: Horacio Jiménez. Cifras en USD sin impuestos, sujetas a la sonda elegida en el informe D2 y al tipo de cambio. La propiedad de los equipos al cierre se definirá en el convenio con TNC.</p>
+      <p class="lead rv" style="--i:4;font-size:.76rem;margin-top:10px;color:var(--text-3)">El hito H2 no tiene pago propio: sus entregables se revisan en el mes 4 y se pagan junto con H3. Montos en USD sin impuestos.</p>
     </div>
   </section>
 
@@ -1196,7 +1252,7 @@ pre.json .n{color:#fbbf24}
     <span class="hide-sm">26 octubre 2026</span><span class="dot hide-sm"></span>
     <span class="slide-title" id="slide-title">Portada</span><span class="dot"></span>
     <button type="button" class="counter-btn" id="btn-index" aria-haspopup="true" aria-expanded="false" title="Índice (M)">
-      <span id="counter">01 / 22</span>
+      <span id="counter">01 / 23</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>
     </button>
   </div>
@@ -1451,7 +1507,7 @@ const GANTT = [
   { t:'Línea base: data room TNC', w:'lab', s:[[2,4]] },
   { t:'Calibración y verificación en campo', w:'lab', s:[[5,6]] },
   { t:'Operación: testigo e intervenida', w:'ops', s:[[5,15]] },
-  { t:'SMAA OS: API v1 y alertas', w:'data', s:[[3,7]] },
+  { t:'SMAA OS: API v1 y alertas', w:'data', s:[[3,5]] },
   { t:'Modelos base y predictivos', w:'data', s:[[7,13]] },
   { t:'Muestreo de cierre (opcional)', w:'lab', s:[[14,14]] },
   { act:'pol', t:'Brief de política pública', w:'pol', s:[[11,14]] },
@@ -1462,13 +1518,28 @@ const SEASONS = [
   { t:'Si Sinaloa · tomate ciclo OI', c:'#22d3ee', s:[[1,6],[11,15]] },
   { t:'Si Durango · ciclo PV', c:'#c08a5b', s:[[8,12]] }
 ];
-const MS = [
-  { m:2, h:'H1 · Mes 2', d:'Sitio y sonda seleccionados' },
-  { m:4, h:'H2 · Mes 4', d:'FAT aprobado y gemelo digital' },
-  { m:5, h:'H3 · Mes 5', d:'SMAAgro en línea' },
-  { m:11, h:'H4 · Mes 11', d:'Modelos base y predictivo v1' },
-  { m:15, h:'H5 · Mes 15', d:'Informe final y brief' }
+/* Catálogo único de entregables: alimenta cronograma (hitos), presupuesto (pagos) y la lámina de entregables */
+const HITOS = [
+  { h:'H0', m:0,  t:'Firma del convenio', pay:20000, e:[
+    ['E1','Plan de trabajo y acuerdo de parcelas','Calendario detallado, criterios de intervención acordados con TNC y Herdez, proveedores candidatos'] ] },
+  { h:'H1', m:2,  t:'Sitio y sonda seleccionados', pay:15000, e:[
+    ['E2','Informe de selección de sitio','Matriz ponderada, ficha del pozo (REPDA y nivel estático), señal celular, ubicación de testigo e intervenida'],
+    ['E3','Informe de selección de sonda','Estudio de mercado y prueba de banco de las dos finalistas'] ] },
+  { h:'H2', m:4,  t:'SMAAgro listo para campo', pay:0, e:[
+    ['E4','Prototipo SMAAgro con pruebas de banco aprobadas','Reporte de pruebas FAT'],
+    ['E5','Gemelo digital SMAAgro','Guía 3D de instalación para el agricultor'] ] },
+  { h:'H3', m:5,  t:'Red en línea', pay:15000, e:[
+    ['E6','Red instalada y operando','2 SMAAgro, CHAAK y SMAWA en línea; reporte de instalación y línea base con datos de TNC'],
+    ['E7','API v1 y alertas','Documentación del API abierto, alertas por WhatsApp y Telegram, tablero'] ] },
+  { h:'H4', m:11, t:'Modelos v1', pay:15000, e:[
+    ['E8','Modelos base y predictivo v1','Balance hídrico, salinidad, vida del suelo y pronóstico de riego'],
+    ['E9','Reporte intermedio','Testigo contra intervenida con los datos del ciclo'] ] },
+  { h:'H5', m:15, t:'Cierre del piloto', pay:10000, e:[
+    ['E10','Informe final','Resultados, aprendizajes y ruta de escalamiento'],
+    ['E11','Brief de política pública','Criterios de incentivo basados en resultados medidos'],
+    ['E12','Presentaciones en 2 congresos o foros','Materiales y presentación'] ] }
 ];
+const MS = HITOS.map(x => ({ m:x.m, h: x.m ? `${x.h} · Mes ${x.m}` : `${x.h} · Firma`, d:x.t, x }));
 function renderGantt(){
   const g = $('#gantt'); let h = '<div class="g-h" style="text-align:left;padding-left:12px">Actividad</div>';
   MONTHS.forEach((m,i)=>{ const yr = i===0?' 26':i===2?' 27':i===14?' 28':''; h += `<div class="g-h${yr?' yr':''}">${m}${yr}</div>`; });
@@ -1477,7 +1548,7 @@ function renderGantt(){
     for (let m=1;m<=NM;m++){
       let inner = '';
       segs.forEach(([a,b]) => { if (m===a){ const span=b-a+1; inner += `<div class="${isSeason?'g-season':'g-bar'}" style="--c:${color};left:3px;width:calc(${span*100}% - 6px)"></div>`; } });
-      ms.filter(x=>x.m===m).forEach(()=>{ inner += '<div class="g-ms" style="left:100%"></div>'; });
+      ms.filter(x=>x.m===m).forEach(()=>{ inner += `<div class="g-ms" style="left:${m===NM?'calc(100% - 9px)':'100%'}"></div>`; });
       r += `<div class="g-c ${cls}">${inner}</div>`;
     }
     return r;
@@ -1489,12 +1560,12 @@ function renderGantt(){
   // las barras abarcan varias celdas: permitir desbordamiento visual
   $$('.g-c', g).forEach(c => c.style.overflow = 'visible');
   $('#gantt-legend').innerHTML = Object.values(WS).map(w=>`<span><i style="--c:${w.c}"></i>${w.label}</span>`).join('') + '<span><i style="--c:transparent;border:1px solid #64748b;background:repeating-linear-gradient(135deg,#64748b55 0 3px,transparent 3px 6px)"></i>Ciclo de cultivo</span><span><i class="ms"></i>Hito</span>';
-  $('#milestones').innerHTML = MS.map(m=>`<div class="ms-card"><b>${m.h}</b>${m.d}</div>`).join('');
+  $('#milestones').innerHTML = MS.map(m=>`<button type="button" class="ms-card" data-go="22"><b>${m.h}</b>${m.d}<span class="ms-e">${m.x.e.map(e=>e[0]).join(' · ')}${m.x.pay?' · USD '+fmt.format(m.x.pay):''}</span></button>`).join('');
 }
 const RATE = 130;
 const FEES = [
-  { act:'disc',  t:'Discovery y selección de sitio (D1)', oj:28, hj:12 },
-  { act:'probe', t:'Estudio de mercado de sondas (D2)', oj:6, hj:14 },
+  { act:'disc',  t:'Discovery y selección de sitio (E2)', oj:28, hj:12 },
+  { act:'probe', t:'Estudio de mercado de sondas (E3)', oj:6, hj:14 },
   { act:'dev',   t:'Diseño e integración SMAAgro', oj:4, hj:30 },
   { act:'twin',  t:'Gemelo digital SMAAgro', oj:24, hj:0 },
   { act:'inst',  t:'Emplazamiento y pruebas de campo', oj:10, hj:10 },
@@ -1548,6 +1619,16 @@ function renderByActivity(){
     <td class="barc"><div class="stack" style="width:${r.tot/max*100}%"><span class="s-fee" style="flex:${r.fee}"></span><span class="s-cost" style="flex:${r.cost}"></span></div></td></tr>`).join('');
   $('#byact tfoot').innerHTML = `<tr><td>Total</td><td class="amt">${H}</td><td class="amt">${fmt.format(F)}</td><td class="amt">${fmt.format(C)}</td><td class="amt">${fmt.format(T)}</td><td class="pct">100 %</td><td class="barc"></td></tr>`;
 }
+function renderDeliv(){
+  const T = HITOS.reduce((a,x)=>a+x.pay,0), pct = v => (v/T*100).toFixed(1)+' %';
+  $('#dl tbody').innerHTML = HITOS.map(x => `<tr>
+    <td class="hito"><b>${x.h}</b><span>${x.t}</span></td>
+    <td class="mes">${x.m===0?'Firma':'Mes '+x.m}</td>
+    <td class="ents">${x.e.map(e=>`<div class="ent"><b class="ecode">${e[0]}</b><span><strong>${e[1]}</strong><small>${e[2]}</small></span></div>`).join('')}</td>
+    <td class="amt">${x.pay?fmt.format(x.pay):'Con H3'}</td><td class="pct">${x.pay?pct(x.pay):'–'}</td></tr>`).join('');
+  $('#dl tfoot').innerHTML = `<tr><td colspan="3">Total · ${HITOS.reduce((a,x)=>a+x.e.length,0)} entregables</td><td class="amt">${fmt.format(T)}</td><td class="pct">100 %</td></tr>`;
+  $('#pay').innerHTML = HITOS.filter(x=>x.pay).map(x => `<button type="button" data-go="22"><b>${pct(x.pay)} · ${fmt.format(x.pay)}</b>${x.h} · ${x.m===0?'Firma':'mes '+x.m}<span class="ms-e">${x.e.map(e=>e[0]).join(' · ')}</span></button>`).join('');
+}
 function renderBudget(){
   const pct = v => (v/75000*100).toFixed(1) + ' %';
   const hOJ = FEES.reduce((s,f)=>s+f.oj,0), hHJ = FEES.reduce((s,f)=>s+f.hj,0), hrs = hOJ + hHJ, fee = hrs*RATE;
@@ -1580,6 +1661,30 @@ function countUp(slide){
     el._raf = requestAnimationFrame(tick);
   });
 }
+/* Ajuste a pantalla: si un panel no cabe, se escala completo (sin scroll interno) */
+function fitPanels(){ slides.forEach(fitPanel); }
+function fitPanel(sl){
+  const desktop = innerWidth >= 900;
+  {
+    const p = sl.querySelector('.panel'); if (!p) return;
+    p.style.zoom = ''; p.style.maxHeight = ''; p.style.flexShrink = '';
+    if (!desktop) return;
+    p.style.maxHeight = 'none'; p.style.flexShrink = '0';
+    const cs = getComputedStyle(sl);
+    const avail = sl.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    const natural = p.scrollHeight;
+    if (natural > avail + 1){
+      let z = Math.max(.66, (avail - 10) / natural);
+      p.style.zoom = z.toFixed(3);
+      for (let k = 0; k < 4; k++){
+        const h = p.getBoundingClientRect().height;
+        if (h <= avail || z <= .66) break;
+        z = Math.max(.66, z * (avail - 10) / h);
+        p.style.zoom = z.toFixed(3);
+      }
+    } else { p.style.maxHeight = ''; p.style.flexShrink = ''; }
+  }
+}
 function goTo(i, { instant=false } = {}){
   i = Math.max(0, Math.min(slides.length-1, i)); current = i;
   slides.forEach((s,k) => { const on = k===i; s.classList.toggle('is-active',on); s.setAttribute('aria-hidden',String(!on)); s.inert = !on; });
@@ -1593,6 +1698,7 @@ function goTo(i, { instant=false } = {}){
   $$('#index button').forEach(b => b.setAttribute('aria-current', String(+b.dataset.go === i+1)));
   try { history.replaceState(null,'','#'+(i+1)); } catch(_){}
   countUp(slides[i]);
+  fitPanel(slides[i]);
   setView(slides[i].dataset.view, instant);
   if (slides[i].dataset.wins && window.mapboxgl && CONFIG.mapboxToken){ initWindows(); setTimeout(() => Object.values(wins).forEach(m => m.resize && m.resize()), 650); }
 }
@@ -1637,7 +1743,7 @@ let tx = null;
 addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
 addEventListener('touchend', e => { if (tx===null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 60) (dx<0 ? next : prev)(); tx = null; }, { passive:true });
 addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1),10); if (n && n-1 !== current) goTo(n-1); });
-addEventListener('resize', () => { resize(); });
+addEventListener('resize', () => { fitPanels(); resize(); });
 
 /* ===================== Referencia en vivo (Open-Meteo) ===================== */
 async function pollLive(){
@@ -1662,7 +1768,8 @@ async function pollLive(){
 }
 
 /* ===================== Arranque ===================== */
-renderGantt(); renderBudget(); renderByActivity(); renderThr(); buildIndex();
+renderGantt(); renderBudget(); renderByActivity(); renderDeliv();
+fitPanels(); document.fonts && document.fonts.ready.then(() => { fitPanels(); updateOffset(true); }); renderThr(); buildIndex();
 resize();
 goTo((parseInt(location.hash.slice(1),10) || 1) - 1, { instant:true });
 requestAnimationFrame(drawFrame);
