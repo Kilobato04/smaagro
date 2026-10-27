@@ -704,7 +704,7 @@ pre.json .n{color:#fbbf24}
         </table>
       </div>
       <div class="cards cards--2">
-        <div class="card rv" style="--i:4;--c:var(--c-hum)"><span class="card-num">Entregable E2 · Mes 2</span><h4>Informe de selección de sitio</h4><p>Matriz ponderada, ficha del pozo, fotos, señal celular y ubicación de testigo e intervenida.</p></div>
+        <div class="card rv" style="--i:4;--c:var(--c-hum)"><span class="card-num">Entregable E2 · Mes 2</span><h4>Selección de sitio y acuerdo con el productor</h4><p>Matriz ponderada, ficha del pozo, fotos, señal celular y ubicación de testigo e intervenida.</p></div>
         <div class="card rv" style="--i:5;--c:var(--c-sal)"><span class="card-num">Entregable E3 · Mes 2</span><h4>Informe de selección de sonda</h4><p>Análisis de mercado y prueba de banco de dos finalistas. Ver lámina de sondas.</p></div>
       </div>
       <button type="button" class="dl-link rv" style="--i:6" data-go="22">Ver todos los entregables, hitos y pagos<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -1088,7 +1088,7 @@ pre.json .n{color:#fbbf24}
       </div>
       <div class="cards cards--2">
         <div class="card rv" style="--i:6;--c:var(--c-hum)"><span class="card-num">Evidencia</span><h4>Entregables técnicos</h4><ul><li><b class="ecode">E2–E3</b> Informes de sitio y de sonda</li><li><b class="ecode">E5</b> Gemelo digital de instalación</li><li><b class="ecode">E6–E7</b> Red en línea, API y alertas</li><li><b class="ecode">E8–E9</b> Modelos y reporte testigo vs intervenida</li></ul></div>
-        <div class="card rv" style="--i:7;--c:var(--c-pol)"><span class="card-num">Incidencia</span><h4>Entregables de política</h4><ul><li><b class="ecode">E10</b> Informe final y ruta de escalamiento</li><li><b class="ecode">E11</b> Brief con criterios de incentivo medibles</li><li><b class="ecode">E12</b> 2 presentaciones en congresos o foros</li><li>Insumos para el diálogo de TNC con autoridades</li></ul></div>
+        <div class="card rv" style="--i:7;--c:var(--c-pol)"><span class="card-num">Incidencia</span><h4>Entregables de política</h4><ul><li><b class="ecode">E10</b> Informe final, brief de política pública y ruta de escalamiento</li><li>Criterios de incentivo medibles</li><li>Reporte de 2 presentaciones en congresos o foros</li><li>Insumos para el diálogo de TNC con autoridades</li></ul></div>
       </div>
       <div class="note rv" style="--i:8">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
@@ -1217,7 +1217,7 @@ pre.json .n{color:#fbbf24}
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">Parte IV · Entregables, hitos y pagos</span>
       <h2 class="rv" style="--i:1">Cada pago contra entregables concretos</h2>
-      <p class="lead rv" style="--i:2">Doce entregables agrupados en seis hitos. Cada pago se libera al aprobar los entregables de su hito. Son los mismos hitos del cronograma y del presupuesto.</p>
+      <p class="lead rv" style="--i:2">Diez entregables agrupados en seis hitos. Cada pago se libera al aprobar los entregables de su hito. Son los mismos hitos del cronograma y del presupuesto.</p>
       <div class="tbl-wrap rv" style="--i:3;margin-top:14px">
         <table class="dl-table" id="dl"><thead><tr><th>Hito</th><th>Mes</th><th>Entregables</th><th class="amt">Pago USD</th><th class="pct">%</th></tr></thead><tbody></tbody><tfoot></tfoot></table>
       </div>
@@ -1521,9 +1521,9 @@ const SEASONS = [
 /* Catálogo único de entregables: alimenta cronograma (hitos), presupuesto (pagos) y la lámina de entregables */
 const HITOS = [
   { h:'H0', m:0,  t:'Firma del convenio', pay:20000, e:[
-    ['E1','Plan de trabajo y acuerdo de parcelas','Calendario detallado, criterios de intervención acordados con TNC y Herdez, proveedores candidatos'] ] },
+    ['E1','Plan de trabajo, movilización y parcelas candidatas','Calendario detallado, movilización del equipo, lista corta de proveedores y parcelas candidatas, y criterios de intervención acordados con TNC y Herdez'] ] },
   { h:'H1', m:2,  t:'Sitio y sonda seleccionados', pay:15000, e:[
-    ['E2','Informe de selección de sitio','Matriz ponderada, ficha del pozo (REPDA y nivel estático), señal celular, ubicación de testigo e intervenida'],
+    ['E2','Selección de sitio y acuerdo con el productor','Evaluación en campo de las candidatas de E1: matriz ponderada, ficha del pozo (REPDA y nivel estático), señal celular, ubicación de testigo e intervenida y carta de participación del productor'],
     ['E3','Informe de selección de sonda','Estudio de mercado y prueba de banco de las dos finalistas'] ] },
   { h:'H2', m:4,  t:'SMAAgro listo para campo', pay:0, e:[
     ['E4','Prototipo SMAAgro con pruebas de banco aprobadas','Reporte de pruebas FAT'],
@@ -1535,9 +1535,7 @@ const HITOS = [
     ['E8','Modelos base y predictivo v1','Balance hídrico, salinidad, vida del suelo y pronóstico de riego'],
     ['E9','Reporte intermedio','Testigo contra intervenida con los datos del ciclo'] ] },
   { h:'H5', m:15, t:'Cierre del piloto', pay:10000, e:[
-    ['E10','Informe final','Resultados, aprendizajes y ruta de escalamiento'],
-    ['E11','Brief de política pública','Criterios de incentivo basados en resultados medidos'],
-    ['E12','Presentaciones en 2 congresos o foros','Materiales y presentación'] ] }
+    ['E10','Informe final, brief de política pública y escalamiento','Resultados del piloto, criterios de incentivo basados en resultados medidos, ruta de escalamiento y reporte de las 2 presentaciones en congresos o foros'] ] }
 ];
 const MS = HITOS.map(x => ({ m:x.m, h: x.m ? `${x.h} · Mes ${x.m}` : `${x.h} · Firma`, d:x.t, x }));
 function renderGantt(){
