@@ -448,6 +448,7 @@ pre.json .n{color:#fbbf24}
 .co2t{table-layout:fixed}
 .co2t td{white-space:normal}
 .co2t td:first-child{white-space:nowrap}
+.fnote{margin-top:8px;font-size:.76rem;color:var(--text-3);line-height:1.45}
 /* Footer */
 .bar{position:fixed;left:var(--gutter);right:var(--gutter);bottom:calc(var(--bar-bottom) + env(safe-area-inset-bottom,0px));z-index:30;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none}
 .bar>*{pointer-events:auto}
@@ -687,6 +688,7 @@ pre.json .n{color:#fbbf24}
             <tr><td>Nivel del pozo</td><td><span class="tag tag--on">Continuo · SMAWA</span></td><td>Presión sobre el acuífero</td></tr>
             <tr><td>pH, materia orgánica, NPK</td><td><span class="tag tag--lab">Data room TNC · lab opcional</span></td><td>Cambian en meses; sensores in situ derivan</td></tr>
             <tr><td>Textura y densidad aparente</td><td><span class="tag tag--lab">Data room TNC · lab opcional</span></td><td>Ajustan la curva de la sonda</td></tr>
+            <tr><td>Carbono activo (POXC)</td><td><span class="tag tag--lab">Laboratorio · inicio, mitad y cierre</span></td><td>Responde al manejo en meses, a diferencia del SOC</td></tr>
           </tbody>
         </table>
       </div>
@@ -817,7 +819,7 @@ pre.json .n{color:#fbbf24}
             <tbody>
               <tr><td>Mide</td><td>Humedad volumétrica, conductividad eléctrica y temperatura a 10, 20, 30, 40, 50 y 60 cm; CO₂ del suelo a 15 cm</td></tr>
               <tr><td>Resolución</td><td>Una lectura cada 15 a 20 min · 19 canales por lectura</td></tr>
-              <tr><td>Sondas</td><td>Perfil SDI-12 y CO₂ (Vaisala GMP252 o SenseCAP S-CO2-03), seleccionadas en el entregable E3</td></tr>
+              <tr><td>Sondas</td><td>Perfil SDI-12 y CO₂ (Vaisala GMP252* preferida; SenseCAP S-CO2-03 como alternativa), confirmadas en el entregable E3</td></tr>
               <tr><td>Energía</td><td>Panel solar 10 W y batería 72 Wh, como SMAA</td></tr>
               <tr><td>Autonomía</td><td>Objetivo ≥ 5 días sin sol. SMAA logra 3.8 días leyendo cada minuto; SMAAgro lee 15 a 20 veces menos. Se confirma con la sonda de CO₂ en las pruebas de banco</td></tr>
               <tr><td>Datos</td><td>Celular 2G/4G, SIM Hologram multioperador · nube AWS · API</td></tr>
@@ -901,21 +903,22 @@ pre.json .n{color:#fbbf24}
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">02 · Arquitectura · Entregable E3</span>
       <h2 class="rv" style="--i:1">Segunda sonda: CO₂ del suelo para medir la vida del suelo</h2>
-      <p class="lead rv" style="--i:2">No existe en el mercado una sonda enterrada que mida materia orgánica en continuo: la materia orgánica cambia en meses o años. Lo que sí se mide cada 15 minutos es la respiración del suelo, que responde rápido a las mejores prácticas. Dos finalistas pasan a prueba de banco.</p>
+      <p class="lead rv" style="--i:2">No existe en el mercado una sonda enterrada que mida materia orgánica en continuo: la materia orgánica cambia en meses o años. Lo que sí se mide cada 15 minutos es la respiración del suelo, que responde rápido a las mejores prácticas. Opción preferida: Vaisala GMP252*.</p>
       <div class="tbl-wrap rv" style="--i:3;margin-top:16px">
         <table class="nice co2t">
           <colgroup><col style="width:15%"><col style="width:22%"><col style="width:15%"><col style="width:13%"><col style="width:18%"><col style="width:17%"></colgroup>
           <thead><tr><th>Sonda</th><th>Rango y precisión</th><th>Conexión</th><th>Consumo</th><th>A favor</th><th>A revisar</th></tr></thead>
           <tbody>
-            <tr><td><a class="plink" href="https://www.vaisala.com/sites/default/files/documents/GMP252-2024Bid.pdf" target="_blank" rel="noopener">Vaisala GMP252<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>0–10,000 ppm, ±40 ppm hasta 3,000; hasta 30,000 ppm con menor precisión</td><td>Modbus RTU (RS-485) o analógica</td><td>0.4 W, 12–30 V</td><td>Referencia de la industria; rango alto para suelo irrigado</td><td>Precio; carcasa con membrana (IP65)</td></tr>
-            <tr><td><a class="plink" href="https://files.seeedstudio.com/products/SenseCAP/101991029_CO2_Sensor/CO2_Sensor_Datasheet(S-CO2-03).pdf" target="_blank" rel="noopener">SenseCAP S-CO2-03<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>0–10,000 ppm, ±(50 ppm + 3 %)</td><td><b>SDI-12</b> o RS-485 Modbus</td><td>33 mA a 5 V; reposo muy bajo</td><td>Mismo bus SDI-12 que la sonda de perfil; costo bajo</td><td>Diseñada para aire; rango de 10,000 ppm</td></tr>
+            <tr><td><a class="plink" href="https://www.vaisala.com/sites/default/files/documents/GMP252-2024Bid.pdf" target="_blank" rel="noopener">Vaisala GMP252*<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>0–10,000 ppm, ±40 ppm hasta 3,000; hasta 30,000 ppm con menor precisión</td><td>Modbus RTU (RS-485) o analógica</td><td>0.4 W, 12–30 V</td><td>Referencia de la industria; rango alto para suelo irrigado; sin suscripción ni software obligatorio</td><td>Precio de lista ≈ USD 1,000 por sonda, más cable y filtro; carcasa con membrana (IP65)</td></tr>
+            <tr class="alt"><td><a class="plink" href="https://files.seeedstudio.com/products/SenseCAP/101991029_CO2_Sensor/CO2_Sensor_Datasheet(S-CO2-03).pdf" target="_blank" rel="noopener">SenseCAP S-CO2-03<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></td><td>0–10,000 ppm, ±(50 ppm + 3 %)</td><td><b>SDI-12</b> o RS-485 Modbus</td><td>33 mA a 5 V; reposo muy bajo</td><td>Mismo bus SDI-12 que la sonda de perfil; costo bajo</td><td>Diseñada para aire; rango de 10,000 ppm</td></tr>
           </tbody>
         </table>
       </div>
+      <p class="fnote rv" style="--i:3">* Preferencia preliminar. La decisión final se toma con la matriz de evaluación y la prueba de banco del entregable E3; la SenseCAP queda como alternativa de menor costo.</p>
       <div class="cards cards--3">
         <div class="card rv" style="--i:4;--c:var(--c-agua)"><span class="card-num">Instalación</span><h4>Una por SMAAgro, a 15 cm</h4><p>En tubo con membrana hidrofóbica, fuera del bulbo de humedad del gotero. El agua es el principal riesgo de lectura en suelo irrigado.</p></div>
         <div class="card rv" style="--i:5;--c:var(--c-vida)"><span class="card-num">Lo que mide</span><h4>Concentración, no flujo</h4><p>Indicador relativo entre testigo e intervenida. Medir el flujo requeriría dos profundidades por equipo.</p></div>
-        <div class="card rv" style="--i:6;--c:var(--c-sal)"><span class="card-num">Materia orgánica</span><h4>Por campaña</h4><p>Se toma del data room de TNC y, si es viable, de laboratorio local, al inicio y al cierre.</p></div>
+        <div class="card rv" style="--i:6;--c:var(--c-sal)"><span class="card-num">Carbono del suelo</span><h4>SOC y POXC por campaña</h4><p>SOC del data room de TNC y laboratorio al inicio y al cierre. POXC (carbono activo) al inicio, a mitad y al cierre: es el indicador de carbono que sí cambia en meses.</p></div>
       </div>
     </div>
   </section>
@@ -1011,6 +1014,7 @@ pre.json .n{color:#fbbf24}
           <tbody>
             <tr><td>Textura y densidad aparente</td><td>Data room TNC</td><td>Laboratorio local (opcional)</td></tr>
             <tr><td>Materia orgánica, pH, NPK</td><td>Data room TNC</td><td>Laboratorio local (opcional)</td></tr>
+            <tr><td>Carbono activo (POXC)</td><td>Laboratorio local</td><td>Inicio, mitad y cierre, en testigo e intervenida</td></tr>
             <tr><td>Salinidad (CE)</td><td>Sonda SMAAgro</td><td>Conductímetro portátil en visitas</td></tr>
             <tr><td>Humedad volumétrica</td><td>Sonda SMAAgro</td><td>Muestra gravimétrica al instalar (opcional)</td></tr>
           </tbody>
@@ -1078,7 +1082,7 @@ pre.json .n{color:#fbbf24}
       <div class="cards cards--4">
         <div class="card rv" style="--i:3;--c:var(--c-hum)"><span class="card-num">Base · Agua</span><h4>Balance hídrico por capas</h4><p>Lluvia y riego entran; evapotranspiración FAO-56 y drenaje bajo 60 cm salen. Detecta sobre-riego y lixiviación de nitrógeno.</p></div>
         <div class="card rv" style="--i:4;--c:var(--c-sal)"><span class="card-num">Base · Sales</span><h4>Riesgo de salinización</h4><p>Tendencia de CE en la zona de raíz contra el umbral del cultivo. Recomienda fracción de lavado.</p></div>
-        <div class="card rv" style="--i:5;--c:var(--c-tmp)"><span class="card-num">Base · Vida</span><h4>Vida del suelo</h4><p>CO₂ del suelo, temperatura y humedad estiman la actividad biológica y se cruzan con la materia orgánica del data room de TNC.</p></div>
+        <div class="card rv" style="--i:5;--c:var(--c-tmp)"><span class="card-num">Base · Vida</span><h4>Vida del suelo</h4><p>CO₂ del suelo, temperatura y humedad estiman la actividad biológica; se contrasta con POXC y con el SOC del data room de TNC.</p></div>
         <div class="card rv" style="--i:6;--c:var(--c-vida)"><span class="card-num">Predictivo</span><h4>Humedad y riego a 24–72 h</h4><p>Pronóstico con datos de CHAAK y del perfil. Avisa al agricultor cuándo y cuánto regar, por WhatsApp o Telegram.</p></div>
       </div>
       <div class="cols">
@@ -1544,7 +1548,7 @@ const GANTT = [
   { t:'Modelo predictivo', w:'data', s:[[8,12]] },
   { t:'Congresos y foros', w:'pol', s:[[10,10],[16,16]] },
   { t:'Brief de política pública', w:'pol', s:[[15,17]] },
-  { t:'Muestreo de cierre (opcional)', w:'lab', s:[[17,17]] },
+  { t:'Muestreos de SOC y POXC', w:'lab', s:[[5,5],[12,12],[17,17]] },
   { t:'Informe final', w:'pol', s:[[18,18]] }
 ];
 const SEASONS = [
@@ -1557,7 +1561,7 @@ const HITOS = [
     ['E1','Plan de trabajo y movilización','Calendario detallado, movilización del equipo y criterios de intervención acordados con TNC y Herdez'] ] },
   { h:'H2', m:5,  when:'Abr 2027', p:'P2', t:'Parcela validada y SMAAgro listo', pay:20000, e:[
     ['E2','Validación de la parcela designada','Parcela elegida por TNC y Herdez en Sinaloa: pozo en REPDA, nivel estático ≤ 30 m, señal celular, toma eléctrica, ubicación de testigo e intervenida y carta del productor'],
-    ['E3','Selección de sondas de humedad y CO₂','Estudio de mercado y prueba de banco de las finalistas; para CO₂, Vaisala GMP252 y SenseCAP S-CO2-03'],
+    ['E3','Selección de sondas de humedad y CO₂','Estudio de mercado, matriz de evaluación y prueba de banco; para CO₂, Vaisala GMP252 (preferida) contra SenseCAP S-CO2-03'],
     ['E4','Prototipo SMAAgro con pruebas de banco aprobadas','Reporte FAT, incluido el balance solar con la sonda de CO₂'],
     ['E5','Gemelo digital SMAAgro','Guía 3D de instalación para el agricultor'] ] },
   { h:'H3', m:8,  when:'Jul 2027', p:'P3', t:'Red en línea y modelos base', pay:15000, e:[
@@ -1567,7 +1571,7 @@ const HITOS = [
   { h:'H4', m:12, when:'Nov 2027*', p:'P4', t:'Inicio de la parcela intervenida', pay:20000, e:[
     ['E9','Reporte de línea base y modelo predictivo v1','Testigo contra testigo antes de intervenir y pronóstico de humedad y riego; arranque de la medición con intervención'] ] },
   { h:'H5', m:18, when:'May 2028', p:'', t:'Cierre del piloto', pay:0, e:[
-    ['E10','Informe final, brief de política pública y escalamiento','Resultados del ciclo OI 2027-28, criterios de incentivo, ruta de escalamiento y reporte de 2 congresos o foros'] ] }
+    ['E10','Informe final, brief de política pública y escalamiento','Resultados del ciclo OI 2027-28 (CO₂, POXC y SOC), criterios de incentivo, ruta de escalamiento y reporte de 2 congresos o foros'] ] }
 ];
 const MS = HITOS.map(x => ({ m:x.m, h:`${x.h} · ${x.when}`, d:x.t, x }));
 function renderGantt(){
@@ -1608,19 +1612,19 @@ const FEES = [
 ];
 const COSTS = [
   { act:'equip', t:'Equipos: 2 SMAAgro con sonda de perfil', a:6400 },
-  { act:'equip', t:'Equipos: 2 sondas de CO₂ (finalista elegida)', a:2000 },
+  { act:'equip', t:'Equipos: 2 sondas de CO₂ Vaisala GMP252 con cable y filtro PTFE (puestas en México)', a:2900 },
   { act:'equip', t:'Sonda de perfil de repuesto', a:2000 },
   { act:'equip', t:'Equipos: 1 CHAAK y 1 SMAWA para el pozo', a:4100 },
-  { act:'probe', t:'Prototipo y finalistas para prueba de banco (perfil y CO₂)', a:3500 },
+  { act:'probe', t:'Prototipo y finalistas para prueba de banco (perfil y SenseCAP)', a:3200 },
   { act:'dev',   t:'Ingeniería de apoyo en hardware (subcontrato)', a:4500 },
   { act:'os',    t:'Ingeniería de apoyo en datos (subcontrato)', a:2500 },
   { act:'disc',  t:'Movilización y visita de validación a Sinaloa, sonda de nivel', a:2000 },
   { act:'inst',  t:'Instalación: viaje, postes, materiales y mano de obra local', a:2500 },
   { act:'ops',   t:'Visitas trimestrales y técnico de campo local (18 meses)', a:3200 },
-  { act:'cal',   t:'Laboratorio local opcional (textura, MO, CE)', a:1500 },
+  { act:'cal',   t:'Laboratorio local: SOC y POXC (inicio, mitad, cierre), textura', a:1500 },
   { act:'ops',   t:'Conectividad celular y nube (18 meses)', a:800 },
-  { act:'pol',   t:'Congresos y foros (2), diseño del brief', a:4000 },
-  { act:'mgmt',  t:'Contingencia', a:900 }
+  { act:'pol',   t:'Congresos y foros (2), diseño del brief', a:3600 },
+  { act:'mgmt',  t:'Contingencia', a:700 }
 ];
 const ACTS = [
   { k:'disc',  t:'Movilización y validación de parcela', c:'#f472b6' },
