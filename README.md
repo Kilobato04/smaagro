@@ -15,5 +15,10 @@ Presentación HTML de una sola página (24 láminas). Sitio estático, sin build
 
 - Entregables, hitos y pagos: un solo catálogo (`HITOS` en el script) alimenta el cronograma, los pagos y la lámina 23.
 
+## Versión ejecutiva
+- Selector Completa / Ejecutiva en el pie. La presentación abre en la completa (24 láminas).
+- Enlace directo a la ejecutiva (12 láminas): agrega `#e1` al final de la URL. `#n` abre la lámina n de la completa; `#en`, la lámina n de la ejecutiva.
+- En la ejecutiva, "Ver detalle" abre la lámina correspondiente de la completa.
+
 ## Navegación
 ← → láminas · M índice · F pantalla completa · `#n` en la URL abre la lámina n.

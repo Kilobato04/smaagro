@@ -449,6 +449,43 @@ pre.json .n{color:#fbbf24}
 .co2t td{white-space:normal}
 .co2t td:first-child{white-space:nowrap}
 .fnote{margin-top:8px;font-size:.76rem;color:var(--text-3);line-height:1.45}
+.slide[hidden]{display:none!important}
+.mode-switch{display:inline-flex;padding:3px;border-radius:999px;background:rgba(8,14,27,.78);border:1px solid var(--line);margin-right:4px}
+.mode-switch button{border:0;background:none;cursor:pointer;padding:8px 14px;border-radius:999px;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);transition:background .2s,color .2s}
+.mode-switch button b{font-weight:600;color:var(--text-3);margin-left:4px}
+.mode-switch button[aria-pressed="true"]{background:var(--accent);color:#03121c}
+.mode-switch button[aria-pressed="true"] b{color:#03121c}
+.mode-switch button:hover:not([aria-pressed="true"]){color:var(--text)}
+.detail-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:0;border:0;background:none;cursor:pointer;font:inherit;font-size:.8rem;color:var(--accent)}
+.detail-link svg{width:14px;height:14px}
+.detail-link:hover{text-decoration:underline}
+.exec-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:26px;text-align:left}
+.exec-facts div{padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.exec-facts b{display:block;font-size:1.9rem;font-weight:800;letter-spacing:-.03em;line-height:1}
+.exec-facts span{display:block;margin-top:6px;font-size:.82rem;color:var(--text-2);line-height:1.35}
+.cols--zoom{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);margin-top:14px}
+.win-map--zoom{height:clamp(240px,40vh,400px)}
+.phases{margin-top:18px;border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(5,10,20,.35);padding:12px 14px;display:grid;gap:8px}
+.ph-scale{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));font-family:var(--mono);font-size:.62rem;color:var(--text-3);text-align:center}
+.ph-scale span.yr{color:var(--accent)}
+.ph-row{position:relative;height:38px}
+.ph-bar{position:absolute;top:0;bottom:0;border-radius:8px;padding:5px 10px;background:color-mix(in srgb,var(--c) 22%,transparent);border:1px solid color-mix(in srgb,var(--c) 55%,transparent);overflow:hidden}
+.ph-bar b{display:block;font-size:.8rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph-bar span{display:block;font-family:var(--mono);font-size:.62rem;color:var(--text-3);white-space:nowrap}
+.paylist{display:grid;gap:8px}
+.paylist div{display:grid;grid-template-columns:118px minmax(0,1fr);gap:4px 12px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:rgba(15,23,42,.45)}
+.paylist b{font-size:1rem;color:var(--text);font-variant-numeric:tabular-nums}
+.paylist em{font-style:normal;font-family:var(--mono);font-size:.66rem;color:var(--accent);letter-spacing:.06em}
+.paylist span{grid-column:2;font-size:.8rem;color:var(--text-2);line-height:1.35}
+.panel--map-wide{width:min(520px,100%)}
+.roles{display:grid;gap:6px;margin-top:12px}
+.roles div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px;padding:8px 12px;border-radius:9px;border:1px solid var(--line);background:rgba(15,23,42,.5);font-size:.82rem;color:var(--text-2)}
+.roles b{color:var(--text)}
+@media (max-height:780px){
+  #x-portada .exec-facts{margin-top:16px}
+  #x-portada .exec-facts b{font-size:1.5rem}
+  #x-portada .cover-meta{margin-top:16px;padding-top:14px}
+}
 /* Footer */
 .bar{position:fixed;left:var(--gutter);right:var(--gutter);bottom:calc(var(--bar-bottom) + env(safe-area-inset-bottom,0px));z-index:30;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none}
 .bar>*{pointer-events:auto}
@@ -484,6 +521,9 @@ pre.json .n{color:#fbbf24}
   .milestones{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (max-width:900px){
+  .exec-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cols--zoom{grid-template-columns:1fr}
+  .mode-switch button{padding:7px 9px}
   .wins--one{grid-template-columns:1fr}
   .wins{grid-template-columns:1fr}
   .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -565,8 +605,29 @@ pre.json .n{color:#fbbf24}
     </div>
   </section>
 
+  <!-- PORTADA EJECUTIVA -->
+  <section class="slide" id="x-portada" data-deck="exec" data-layout="cover" data-title="Portada" data-view="overview">
+    <div class="panel panel--cover">
+      <span class="kicker rv" style="--i:0">Resumen ejecutivo · Comité TNC México</span>
+      <h1 class="rv" style="--i:1">Suelo vivo, <span class="grad">medido cada 15 minutos</span></h1>
+      <p class="cover-sub rv" style="--i:2">Piloto SMAAgro en la cadena de abasto de Grupo Herdez · Sinaloa · 18 meses · USD 75,000 más IVA</p>
+      <div class="exec-facts rv" style="--i:3">
+        <div><b>1</b><span>parcela en Sinaloa, testigo e intervenida</span></div>
+        <div><b>4</b><span>variables de suelo en continuo, incluido CO₂</span></div>
+        <div><b>10</b><span>entregables en 5 hitos</span></div>
+        <div><b>0</b><span>costo de SaaS durante el piloto</span></div>
+      </div>
+      <div class="cover-meta rv" style="--i:4">
+        <span><strong>Horacio Jiménez</strong> · Director General</span>
+        <span><strong>Octavio Jiménez</strong> · Director de Operaciones</span>
+      </div>
+      <p class="conf-note rv" style="--i:5">Documento confidencial preparado para The Nature Conservancy México y Grupo Herdez. Prohibida su reproducción o distribución sin autorización de Smability.</p>
+      <div class="restart rv" style="--i:6"><button type="button" class="btn-ghost" data-mode="full">Ver la versión completa (24 láminas)</button></div>
+    </div>
+  </section>
+
   <!-- QUIÉNES SOMOS -->
-  <section class="slide" id="s-inicio" data-layout="full" data-title="Quiénes somos" data-part="I" data-view="overview-dim">
+  <section class="slide" id="s-inicio" data-deck="both" data-layout="full" data-title="Quiénes somos" data-part="I" data-view="overview-dim">
     <div class="panel panel--full">
       <div class="panel-head">
         <div>
@@ -607,7 +668,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- CONTEXTO -->
-  <section class="slide" data-layout="side" data-title="El reto" data-part="I" data-view="region">
+  <section class="slide" id="s-reto" data-deck="both" data-layout="side" data-title="El reto" data-part="I" data-view="region">
     <div class="panel panel--wide">
       <span class="kicker rv" style="--i:0">Parte I · Contexto</span>
       <h2 class="rv" style="--i:1">Sin datos de suelo, los incentivos se diseñan a ciegas</h2>
@@ -625,7 +686,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- ALCANCE -->
-  <section class="slide" data-layout="full" data-title="1 · Alcance del piloto" data-part="I" data-view="overview-dim">
+  <section class="slide" id="s-alcance" data-deck="both" data-layout="full" data-title="1 · Alcance del piloto" data-part="I" data-view="overview-dim">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">01 · Alcance del piloto</span>
       <h2 class="rv" style="--i:1">Una parcela en Sinaloa, testigo e intervenida, 18 meses</h2>
@@ -668,7 +729,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- VARIABLES -->
-  <section class="slide" data-layout="side" data-title="Variables críticas" data-part="I" data-view="region">
+  <section class="slide tight" id="s-variables" data-deck="both" data-layout="side" data-title="Variables críticas" data-part="I" data-view="region">
     <div class="panel panel--wide">
       <span class="kicker rv" style="--i:0">01 · Alcance · Variables</span>
       <h2 class="rv" style="--i:1">Tres variables críticas y CO₂ del suelo en continuo</h2>
@@ -695,8 +756,150 @@ pre.json .n{color:#fbbf24}
     </div>
   </section>
 
+  <!-- EJECUTIVA · CÓMO FUNCIONA -->
+  <section class="slide" id="x-como" data-deck="exec" data-layout="full" data-title="Cómo funciona" data-part="II" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Resumen · Cómo funciona</span>
+      <h2 class="rv" style="--i:1">Del sensor en la parcela a la alerta en el celular del productor</h2>
+      <p class="lead rv" style="--i:2">SMAAgro usa la misma base de SMAA y SMAWA, ya probada en campo: energía solar, red celular y nube propia. Smability es dueña de las cuatro capas.</p>
+      <div class="cards cards--4">
+        <div class="card rv" style="--i:3"><span class="card-num">01 · Dispositivos</span><h4>En la parcela y el pozo</h4><p>2 SMAAgro con sonda de perfil y sonda de CO₂; CHAAK y SMAWA en el pozo.</p></div>
+        <div class="card rv" style="--i:4"><span class="card-num">02 · Calibración</span><h4>Dato confiable</h4><p>Curva del sitio con datos de suelo de TNC y corrección remota de la deriva.</p></div>
+        <div class="card rv" style="--i:5"><span class="card-num">03 · SMAA OS</span><h4>Modelos y API</h4><p>Balance hídrico, salinidad, vida del suelo y pronóstico de riego. API abierto para TNC y Herdez.</p></div>
+        <div class="card rv" style="--i:6"><span class="card-num">04 · AIreGPT</span><h4>Alertas al agricultor</h4><p>Por WhatsApp y Telegram, en español. Tablero para TNC y Herdez.</p></div>
+      </div>
+      <div class="chips rv" style="--i:7">
+        <span class="chip"><b>Lectura</b> cada 15–20 min</span><span class="chip"><b>Sin cobro de SaaS</b> durante el piloto</span><span class="chip"><b>Hecho en México</b></span><span class="chip"><b>Gemelo digital</b> como guía de instalación</span>
+      </div>
+      <button type="button" class="detail-link" data-detail="s-arq">Ver arquitectura y ficha técnica<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </section>
+
+  <!-- EJECUTIVA · DISEÑO DEL PILOTO -->
+  <section class="slide" id="x-diseno" data-deck="exec" data-layout="full" data-title="Diseño del piloto" data-part="II" data-view="overview-dim" data-zoom="1">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Resumen · Diseño del piloto</span>
+      <h2 class="rv" style="--i:1">Una parcela, dos mitades: primero se comparan, luego se interviene una</h2>
+      <div class="cols cols--zoom">
+        <div class="rv" style="--i:2">
+          <ol class="steps" style="margin-top:4px">
+            <li><div class="step-when">Meses 6–11 · Línea base</div><div class="step-title">Testigo contra testigo</div><div class="step-text">Ambas parcelas se miden igual. Demuestra que se comportan parecido y da peso a la comparación con solo dos equipos.</div></li>
+            <li><div class="step-when">Desde el mes 12 · Intervención</div><div class="step-title">Mejores prácticas de TNC</div><div class="step-text">La parcela intervenida aplica las prácticas de TNC en el ciclo de tomate OI 2027-28; la testigo sigue su manejo habitual.</div></li>
+            <li><div class="step-when">Mes 18 · Resultado</div><div class="step-title">La diferencia es el efecto</div><div class="step-text">Agua, salinidad, vida del suelo y carbono activo, comparados durante un ciclo completo.</div></li>
+          </ol>
+          <div class="note" style="margin-top:12px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span>La parcela la designan TNC y Grupo Herdez. La ubicación mostrada es de referencia y se confirma en el entregable E2.</span></div>
+        </div>
+        <div class="win rv" style="--i:3;--c:#22d3ee">
+          <div class="win-head"><span class="card-num" style="margin:0">Valle de Culiacán · Sinaloa</span><code>24.8974, −107.6434</code></div>
+          <div class="win-map win-map--zoom" id="zoom-map">
+            <div class="win-fb">
+              <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-dasharray="2 3"/><circle cx="50" cy="50" r="12" fill="none" stroke="currentColor"/><path d="M50 8v24M50 68v24M8 50h24M68 50h24" stroke="currentColor"/><circle cx="50" cy="50" r="3" fill="currentColor"/></svg>
+              <span>Acercamiento satelital a la parcela en la versión publicada en Netlify</span>
+            </div>
+          </div>
+          <div class="win-foot"><code>1 SMAAgro en testigo · 1 en intervenida · CHAAK y SMAWA en el pozo</code></div>
+        </div>
+      </div>
+      <button type="button" class="detail-link" data-detail="s-parcela">Ver parcela, emplazamiento y validación<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </section>
+
+  <!-- EJECUTIVA · CARBONO -->
+  <section class="slide" id="x-carbono" data-deck="exec" data-layout="full" data-title="Carbono del suelo" data-part="II" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Resumen · Carbono del suelo</span>
+      <h2 class="rv" style="--i:1">Tres medidas de carbono, cada una en su escala de tiempo</h2>
+      <p class="lead rv" style="--i:2">No existe una sonda comercial que mida el carbono orgánico del suelo en continuo. Por eso se combinan tres medidas complementarias.</p>
+      <div class="cards cards--3">
+        <div class="card rv" style="--i:3"><span class="card-num">SOC · carbono orgánico</span><h4>La meta de largo plazo</h4><p>Laboratorio y data room de TNC, al inicio y al cierre. Es el dato de referencia para política pública y escalamiento.</p></div>
+        <div class="card rv" style="--i:4"><span class="card-num">POXC · carbono activo</span><h4>Lo que cambia en meses</h4><p>Laboratorio al inicio, a mitad y al cierre, en testigo e intervenida.</p></div>
+        <div class="card rv" style="--i:5"><span class="card-num">CO₂ del suelo · respiración</span><h4>La vida del suelo, cada 15 minutos</h4><p>Sonda enterrada a 15 cm en cada SMAAgro. Opción preferida: Vaisala GMP252*.</p></div>
+      </div>
+      <div class="note rv" style="--i:6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span><strong>Más CO₂ no siempre es mejor:</strong> se interpreta junto con humedad, temperatura y POXC para distinguir un suelo vivo de uno que pierde carbono.</span></div>
+      <p class="fnote rv" style="--i:7">* Preferencia preliminar; la decisión final sale de la matriz de evaluación y la prueba de banco del entregable E3.</p>
+      <button type="button" class="detail-link" data-detail="s-co2">Ver sondas de CO₂ y su instalación<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </section>
+
+  <!-- EJECUTIVA · RESULTADOS -->
+  <section class="slide" id="x-resultados" data-deck="exec" data-layout="full" data-title="Resultados y paradigma" data-part="III" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Resumen · Resultados e impacto</span>
+      <h2 class="rv" style="--i:1">De subsidiar insumos a <span class="accent">incentivar resultados medidos en el suelo</span></h2>
+      <div class="cards cards--4">
+        <div class="card card--plain metric rv" style="--i:2"><span class="metric-value" data-count="1" data-suffix="M+">1M+</span><span class="metric-label">Lecturas de suelo</span><p class="lead">2 equipos, cada 15 min</p></div>
+        <div class="card card--plain metric rv" style="--i:3"><span class="metric-value" data-count="1">1</span><span class="metric-label">Ciclo intervenido</span><p class="lead">Tomate OI 2027-28 completo</p></div>
+        <div class="card card--plain metric rv" style="--i:4"><span class="metric-value" data-count="1">1</span><span class="metric-label">Línea base</span><p class="lead">Testigo contra testigo antes de intervenir</p></div>
+        <div class="card card--plain metric rv" style="--i:5"><span class="metric-value" data-count="1">1</span><span class="metric-label">Brief de política</span><p class="lead">Criterios de incentivo medibles</p></div>
+      </div>
+      <div class="shift" style="margin-top:16px">
+        <div class="shift-row rv" style="--i:6"><div class="from">Un muestreo al año: una foto</div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="to">Una lectura cada 15 minutos: la película</div></div>
+        <div class="shift-row rv" style="--i:7"><div class="from">Subsidio por insumo o práctica declarada</div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="to">Incentivo por diferencia medida contra un testigo</div></div>
+        <div class="shift-row rv" style="--i:8"><div class="from">Riesgo de abasto invisible</div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="to">Riesgo hídrico y de suelo por proveedor de Herdez</div></div>
+      </div>
+      <button type="button" class="detail-link" data-detail="s-resultados">Ver resultados y cambio de paradigma<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </section>
+
+  <!-- EJECUTIVA · CRONOGRAMA -->
+  <section class="slide" id="x-crono" data-deck="exec" data-layout="full" data-title="Cronograma" data-part="IV" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Resumen · Cronograma</span>
+      <h2 class="rv" style="--i:1">18 meses en cinco fases, de diciembre de 2026 a mayo de 2028</h2>
+      <div class="phases rv" style="--i:2" id="phases"></div>
+      <div class="milestones rv" style="--i:3" id="ms-exec"></div>
+      <button type="button" class="detail-link" data-detail="s-crono">Ver cronograma detallado<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </section>
+
+  <!-- EJECUTIVA · INVERSIÓN -->
+  <section class="slide" id="x-inversion" data-deck="exec" data-layout="full" data-title="Inversión y pagos" data-part="IV" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Resumen · Inversión y pagos</span>
+      <h2 class="rv" style="--i:1">USD 75,000 más IVA, a precio alzado, con cuatro pagos en 2027</h2>
+      <div class="cols cols--even" style="margin-top:14px">
+        <div class="rv" style="--i:2">
+          <h3>Inversión por categoría</h3>
+          <div class="tbl-wrap"><table class="budget" id="cat"><thead><tr><th>Categoría</th><th class="amt">USD</th><th class="pct">%</th><th class="barc"></th></tr></thead><tbody></tbody><tfoot></tfoot></table></div>
+        </div>
+        <div class="rv" style="--i:3">
+          <h3>Pagos contra entregables</h3>
+          <div class="paylist" id="pay-exec"></div>
+        </div>
+      </div>
+      <p class="fnote rv" style="--i:4">Montos sin IVA, facturados en pesos a un tipo de cambio fijo pactado a la firma. Sin cobro de SaaS. * P4 se libera al iniciar la parcela intervenida o el 30 de noviembre de 2027, lo que ocurra primero. El informe final (E10) se entrega en mayo de 2028, cubierto por los pagos anteriores.</p>
+      <button type="button" class="detail-link" data-detail="s-presup">Ver presupuesto y entregables detallados<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </section>
+
+  <!-- EJECUTIVA · SIGUIENTES PASOS -->
+  <section class="slide" id="x-cierre" data-deck="exec" data-layout="map" data-title="Siguientes pasos" data-view="final">
+    <div class="panel panel--map panel--map-wide">
+      <span class="kicker rv" style="--i:0">Siguientes pasos</span>
+      <h2 class="rv" style="--i:1">Tres socios, un piloto</h2>
+      <div class="roles rv" style="--i:2">
+        <div><b>TNC México</b><span>Mejores prácticas, data room de suelo y vínculo con política pública</span></div>
+        <div><b>Grupo Herdez</b><span>Parcela, productor y acceso en campo</span></div>
+        <div><b>Smability</b><span>Tecnología, instalación, datos, modelos y brief</span></div>
+      </div>
+      <ol class="steps rv" style="--i:3;margin-top:12px">
+        <li><div class="step-when">Finales de noviembre de 2026</div><div class="step-text">Firma del convenio</div></li>
+        <li><div class="step-when">Diciembre de 2026</div><div class="step-text">Movilización y plan de trabajo (E1)</div></li>
+        <li><div class="step-when">Enero de 2027</div><div class="step-text">Validación de la parcela designada (E2)</div></li>
+      </ol>
+      <div class="map-contacts rv" style="--i:4">
+        <div><b>Horacio Jiménez</b><span>Director General</span><code>horaciojimenez@smability.io</code></div>
+        <div><b>Octavio Jiménez</b><span>Director de Operaciones</span><code>octaviojimenez@smability.io</code></div>
+      </div>
+      <div class="restart rv" style="--i:5;justify-content:flex-start;margin-top:12px">
+        <button type="button" class="btn-ghost" data-go="1">Volver al inicio</button>
+        <button type="button" class="btn-ghost" data-mode="full">Ver la versión completa</button>
+      </div>
+    </div>
+  </section>
+
   <!-- DISCOVERY -->
-  <section class="slide" id="s-validacion" data-layout="side" data-title="Fase 0 · Validación de parcela" data-part="II" data-view="site">
+  <section class="slide tight" id="s-validacion" data-layout="side" data-title="Fase 0 · Validación de parcela" data-part="II" data-view="site">
     <div class="panel panel--wide">
       <span class="kicker rv" style="--i:0">Fase 0 · Validación de la parcela</span>
       <h2 class="rv" style="--i:1">TNC y Herdez eligen la parcela; nosotros la validamos</h2>
@@ -711,6 +914,7 @@ pre.json .n{color:#fbbf24}
             <tr><td>Productor dispuesto</td><td>Carta de participación; acepta una parcela testigo sin intervenir</td><td><span class="tag tag--lab">Filtro</span></td></tr>
             <tr><td>Servicio eléctrico en el pozo</td><td>Toma para CHAAK y SMAWA; si no existe, kit solar con integración, cotizado aparte</td><td><span class="tag tag--on">Verificación</span></td></tr>
             <tr><td>Testigo e intervenida comparables</td><td>Misma textura, cultivo y fuente de agua</td><td><span class="tag tag--on">Verificación</span></td></tr>
+            <tr><td>Tipo de riego</td><td>Goteo o surco; define dónde van las sondas respecto al gotero del productor</td><td><span class="tag tag--on">Verificación</span></td></tr>
             <tr><td>Ciclo de cultivo</td><td>Tomate OI 2027-28 en la parcela intervenida</td><td><span class="tag tag--on">Verificación</span></td></tr>
             <tr><td>Acceso y seguridad</td><td>Visita, distancia a ciudad, riesgo para el equipo</td><td><span class="tag tag--on">Verificación</span></td></tr>
           </tbody>
@@ -725,7 +929,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- PARCELA -->
-  <section class="slide" data-layout="full" data-title="Parcela en Sinaloa" data-part="II" data-view="overview-dim" data-wins="1">
+  <section class="slide" id="s-parcela" data-layout="full" data-title="Parcela en Sinaloa" data-part="II" data-view="overview-dim" data-wins="1">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">Fase 0 · Parcela de referencia</span>
       <h2 class="rv" style="--i:1">La parcela en Sinaloa</h2>
@@ -765,7 +969,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- ARQUITECTURA -->
-  <section class="slide" data-layout="full" data-title="2 · Arquitectura SMAAgro" data-part="II" data-view="overview-dim">
+  <section class="slide" id="s-arq" data-layout="full" data-title="2 · Arquitectura SMAAgro" data-part="II" data-view="overview-dim">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">02 · Arquitectura del sistema</span>
       <h2 class="rv" style="--i:1">SMAAgro sobre las cuatro capas de Smability</h2>
@@ -899,7 +1103,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- SONDA CO2 -->
-  <section class="slide" data-layout="full" data-title="Sonda de CO₂" data-part="II" data-view="overview-dim">
+  <section class="slide" id="s-co2" data-layout="full" data-title="Sonda de CO₂" data-part="II" data-view="overview-dim">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">02 · Arquitectura · Entregable E3</span>
       <h2 class="rv" style="--i:1">Segunda sonda: CO₂ del suelo para medir la vida del suelo</h2>
@@ -924,7 +1128,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- EMPLAZAMIENTO -->
-  <section class="slide" data-layout="side" data-title="3 · Emplazamiento" data-part="II" data-view="site">
+  <section class="slide" id="s-empl" data-layout="side" data-title="3 · Emplazamiento" data-part="II" data-view="site">
     <div class="panel panel--wide">
       <span class="kicker rv" style="--i:0">03 · Integración y emplazamiento</span>
       <h2 class="rv" style="--i:1">Testigo contra intervenida, con el mismo pozo</h2>
@@ -957,7 +1161,7 @@ pre.json .n{color:#fbbf24}
             <a class="btn-primary" style="margin-top:12px" href="https://smability-digitaltwin.netlify.app/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>Ver gemelo digital actual</a>
           </div>
           <ul class="card" style="--c:var(--accent);list-style:none;display:grid;gap:6px;padding:14px 16px">
-            <li>Sonda en la hilera, a 10–15 cm del gotero, en la zona de raíz</li>
+            <li>Sonda de perfil a 10–15 cm del gotero (del riego del productor), en la zona de raíz; sonda de CO₂ fuera del bulbo húmedo</li>
             <li>Panel solar sin sombra; equipo fuera del paso de maquinaria</li>
             <li>Muestra de suelo, GPS y foto en cada punto al instalar</li>
             <li>Retiro y reinstalación entre ciclos si el cultivo lo exige</li>
@@ -1135,7 +1339,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- PARADIGMA -->
-  <section class="slide" data-layout="full" data-title="Cambio de paradigma" data-part="III" data-view="overview-dim">
+  <section class="slide" id="s-paradigma" data-layout="full" data-title="Cambio de paradigma" data-part="III" data-view="overview-dim">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">Parte III · Por qué importa a Herdez</span>
       <h2 class="rv" style="--i:1">El cambio de paradigma: <span class="accent">pagar por resultados medidos en el suelo</span></h2>
@@ -1175,7 +1379,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- EQUIPO -->
-  <section class="slide" data-layout="full" data-title="Equipo" data-part="IV" data-view="overview-dim">
+  <section class="slide" id="s-equipo" data-layout="full" data-title="Equipo" data-part="IV" data-view="overview-dim">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">Parte IV · Equipo</span>
       <h2 class="rv" style="--i:1">Un equipo compacto, con aliados en el sitio</h2>
@@ -1197,7 +1401,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- PRESUPUESTO POR ACTIVIDAD -->
-  <section class="slide" data-layout="full" data-title="Presupuesto por actividad" data-part="IV" data-view="overview-dim">
+  <section class="slide" id="s-presup" data-layout="full" data-title="Presupuesto por actividad" data-part="IV" data-view="overview-dim">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">Parte IV · Presupuesto · Por actividad</span>
       <h2 class="rv" style="--i:1">USD 75,000 por actividad del piloto</h2>
@@ -1285,7 +1489,7 @@ pre.json .n{color:#fbbf24}
 <footer class="bar">
   <div class="meta">
     <span id="part-label">TNC · Herdez</span><span class="dot"></span>
-    <span class="hide-sm">2 noviembre 2026</span><span class="dot hide-sm"></span>
+    <span class="hide-sm">3 noviembre 2026</span><span class="dot hide-sm"></span>
     <span class="slide-title" id="slide-title">Portada</span><span class="dot"></span>
     <button type="button" class="counter-btn" id="btn-index" aria-haspopup="true" aria-expanded="false" title="Índice (M)">
       <span id="counter">01 / 23</span>
@@ -1293,6 +1497,10 @@ pre.json .n{color:#fbbf24}
     </button>
   </div>
   <div class="actions">
+    <div class="mode-switch" role="group" aria-label="Versión de la presentación">
+      <button type="button" data-mode="full" aria-pressed="true">Completa <b id="n-full">24</b></button>
+      <button type="button" data-mode="exec" aria-pressed="false">Ejecutiva <b id="n-exec">12</b></button>
+    </div>
     <button class="icon-btn" id="btn-fs" title="Pantalla completa (F)" aria-label="Pantalla completa"><svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
     <button class="icon-btn" id="btn-prev" aria-label="Lámina anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
     <button class="icon-btn" id="btn-next" aria-label="Lámina siguiente"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
@@ -1513,6 +1721,23 @@ function initWindows(){
     wins[id] = m;
   });
 }
+/* Acercamiento satelital de enganche (lámina ejecutiva de diseño) */
+let zoomMap = null;
+function playZoom(){
+  if (!window.mapboxgl || !CONFIG.mapboxToken) return;
+  const s = SITES[0], box = document.getElementById('zoom-map'); if (!box) return;
+  const start = { center:[-102.5, 23.6], zoom:3.6, pitch:0, bearing:0 };
+  const end = { center:[s.lng, s.lat], zoom:15.6, pitch:55, bearing:-20, duration: reduceMotion ? 0 : 7000, essential:true };
+  if (!zoomMap){
+    zoomMap = new mapboxgl.Map({ container:'zoom-map', style:'mapbox://styles/mapbox/satellite-streets-v12', ...start, attributionControl:false, cooperativeGestures:true });
+    zoomMap.addControl(new mapboxgl.AttributionControl({ compact:true }));
+    const el=document.createElement('div'); el.className='mk'; el.style.setProperty('--c',s.c); el.innerHTML='<span></span>';
+    new mapboxgl.Marker({element:el}).setLngLat([s.lng,s.lat]).addTo(zoomMap);
+    zoomMap.on('load', () => { box.classList.add('is-live'); zoomMap.resize(); setTimeout(() => zoomMap.flyTo(end), 500); });
+  } else {
+    zoomMap.resize(); zoomMap.jumpTo(start); setTimeout(() => zoomMap.flyTo(end), 600);
+  }
+}
 function flyMapbox(name, instant){
   const v = VIEWS[name] || VIEWS.overview;
   const zoom = { 1:5.4, .85:6.2, 1.9:9.5, 1.5:8.2 }[v.z] || 5.6;
@@ -1664,6 +1889,36 @@ function renderDeliv(){
   $('#dl tfoot').innerHTML = `<tr><td colspan="3">Total · ${HITOS.reduce((a,x)=>a+x.e.length,0)} entregables · más IVA</td><td class="amt">${fmt.format(T)}</td><td class="pct">100 %</td></tr>`;
   $('#pay').innerHTML = HITOS.filter(x=>x.pay).map(x => `<button type="button" data-go="s-deliv"><b>${x.p} · ${fmt.format(x.pay)}</b>${x.when} · ${pct(x.pay)}<span class="ms-e">${x.h} · ${x.e.map(e=>e[0]).join(' · ')}</span></button>`).join('');
 }
+const PHASES = [
+  { t:'Movilización y validación', d:'Dic 2026 – Feb 2027', a:1, b:3, c:'#f472b6' },
+  { t:'Desarrollo y pruebas de banco', d:'Feb – Abr 2027', a:3, b:5, c:'#22d3ee' },
+  { t:'Instalación y línea base', d:'Abr – Oct 2027', a:5, b:11, c:'#64748b' },
+  { t:'Intervención con mejores prácticas de TNC', d:'Nov 2027 – May 2028', a:12, b:18, c:'#2dd4bf' },
+  { t:'Brief, congresos e informe final', d:'Mar – May 2028', a:15, b:18, c:'#a78bfa' }
+];
+const CATS = [
+  { t:'Equipos de campo', k:['equip'] },
+  { t:'Desarrollo SMAAgro, sondas y gemelo digital', k:['dev','probe','twin'] },
+  { t:'Datos, modelos y SMAA OS', k:['os','cal'] },
+  { t:'Validación, instalación y operación en campo', k:['disc','inst','ops'] },
+  { t:'Política pública y difusión', k:['pol'] },
+  { t:'Gestión y contingencia', k:['mgmt'] }
+];
+function renderExec(){
+  // fases
+  let h = '<div class="ph-scale">' + MONTHS.map((m,i) => `<span class="${YEARS[i]?'yr':''}">${m}${YEARS[i]||''}</span>`).join('') + '</div>';
+  h += PHASES.map(p => `<div class="ph-row"><div class="ph-bar" style="--c:${p.c};left:${(p.a-1)/NM*100}%;width:${(p.b-p.a+1)/NM*100}%"><b>${p.t}</b><span>${p.d}</span></div></div>`).join('');
+  $('#phases').innerHTML = h;
+  $('#ms-exec').innerHTML = MS.map(m => `<div class="ms-card"><b>${m.h}</b>${m.d}<span class="ms-e">${m.x.e.map(e=>e[0]).join(' · ')}${m.x.pay?' · '+m.x.p+' USD '+fmt.format(m.x.pay):''}</span></div>`).join('');
+  // inversión por categoría (honorarios incluidos en cada categoría)
+  const tot = k => FEES.filter(f=>f.act===k).reduce((a,f)=>a+(f.oj+f.hj)*RATE,0) + COSTS.filter(c=>c.act===k).reduce((a,c)=>a+c.a,0);
+  const rows = CATS.map(c => ({ ...c, v: c.k.reduce((a,k)=>a+tot(k),0) }));
+  const T = rows.reduce((a,r)=>a+r.v,0), max = Math.max(...rows.map(r=>r.v));
+  $('#cat tbody').innerHTML = rows.map(r => `<tr><td class="name">${r.t}</td><td class="amt">${fmt.format(r.v)}</td><td class="pct">${(r.v/T*100).toFixed(0)} %</td><td class="barc"><div class="bbar"><span style="--c:var(--accent);width:${r.v/max*100}%"></span></div></td></tr>`).join('');
+  $('#cat tfoot').innerHTML = `<tr><td>Total · más IVA</td><td class="amt">${fmt.format(T)}</td><td class="pct">100 %</td><td class="barc"></td></tr>`;
+  $('#pay-exec').innerHTML = HITOS.filter(x=>x.pay).map(x => `<div><em>${x.p} · ${x.when}</em><b>USD ${fmt.format(x.pay)}</b><span>${x.t} · ${x.e.map(e=>e[0]).join(', ')}</span></div>`).join('')
+    + `<div><em>Mayo 2028</em><b>Cierre</b><span>E10 · informe final, brief y escalamiento; cubierto por los pagos anteriores</span></div>`;
+}
 function renderBudget(){
   const pct = v => (v/75000*100).toFixed(1) + ' %';
   const hOJ = FEES.reduce((s,f)=>s+f.oj,0), hHJ = FEES.reduce((s,f)=>s+f.hj,0), hrs = hOJ + hHJ, fee = hrs*RATE;
@@ -1681,8 +1936,26 @@ function renderThr(){
 }
 
 /* ===================== Navegación ===================== */
-const slides = $$('.slide');
+const ALL_SLIDES = $$('.slide');
+let mode = 'full';
+let slides = [];
 let current = 0;
+const inMode = (sl, m) => { const d = sl.dataset.deck || 'full'; return d === 'both' || d === m; };
+function setMode(m, { go = 0, instant = false } = {}){
+  mode = m;
+  slides = ALL_SLIDES.filter(sl => inMode(sl, m));
+  ALL_SLIDES.forEach(sl => { const on = inMode(sl, m); sl.hidden = !on; if (!on){ sl.classList.remove('is-active'); sl.inert = true; } });
+  $$('.mode-switch [data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+  $('#n-full').textContent = ALL_SLIDES.filter(sl => inMode(sl,'full')).length;
+  $('#n-exec').textContent = ALL_SLIDES.filter(sl => inMode(sl,'exec')).length;
+  buildIndex();
+  goTo(go, { instant });
+}
+function goToId(id){
+  let k = slides.findIndex(x => x.id === id);
+  if (k < 0){ const other = mode === 'full' ? 'exec' : 'full'; setMode(other); k = slides.findIndex(x => x.id === id); }
+  if (k >= 0) goTo(k);
+}
 const PART_LABELS = { I:'I · Contexto', II:'II · Validación y solución', III:'III · Impacto', IV:'IV · Ejecución' };
 const PART_TITLES = { I:'Parte I · Quiénes somos, contexto y alcance', II:'Parte II · Validación y solución técnica', III:'Parte III · Resultados e impacto', IV:'Parte IV · Cronograma, equipo y presupuesto' };
 
@@ -1731,10 +2004,11 @@ function goTo(i, { instant=false } = {}){
   const part = slides[i].dataset.part; $('#part-label').textContent = part ? PART_LABELS[part] : 'TNC · Herdez';
   $('#btn-prev').disabled = i === 0;
   $$('#index button').forEach(b => b.setAttribute('aria-current', String(+b.dataset.go === i+1)));
-  try { history.replaceState(null,'','#'+(i+1)); } catch(_){}
+  try { history.replaceState(null,'','#'+(mode==='exec'?'e':'')+(i+1)); } catch(_){}
   countUp(slides[i]);
   fitPanel(slides[i]);
   setView(slides[i].dataset.view, instant);
+  if (slides[i].dataset.zoom) playZoom();
   if (slides[i].dataset.wins && window.mapboxgl && CONFIG.mapboxToken){ initWindows(); setTimeout(() => Object.values(wins).forEach(m => m.resize && m.resize()), 650); }
 }
 const next = () => goTo(current === slides.length-1 ? 0 : current+1);
@@ -1747,12 +2021,17 @@ function buildIndex(){
     h += `<button type="button" data-go="${k+1}"><b>${String(k+1).padStart(2,'0')}</b>${s.dataset.title}</button>`;
   });
   $('#index').innerHTML = h;
+  $$('#progress-bar .progress-split').forEach(x => x.remove());
   ['II','III','IV'].forEach(p => { const f = slides.findIndex(s=>s.dataset.part===p); if (f>0){ const m=document.createElement('i'); m.className='progress-split'; m.style.left=(f/slides.length*100)+'%'; $('#progress-bar').appendChild(m); } });
 }
 function toggleIndex(force){ const open = force ?? !$('#index').classList.contains('is-open'); $('#index').classList.toggle('is-open',open); $('#btn-index').setAttribute('aria-expanded',String(open)); }
 document.addEventListener('click', e => {
   const go = e.target.closest('[data-go]');
-  if (go){ const v = go.dataset.go; goTo(isNaN(+v) ? slides.findIndex(x => x.id === v) : +v - 1); toggleIndex(false); return; }
+  const md = e.target.closest('[data-mode]');
+  if (md){ if (md.dataset.mode !== mode) setMode(md.dataset.mode); toggleIndex(false); return; }
+  const dt = e.target.closest('[data-detail]');
+  if (dt){ setMode('full'); goToId(dt.dataset.detail); toggleIndex(false); return; }
+  if (go){ const v = go.dataset.go; if (isNaN(+v)) goToId(v); else goTo(+v - 1); toggleIndex(false); return; }
   if (!e.target.closest('#index, #btn-index')) toggleIndex(false);
 });
 $('#btn-index').addEventListener('click', () => toggleIndex());
@@ -1777,7 +2056,8 @@ $('#btn-fs').addEventListener('click', toggleFullscreen);
 let tx = null;
 addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
 addEventListener('touchend', e => { if (tx===null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 60) (dx<0 ? next : prev)(); tx = null; }, { passive:true });
-addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1),10); if (n && n-1 !== current) goTo(n-1); });
+function parseHash(){ const m = /^#(e?)(\d+)$/.exec(location.hash || ''); return m ? { mode: m[1] ? 'exec' : 'full', n: +m[2] } : null; }
+addEventListener('hashchange', () => { const h = parseHash(); if (!h) return; if (h.mode !== mode) setMode(h.mode, { go: h.n - 1 }); else if (h.n - 1 !== current) goTo(h.n - 1); });
 addEventListener('resize', () => { fitPanels(); resize(); });
 
 /* ===================== Referencia en vivo (Open-Meteo) ===================== */
@@ -1804,9 +2084,10 @@ async function pollLive(){
 
 /* ===================== Arranque ===================== */
 renderGantt(); renderBudget(); renderByActivity(); renderDeliv();
+renderExec();
 fitPanels(); document.fonts && document.fonts.ready.then(() => { fitPanels(); updateOffset(true); }); renderThr(); buildIndex();
 resize();
-goTo((parseInt(location.hash.slice(1),10) || 1) - 1, { instant:true });
+{ const h = parseHash(); setMode(h ? h.mode : 'full', { go: h ? h.n - 1 : 0, instant: true }); }
 requestAnimationFrame(drawFrame);
 loadMapbox();
 pollLive();
