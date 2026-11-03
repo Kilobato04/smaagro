@@ -613,7 +613,7 @@ pre.json .n{color:#fbbf24}
       <p class="cover-sub rv" style="--i:2">Piloto SMAAgro en la cadena de abasto de Grupo Herdez · Sinaloa · 18 meses · USD 75,000 más IVA</p>
       <div class="exec-facts rv" style="--i:3">
         <div><b>1</b><span>parcela en Sinaloa, testigo e intervenida</span></div>
-        <div><b>4</b><span>variables de suelo en continuo, incluido CO₂</span></div>
+        <div><b>5</b><span>indicadores de suelo: 4 en continuo, incluido CO₂, y POXC</span></div>
         <div><b>10</b><span>entregables en 5 hitos</span></div>
         <div><b>0</b><span>costo de SaaS durante el piloto</span></div>
       </div>
@@ -733,7 +733,7 @@ pre.json .n{color:#fbbf24}
     <div class="panel panel--wide">
       <span class="kicker rv" style="--i:0">01 · Alcance · Variables</span>
       <h2 class="rv" style="--i:1">Tres variables críticas y CO₂ del suelo en continuo</h2>
-      <p class="lead rv" style="--i:2">SMAAgro mide en continuo lo que cambia en horas. Lo que cambia en meses o años se toma del banco de datos de suelo de TNC y, si es viable, de un laboratorio local.</p>
+      <p class="lead rv" style="--i:2">SMAAgro mide en continuo lo que cambia en horas. Lo que cambia en meses o años se toma del data room de TNC.</p>
       <div class="cards cards--2 vars">
         <div class="card var rv" style="--i:3;--c:var(--c-hum)"><span class="dot"></span><h4>Humedad volumétrica del perfil</h4><span class="unit">% VWC · 6 prof.</span><p>Cuánta agua hay en la zona de raíz y cuánta se escapa por debajo de 60 cm. Base para eficiencia de riego y estrés hídrico.</p></div>
         <div class="card var rv" style="--i:4;--c:var(--c-sal)"><span class="dot"></span><h4>Salinidad (conductividad eléctrica)</h4><span class="unit">dS/m · 6 prof.</span><p>Acumulación de sales por riego y fertilización. Cada dS/m sobre el umbral del cultivo resta rendimiento.</p></div>
@@ -747,9 +747,9 @@ pre.json .n{color:#fbbf24}
           <tbody>
             <tr><td>Lluvia, ET₀, viento</td><td><span class="tag tag--on">Continuo · CHAAK</span></td><td>Cierra el balance hídrico</td></tr>
             <tr><td>Nivel del pozo</td><td><span class="tag tag--on">Continuo · SMAWA</span></td><td>Presión sobre el acuífero</td></tr>
-            <tr><td>pH, materia orgánica, NPK</td><td><span class="tag tag--lab">Data room TNC · lab opcional</span></td><td>Cambian en meses; sensores in situ derivan</td></tr>
-            <tr><td>Textura y densidad aparente</td><td><span class="tag tag--lab">Data room TNC · lab opcional</span></td><td>Ajustan la curva de la sonda</td></tr>
-            <tr><td>Carbono activo (POXC)</td><td><span class="tag tag--lab">Laboratorio · inicio, mitad y cierre</span></td><td>Responde al manejo en meses, a diferencia del SOC</td></tr>
+            <tr><td>pH, materia orgánica, NPK</td><td><span class="tag tag--lab">Data room TNC</span></td><td>Cambian en meses; sensores in situ derivan</td></tr>
+            <tr><td>Textura y densidad aparente</td><td><span class="tag tag--lab">Data room TNC</span></td><td>Ajustan la curva de la sonda</td></tr>
+            <tr><td>Carbono activo (POXC)</td><td><span class="tag tag--lab">Prueba de campo · inicio, mitad y cierre</span></td><td>Responde a las mejores prácticas en meses</td></tr>
           </tbody>
         </table>
       </div>
@@ -808,14 +808,14 @@ pre.json .n{color:#fbbf24}
   <section class="slide" id="x-carbono" data-deck="exec" data-layout="full" data-title="Carbono del suelo" data-part="II" data-view="overview-dim">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">Resumen · Carbono del suelo</span>
-      <h2 class="rv" style="--i:1">Tres medidas de carbono, cada una en su escala de tiempo</h2>
-      <p class="lead rv" style="--i:2">No existe una sonda comercial que mida el carbono orgánico del suelo en continuo. Por eso se combinan tres medidas complementarias.</p>
+      <h2 class="rv" style="--i:1">Medimos lo que responde a las mejores prácticas</h2>
+      <p class="lead rv" style="--i:2">El piloto se enfoca en indicadores que cambian dentro de su ventana de 18 meses: el carbono activo y la respiración del suelo. El carbono orgánico total (SOC) es una meta de largo plazo y queda como contexto del data room de TNC.</p>
       <div class="cards cards--3">
-        <div class="card rv" style="--i:3"><span class="card-num">SOC · carbono orgánico</span><h4>La meta de largo plazo</h4><p>Laboratorio y data room de TNC, al inicio y al cierre. Es el dato de referencia para política pública y escalamiento.</p></div>
-        <div class="card rv" style="--i:4"><span class="card-num">POXC · carbono activo</span><h4>Lo que cambia en meses</h4><p>Laboratorio al inicio, a mitad y al cierre, en testigo e intervenida.</p></div>
+        <div class="card rv" style="--i:3"><span class="card-num">Humedad · salinidad · temperatura</span><h4>El estado del perfil</h4><p>Medición directa cada 15 minutos a 6 profundidades, con la sonda de perfil de SMAAgro.</p></div>
+        <div class="card rv" style="--i:4"><span class="card-num">POXC · carbono activo</span><h4>Lo que cambia en meses</h4><p>Prueba de campo al inicio, a mitad y al cierre, en testigo e intervenida.</p></div>
         <div class="card rv" style="--i:5"><span class="card-num">CO₂ del suelo · respiración</span><h4>La vida del suelo, cada 15 minutos</h4><p>Sonda enterrada a 15 cm en cada SMAAgro. Opción preferida: Vaisala GMP252*.</p></div>
       </div>
-      <div class="note rv" style="--i:6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span><strong>Más CO₂ no siempre es mejor:</strong> se interpreta junto con humedad, temperatura y POXC para distinguir un suelo vivo de uno que pierde carbono.</span></div>
+      <div class="note rv" style="--i:6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span><strong>Más CO₂ no siempre es mejor:</strong> se interpreta junto con humedad, temperatura y POXC para distinguir un suelo vivo de uno que pierde carbono. El CO₂ no sustituye la medición de carbono; indica la respuesta del suelo al manejo.</span></div>
       <p class="fnote rv" style="--i:7">* Preferencia preliminar; la decisión final sale de la matriz de evaluación y la prueba de banco del entregable E3.</p>
       <button type="button" class="detail-link" data-detail="s-co2">Ver sondas de CO₂ y su instalación<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div>
@@ -1122,7 +1122,7 @@ pre.json .n{color:#fbbf24}
       <div class="cards cards--3">
         <div class="card rv" style="--i:4;--c:var(--c-agua)"><span class="card-num">Instalación</span><h4>Una por SMAAgro, a 15 cm</h4><p>En tubo con membrana hidrofóbica, fuera del bulbo de humedad del gotero. El agua es el principal riesgo de lectura en suelo irrigado.</p></div>
         <div class="card rv" style="--i:5;--c:var(--c-vida)"><span class="card-num">Lo que mide</span><h4>Concentración, no flujo</h4><p>Indicador relativo entre testigo e intervenida. Medir el flujo requeriría dos profundidades por equipo.</p></div>
-        <div class="card rv" style="--i:6;--c:var(--c-sal)"><span class="card-num">Carbono del suelo</span><h4>SOC y POXC por campaña</h4><p>SOC del data room de TNC y laboratorio al inicio y al cierre. POXC (carbono activo) al inicio, a mitad y al cierre: es el indicador de carbono que sí cambia en meses.</p></div>
+        <div class="card rv" style="--i:6;--c:var(--c-sal)"><span class="card-num">Carbono activo</span><h4>POXC por campaña</h4><p>Prueba de campo al inicio, a mitad y al cierre: el indicador de carbono que sí cambia en meses. El SOC total es meta de largo plazo y se toma como contexto del data room de TNC.</p></div>
       </div>
     </div>
   </section>
@@ -1177,7 +1177,7 @@ pre.json .n{color:#fbbf24}
       <span class="kicker rv" style="--i:0">04 · Pruebas</span>
       <h2 class="rv" style="--i:1">Tres etapas de prueba</h2>
       <ol class="steps">
-        <li class="rv" style="--i:2"><div class="step-when">Banco (FAT) · Mes 4</div><div class="step-title">Pruebas en laboratorio Smability</div><div class="step-text">Lectura SDI-12 de la sonda elegida y de la sonda de CO₂, consumo y autonomía solar, reconexión celular tras cortes de red, gabinete expuesto a más de 45 °C.</div></li>
+        <li class="rv" style="--i:2"><div class="step-when">Banco (FAT) · Mes 4</div><div class="step-title">Pruebas de banco en Smability</div><div class="step-text">Lectura SDI-12 de la sonda elegida y de la sonda de CO₂, consumo y autonomía solar, reconexión celular tras cortes de red, gabinete expuesto a más de 45 °C.</div></li>
         <li class="rv" style="--i:3"><div class="step-when">Campo controlado (SAT) · Meses 5–6</div><div class="step-title">Seis semanas en el sitio elegido</div><div class="step-text">Primeros equipos en parcela real. Lecturas contra mediciones de referencia en campo. Ajuste de firmware y montaje con ayuda del gemelo digital.</div></li>
         <li class="rv" style="--i:4"><div class="step-when">Operación · Meses 6–18</div><div class="step-title">Aceptación continua</div><div class="step-text">Reporte mensual de disponibilidad, completitud y deriva. Visita de verificación trimestral.</div></li>
       </ol>
@@ -1210,15 +1210,15 @@ pre.json .n{color:#fbbf24}
       <div class="cards cards--3">
         <div class="card rv" style="--i:3;--c:var(--c-vida)"><span class="card-num">Base · Data room TNC</span><h4>Datos de suelo mexicano</h4><p>Perfiles, textura, materia orgánica, pH y salinidad de la zona. Definen la curva y la línea base.</p></div>
         <div class="card rv" style="--i:4;--c:var(--c-hum)"><span class="card-num">Ajuste · Smability</span><h4>Curva por textura y deriva</h4><p>Ecuación del fabricante ajustada a la textura. SMAA OS corrige la deriva de forma remota.</p></div>
-        <div class="card rv" style="--i:5;--c:var(--c-sal)"><span class="card-num">Opcional · Laboratorio local</span><h4>Verificación en campo</h4><p>Si hay laboratorio cercano, se toman muestras al instalar para afinar la curva. Si no, se sigue igual.</p></div>
+        <div class="card rv" style="--i:5;--c:var(--c-sal)"><span class="card-num">Opcional · a discreción</span><h4>Validación local</h4><p>Solo si una medida crítica para calibrar lo requiere, se valida con un análisis local. Si no, se sigue con el data room de TNC.</p></div>
       </div>
       <div class="tbl-wrap rv" style="--i:6;margin-top:16px">
         <table class="nice">
           <thead><tr><th>Dato</th><th>Fuente principal</th><th>Complemento</th></tr></thead>
           <tbody>
-            <tr><td>Textura y densidad aparente</td><td>Data room TNC</td><td>Laboratorio local (opcional)</td></tr>
-            <tr><td>Materia orgánica, pH, NPK</td><td>Data room TNC</td><td>Laboratorio local (opcional)</td></tr>
-            <tr><td>Carbono activo (POXC)</td><td>Laboratorio local</td><td>Inicio, mitad y cierre, en testigo e intervenida</td></tr>
+            <tr><td>Textura y densidad aparente</td><td>Data room TNC</td><td>Validación local opcional, a discreción</td></tr>
+            <tr><td>Materia orgánica, pH, NPK</td><td>Data room TNC</td><td>—</td></tr>
+            <tr><td>Carbono activo (POXC)</td><td>Prueba de campo con kit</td><td>Inicio, mitad y cierre, en testigo e intervenida</td></tr>
             <tr><td>Salinidad (CE)</td><td>Sonda SMAAgro</td><td>Conductímetro portátil en visitas</td></tr>
             <tr><td>Humedad volumétrica</td><td>Sonda SMAAgro</td><td>Muestra gravimétrica al instalar (opcional)</td></tr>
           </tbody>
@@ -1226,7 +1226,7 @@ pre.json .n{color:#fbbf24}
       </div>
       <div class="note rv" style="--i:7">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        <span><strong>Complejidad: baja a media.</strong> El laboratorio no condiciona el avance del piloto. Si se logra, mejora la precisión; si no, se trabaja con los datos de TNC y la curva por textura.</span>
+        <span><strong>Complejidad: baja a media.</strong> La calibración se apoya en el data room de TNC. La validación local es opcional y a discreción: no condiciona el avance del piloto.</span>
       </div>
     </div>
   </section>
@@ -1286,7 +1286,7 @@ pre.json .n{color:#fbbf24}
       <div class="cards cards--4">
         <div class="card rv" style="--i:3;--c:var(--c-hum)"><span class="card-num">Base · Agua</span><h4>Balance hídrico por capas</h4><p>Lluvia y riego entran; evapotranspiración FAO-56 y drenaje bajo 60 cm salen. Detecta sobre-riego y lixiviación de nitrógeno.</p></div>
         <div class="card rv" style="--i:4;--c:var(--c-sal)"><span class="card-num">Base · Sales</span><h4>Riesgo de salinización</h4><p>Tendencia de CE en la zona de raíz contra el umbral del cultivo. Recomienda fracción de lavado.</p></div>
-        <div class="card rv" style="--i:5;--c:var(--c-tmp)"><span class="card-num">Base · Vida</span><h4>Vida del suelo</h4><p>CO₂ del suelo, temperatura y humedad estiman la actividad biológica; se contrasta con POXC y con el SOC del data room de TNC.</p></div>
+        <div class="card rv" style="--i:5;--c:var(--c-tmp)"><span class="card-num">Base · Vida</span><h4>Vida del suelo</h4><p>CO₂ del suelo, temperatura y humedad estiman la actividad biológica; se contrasta con el POXC y con el contexto de suelo del data room de TNC.</p></div>
         <div class="card rv" style="--i:6;--c:var(--c-vida)"><span class="card-num">Predictivo</span><h4>Humedad y riego a 24–72 h</h4><p>Pronóstico con datos de CHAAK y del perfil. Avisa al agricultor cuándo y cuánto regar, por WhatsApp o Telegram.</p></div>
       </div>
       <div class="cols">
@@ -1392,7 +1392,7 @@ pre.json .n{color:#fbbf24}
       </div>
       <h3 class="rv" style="--i:8;margin-top:18px">Aliados y contrapartes</h3>
       <div class="cards cards--4" style="margin-top:0">
-        <div class="card rv" style="--i:9;--c:var(--c-earth)"><div class="person"><span class="avatar">SU</span><div><h4>Asesoría en suelo y agua</h4><span class="role">Externo · por confirmar</span><p>INIFAP Sinaloa o Universidad Autónoma de Sinaloa. Revisión de datos de suelo y laboratorio local, si se requiere.</p></div></div></div>
+        <div class="card rv" style="--i:9;--c:var(--c-earth)"><div class="person"><span class="avatar">SU</span><div><h4>Asesoría en suelo y agua</h4><span class="role">Externo · por confirmar</span><p>INIFAP Sinaloa o Universidad Autónoma de Sinaloa. Revisión del data room de TNC y validación local opcional, a discreción.</p></div></div></div>
         <div class="card rv" style="--i:10;--c:var(--c-earth)"><div class="person"><span class="avatar">TC</span><div><h4>Técnico de campo</h4><span class="role">Local</span><p>Instalación, visitas trimestrales y enlace con el productor.</p></div></div></div>
         <div class="card rv" style="--i:11;--c:var(--c-vida)"><div class="person"><span class="avatar">TN</span><div><h4>TNC México</h4><span class="role">Contraparte</span><p>Política pública, definición de la intervención y red de extensionistas.</p></div></div></div>
         <div class="card rv" style="--i:12;--c:var(--c-vida)"><div class="person"><span class="avatar">GH</span><div><h4>Grupo Herdez</h4><span class="role">Contraparte</span><p>Agronomía de abasto, proveedores candidatos y acceso a parcelas.</p></div></div></div>
@@ -1753,7 +1753,7 @@ const YEARS = { 0:' 26', 1:' 27', 13:' 28' };
 const NM = MONTHS.length;
 const WS = {
   disc:{label:'Movilización y validación',c:'#f472b6'}, dev:{label:'Desarrollo',c:'#22d3ee'}, test:{label:'Pruebas y sondas',c:'#38bdf8'},
-  field:{label:'Campo',c:'#c08a5b'}, lab:{label:'Calibración y datos de suelo',c:'#fbbf24'}, data:{label:'SMAA OS y modelos',c:'#4ade80'},
+  field:{label:'Campo',c:'#c08a5b'}, lab:{label:'Calibración, POXC y data room TNC',c:'#fbbf24'}, data:{label:'SMAA OS y modelos',c:'#4ade80'},
   pol:{label:'Política y difusión',c:'#a78bfa'}, ops:{label:'Operación',c:'#64748b'}, int:{label:'Medición con intervención',c:'#2dd4bf'}
 };
 const GANTT = [
@@ -1773,7 +1773,7 @@ const GANTT = [
   { t:'Modelo predictivo', w:'data', s:[[8,12]] },
   { t:'Congresos y foros', w:'pol', s:[[10,10],[16,16]] },
   { t:'Brief de política pública', w:'pol', s:[[15,17]] },
-  { t:'Muestreos de SOC y POXC', w:'lab', s:[[5,5],[12,12],[17,17]] },
+  { t:'Pruebas de campo de POXC', w:'lab', s:[[5,5],[12,12],[17,17]] },
   { t:'Informe final', w:'pol', s:[[18,18]] }
 ];
 const SEASONS = [
@@ -1796,7 +1796,7 @@ const HITOS = [
   { h:'H4', m:12, when:'Nov 2027*', p:'P4', t:'Inicio de la parcela intervenida', pay:20000, e:[
     ['E9','Reporte de línea base y modelo predictivo v1','Testigo contra testigo antes de intervenir y pronóstico de humedad y riego; arranque de la medición con intervención'] ] },
   { h:'H5', m:18, when:'May 2028', p:'', t:'Cierre del piloto', pay:0, e:[
-    ['E10','Informe final, brief de política pública y escalamiento','Resultados del ciclo OI 2027-28 (CO₂, POXC y SOC), criterios de incentivo, ruta de escalamiento y reporte de 2 congresos o foros'] ] }
+    ['E10','Informe final, brief de política pública y escalamiento','Resultados del ciclo OI 2027-28 (humedad, salinidad, temperatura, CO₂ y POXC), criterios de incentivo, ruta de escalamiento y reporte de 2 congresos o foros'] ] }
 ];
 const MS = HITOS.map(x => ({ m:x.m, h:`${x.h} · ${x.when}`, d:x.t, x }));
 function renderGantt(){
@@ -1846,7 +1846,7 @@ const COSTS = [
   { act:'disc',  t:'Movilización y visita de validación a Sinaloa, sonda de nivel', a:2000 },
   { act:'inst',  t:'Instalación: viaje, postes, materiales y mano de obra local', a:2500 },
   { act:'ops',   t:'Visitas trimestrales y técnico de campo local (18 meses)', a:3200 },
-  { act:'cal',   t:'Laboratorio local: SOC y POXC (inicio, mitad, cierre), textura', a:1500 },
+  { act:'cal',   t:'Kit de campo POXC y validación local opcional', a:1500 },
   { act:'ops',   t:'Conectividad celular y nube (18 meses)', a:800 },
   { act:'pol',   t:'Congresos y foros (2), diseño del brief', a:3600 },
   { act:'mgmt',  t:'Contingencia', a:700 }
