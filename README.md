@@ -17,7 +17,7 @@ Presentación HTML de una sola página (24 láminas). Sitio estático, sin build
 
 ## Versión ejecutiva
 - Selector Completa / Ejecutiva en el pie. La presentación abre en la completa (24 láminas).
-- Enlace directo a la ejecutiva (12 láminas): agrega `#e1` al final de la URL. `#n` abre la lámina n de la completa; `#en`, la lámina n de la ejecutiva.
+- Enlace directo a la ejecutiva (13 láminas): agrega `#e1` al final de la URL. `#n` abre la lámina n de la completa; `#en`, la lámina n de la ejecutiva.
 - En la ejecutiva, "Ver detalle" abre la lámina correspondiente de la completa.
 
 ## Navegación

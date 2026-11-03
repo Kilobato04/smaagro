@@ -486,6 +486,16 @@ pre.json .n{color:#fbbf24}
   #x-portada .exec-facts b{font-size:1.5rem}
   #x-portada .cover-meta{margin-top:16px;padding-top:14px}
 }
+.jsons{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:14px}
+.jcol{min-width:0;display:flex;flex-direction:column}
+.jhead{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:2px}
+.jhead b{font-family:var(--mono);font-size:.78rem;color:var(--accent);letter-spacing:.06em}
+.jhead span{font-size:.76rem;color:var(--text-3)}
+.jsons pre.json{flex:1;font-size:.66rem;line-height:1.5;padding:10px 12px;margin-top:4px;white-space:pre;overflow-x:auto}
+.uses{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}
+.uses div{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:rgba(15,23,42,.45)}
+.uses b{display:block;font-size:.84rem;color:var(--text)}
+.uses span{display:block;margin-top:2px;font-size:.76rem;color:var(--text-2);line-height:1.35}
 /* Footer */
 .bar{position:fixed;left:var(--gutter);right:var(--gutter);bottom:calc(var(--bar-bottom) + env(safe-area-inset-bottom,0px));z-index:30;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none}
 .bar>*{pointer-events:auto}
@@ -521,6 +531,8 @@ pre.json .n{color:#fbbf24}
   .milestones{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (max-width:900px){
+  .jsons{grid-template-columns:1fr}
+  .uses{grid-template-columns:repeat(2,minmax(0,1fr))}
   .exec-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
   .cols--zoom{grid-template-columns:1fr}
   .mode-switch button{padding:7px 9px}
@@ -838,6 +850,61 @@ pre.json .n{color:#fbbf24}
         <div class="shift-row rv" style="--i:8"><div class="from">Riesgo de abasto invisible</div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="to">Riesgo hídrico y de suelo por proveedor de Herdez</div></div>
       </div>
       <button type="button" class="detail-link" data-detail="s-resultados">Ver resultados y cambio de paradigma<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </section>
+
+  <!-- EJECUTIVA · EL DATO -->
+  <section class="slide" id="x-dato" data-deck="exec" data-layout="full" data-title="El dato por dispositivo" data-part="II" data-view="overview-dim">
+    <div class="panel panel--full">
+      <span class="kicker rv" style="--i:0">Resumen · El dato</span>
+      <h2 class="rv" style="--i:1">Un mismo API para los tres dispositivos</h2>
+      <p class="lead rv" style="--i:2">Cada equipo envía su lectura a SMAA OS cada 15 a 20 minutos. El API abierto entrega el mismo formato a TNC, a Herdez y a las alertas del productor.</p>
+      <div class="jsons rv" style="--i:3">
+        <div class="jcol"><div class="jhead"><b>SMAAgro</b><span>Suelo: humedad, salinidad, temperatura y CO₂</span></div><pre class="json">{
+  <span class="k">"device"</span>: <span class="s">"SMAAGRO-02"</span>,
+  <span class="k">"plot"</span>: <span class="s">"intervenida"</span>,
+  <span class="k">"ts"</span>: <span class="s">"2027-12-04T09:15"</span>,
+  <span class="k">"profile"</span>: [
+    { <span class="k">"depth_cm"</span>: <span class="n">10</span>, <span class="k">"vwc"</span>: <span class="n">31.4</span>, <span class="k">"ec_dsm"</span>: <span class="n">1.8</span>, <span class="k">"t_c"</span>: <span class="n">21.6</span> },
+    { <span class="k">"depth_cm"</span>: <span class="n">30</span>, <span class="k">"vwc"</span>: <span class="n">34.9</span>, <span class="k">"ec_dsm"</span>: <span class="n">2.1</span>, <span class="k">"t_c"</span>: <span class="n">20.2</span> },
+    { <span class="k">"depth_cm"</span>: <span class="n">60</span>, <span class="k">"vwc"</span>: <span class="n">38.2</span>, <span class="k">"ec_dsm"</span>: <span class="n">2.6</span>, <span class="k">"t_c"</span>: <span class="n">19.5</span> }
+  ],
+  <span class="k">"co2"</span>: { <span class="k">"depth_cm"</span>: <span class="n">15</span>, <span class="k">"ppm"</span>: <span class="n">4120</span> },
+  <span class="k">"qc"</span>: <span class="s">"ok"</span>
+}</pre></div>
+        <div class="jcol"><div class="jhead"><b>CHAAK</b><span>Meteorología en el pozo</span></div><pre class="json">{
+  <span class="k">"device"</span>: <span class="s">"CHAAK-01"</span>,
+  <span class="k">"site"</span>: <span class="s">"pozo"</span>,
+  <span class="k">"ts"</span>: <span class="s">"2027-12-04T09:15"</span>,
+  <span class="k">"wind_ms"</span>: <span class="n">3.2</span>,
+  <span class="k">"wind_dir_deg"</span>: <span class="n">285</span>,
+  <span class="k">"rain_mmh"</span>: <span class="n">0.0</span>,
+  <span class="k">"rain_day_mm"</span>: <span class="n">0.0</span>,
+  <span class="k">"solar_wm2"</span>: <span class="n">612</span>,
+  <span class="k">"t_c"</span>: <span class="n">24.1</span>,
+  <span class="k">"rh_pct"</span>: <span class="n">48</span>,
+  <span class="k">"p_hpa"</span>: <span class="n">1009.6</span>,
+  <span class="k">"et0_day_mm"</span>: <span class="n">4.3</span>
+}</pre></div>
+        <div class="jcol"><div class="jhead"><b>SMAWA</b><span>Nivel del agua en el pozo</span></div><pre class="json">{
+  <span class="k">"device"</span>: <span class="s">"SMAWA-01"</span>,
+  <span class="k">"site"</span>: <span class="s">"pozo"</span>,
+  <span class="k">"ts"</span>: <span class="s">"2027-12-04T09:15"</span>,
+  <span class="k">"depth_to_water_m"</span>: <span class="n">18.4</span>,
+  <span class="k">"pumping"</span>: true,
+  <span class="k">"drawdown_m"</span>: <span class="n">2.7</span>,
+  <span class="k">"change_24h_m"</span>: <span class="n">-0.12</span>,
+  <span class="k">"water_t_c"</span>: <span class="n">26.8</span>
+}</pre></div>
+      </div>
+      <div class="uses rv" style="--i:4">
+        <div><b>Monitoreo</b><span>Tablero en tiempo real, testigo contra intervenida</span></div>
+        <div><b>Alertas</b><span>Sobre-riego, salinidad, lluvia y abatimiento del pozo, por WhatsApp y Telegram</span></div>
+        <div><b>Modelos</b><span>Balance hídrico, salinidad y vida del suelo</span></div>
+        <div><b>Pronósticos</b><span>Humedad y necesidad de riego a 24–72 h</span></div>
+      </div>
+      <p class="fnote rv" style="--i:5">Ejemplos ilustrativos; los campos finales se documentan en el entregable E7. El POXC se mide por campaña y se carga en SMAA OS junto a estas series.</p>
+      <button type="button" class="detail-link" data-detail="s-api">Ver API y modelo de suelo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div>
   </section>
 
@@ -1232,7 +1299,7 @@ pre.json .n{color:#fbbf24}
   </section>
 
   <!-- API -->
-  <section class="slide" data-layout="full" data-title="6 · API · SMAA OS" data-part="II" data-view="overview-dim">
+  <section class="slide" id="s-api" data-layout="full" data-title="6 · API · SMAA OS" data-part="II" data-view="overview-dim">
     <div class="panel panel--full">
       <span class="kicker rv" style="--i:0">06 · API · SMAA OS</span>
       <h2 class="rv" style="--i:1">Un API abierto, servido por SMAA OS</h2>
